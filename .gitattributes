@@ -5,11 +5,9 @@
 *.wbmp binary
 tests/fixtures/goldens/*.html -text
 templates/classic/*.html -text
-legacy/** linguist-vendored
 tests/fixtures/** linguist-vendored
 /.github export-ignore
 /tests export-ignore
-/legacy export-ignore
 /deploy export-ignore
 /.php-cs-fixer.dist.php export-ignore
 /phpunit.xml.dist export-ignore

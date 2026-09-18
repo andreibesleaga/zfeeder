@@ -308,7 +308,7 @@ abstract class SubscriptionStoreContractTestCase extends TestCase
 
     public function testEveryLegacySubscriptionFileImports(): void
     {
-        $files = glob(\dirname(__DIR__, 2) . '/legacy/zfeeder-1.6/newsfeeds/categories/*.opml');
+        $files = glob(\dirname(__DIR__, 2) . '/tests/fixtures/legacy-1.6/newsfeeds/categories/*.opml');
         self::assertIsArray($files);
         self::assertNotCount(0, $files);
 

@@ -98,11 +98,12 @@ A news item dated 12 September 2004, titled "1 year," marks the point where the 
 development as "currently on standby, frozen on version 1.6" — a decision made openly on the project's own
 site rather than announced later. No further versions were released after 1.6 (25 April 2004). The
 `zvonnews` project page on SourceForge is still reachable today, last touched in 2017 according to the
-provenance notes kept with this repository's recovered screenshots, but the project's own website
+provenance notes kept with the recovered screenshots, but the project's own website
 (`http://zvonnews.sourceforge.net`, hosted on SourceForge's now-retired project web space) eventually went
 offline. What survives is the SourceForge project listing itself, Internet Archive captures of the project
-site and its screenshots page, and the author's own copy of the source, which is preserved unmodified in
-this repository at `legacy/zfeeder-1.6/`.
+site and its screenshots page, and the author's own copy of the source, which is preserved unmodified at
+<https://github.com/andreibesleaga/old-projects> as `zfeeder-1.6.zip`, with the recovered screenshots
+alongside it as `zfeeder-screenshots.zip`.
 
 ## The code, honestly
 
@@ -161,7 +162,7 @@ A side-by-side comparison against the same views running on today's stack is in
 ## Release timeline
 
 Dates below come from the archived project site's news items and the version history section of the 1.6
-readme (`legacy/zfeeder-1.6/readme.html`). Where the surviving archive does not record an exact date, the
+readme (`readme.html` in the 1.6 release). Where the surviving archive does not record an exact date, the
 row says so rather than guessing.
 
 | Version | Date | Change |
@@ -188,7 +189,7 @@ one include line to embed it — on a current PHP stack, with the security model
 modern responsive design for both the embedded output and the admin panel. The rebuild plan, including the
 concrete decisions on what is kept and what is replaced, is in [`project/PLAN.md`](../project/PLAN.md).
 
-The original, untouched 1.6 tree is kept in this repository at `legacy/zfeeder-1.6/` so the rebuild's diff
-against it tells its own story. The project's SourceForge listing remains at
+The original, untouched 1.6 tree is archived at <https://github.com/andreibesleaga/old-projects>
+(`zfeeder-1.6.zip`) so the rebuild's diff against it tells its own story. The project's SourceForge listing remains at
 <https://sourceforge.net/projects/zvonnews/>; the 2.0 rebuild lives at
 <https://github.com/andreibesleaga/zfeeder>.

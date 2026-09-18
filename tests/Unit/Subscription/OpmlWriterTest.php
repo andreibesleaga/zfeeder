@@ -157,7 +157,7 @@ final class OpmlWriterTest extends TestCase
     /** @return array<string, array{string}> */
     public static function legacyFileProvider(): array
     {
-        $files = glob(\dirname(__DIR__, 3) . '/legacy/zfeeder-1.6/newsfeeds/categories/*.opml');
+        $files = glob(\dirname(__DIR__, 3) . '/tests/fixtures/legacy-1.6/newsfeeds/categories/*.opml');
         $cases = [];
         foreach ($files === false ? [] : $files as $file) {
             $cases[basename($file)] = [$file];

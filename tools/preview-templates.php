@@ -85,7 +85,7 @@ $feeds = [
             ['Sixteen modern templates', 'https://sourceforge.net/p/zfeeder/news/2026/09/templates/', '-5 hours',
                 'Thirteen counterparts of the originals plus cards, list and ticker — all container-query based.'],
             ['zFeeder 1.6 archived', 'https://sourceforge.net/p/zfeeder/news/2026/09/archive/', '-3 days',
-                'The 2004 tree is kept verbatim under legacy/ so the goldens can prove the output still matches.'],
+                'The 2004 release is archived at github.com/andreibesleaga/old-projects; the goldens still prove the output matches it.'],
         ],
     ],
     [

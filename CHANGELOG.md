@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+
+- **The 1.6 tree and the recovered screenshots.** `legacy/zfeeder-1.6/` and
+  `legacy/screenshots/` are no longer in this repository. They are archived publicly at
+  <https://github.com/andreibesleaga/old-projects>, as `zfeeder-1.6.zip` and
+  `zfeeder-screenshots.zip`. The minimal 2004 corpus the tests read — the eleven original
+  `categories/*.opml` subscription files, the original `templates/` directory, and
+  `config.php`, which is read as text and never executed — is kept at
+  `tests/fixtures/legacy-1.6/newsfeeds/`, and `tools/record-goldens.sh` now downloads
+  `zfeeder-1.6.zip` instead of reading `legacy/`. Every compatibility test still runs
+  against real 2004 files; no 2004 PHP is loaded anywhere.
+
+### Security
+
+- **No credential is written down in the repository.** The browser suite used a fixed
+  administrator password; `tools/run-e2e.sh` now generates one for each run and passes it
+  to the suite as `ZF_E2E_PASSWORD`. Nothing is exempt from the secret scan any more —
+  `S18SecretsTest` dropped its one allowed exception.
+
 ## [2.0.0] — 2026-09-18
 
 The first release since 1.6 in April 2004. zFeeder is rebuilt on PHP 8.3 with the same
@@ -62,6 +81,7 @@ installation can be carried forward rather than replaced.
 
 - **WAP/WML output.** `wap.php` and the `wap_*` templates served mobile phones of 2004 and
   have no audience now. The 1.6 files remain in `legacy/` for reference.
+  *(Removed from the repository after 2.0.0 — see Unreleased.)*
 - **Frame-based demonstrations.** The two-frame aggregator is rebuilt as a CSS grid.
 - **HTTP Basic authentication for the panel.** Session login only; leave Basic auth to the
   web server if you want it.

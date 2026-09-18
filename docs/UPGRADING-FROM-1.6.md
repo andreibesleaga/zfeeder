@@ -33,8 +33,9 @@ One thing cannot come across: the administrator password. 1.6 stored
 `categories/*.opml` is the only copy of your subscription list, and `config.php` is
 the only record of your settings.
 
-**Do not deploy `legacy/zfeeder-1.6/`.** The original code is kept in this repository
-as history. It writes its configuration file as PHP built from `$_POST`, passes
+**Do not deploy the 2004 code.** The original is kept as history at
+<https://github.com/andreibesleaga/old-projects> (`zfeeder-1.6.zip`). It writes its
+configuration file as PHP built from `$_POST`, passes
 `$_GET` straight into a filesystem path, prints feed content unescaped, and will
 fetch any URL it is handed. Keep it off the internet.
 
@@ -59,8 +60,8 @@ bin/zfeeder legacy-import /path/to/old/newsfeeds --dry-run
 ```
 
 `--dry-run` writes nothing. It prints three tables — subscriptions, settings,
-templates — and the warning about the password. Run against the 1.6 tree in this
-repository it reports:
+templates — and the warning about the password. Run against the 2004 corpus in
+`tests/fixtures/legacy-1.6/newsfeeds/`, it reports:
 
 ```
 Subscriptions
@@ -376,4 +377,4 @@ directory and never writes to it.
 The code behind this page: `src/Cli/Command/LegacyImportCommand.php` (the import and
 the constant mapping), `src/Legacy/LegacyCacheLocator.php` (the 1.6 cache naming),
 `src/Config/Schema.php` (the 2.0 options). The 2004 original, for comparison, is
-`legacy/zfeeder-1.6/newsfeeds/config.php`.
+`tests/fixtures/legacy-1.6/newsfeeds/config.php`.

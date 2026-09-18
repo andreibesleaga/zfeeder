@@ -22,9 +22,11 @@ Everything written for this repository is under that licence, including:
 `templates/classic/*.html`, `public/assets/classic/images/` and
 `public/assets/classic/css/` are the author's own work from 2003–2004, carried into this
 repository unchanged and released under the same licence. They are not third-party material
-and no separate attribution is required. `legacy/zfeeder-1.6/` is the 2004 release itself,
-kept as history; it ships its own copy of the same GPL v2 text at
-`legacy/zfeeder-1.6/LICENSE`.
+and no separate attribution is required. The same holds for `tests/fixtures/legacy-1.6/`, the
+eleven 2004 OPML category files and the original `config.php` that the tests read. The 2004
+release itself is not in this repository: it is archived as `zfeeder-1.6.zip` at
+<https://github.com/andreibesleaga/old-projects>, and it carries its own copy of the same
+GPL v2 text.
 
 ## Runtime dependencies
 

@@ -53,3 +53,7 @@ owner-side account action, as is every git write in this project.
   submodule is not the same thing.
 - **Composer-only distribution.** It drops `tools/build-dist.sh` and the archive job, and with them the users
   this rebuild is aimed at.
+
+**Update, 18 September 2026.** The 1.6 tree was removed from this repository and archived at
+<https://github.com/andreibesleaga/old-projects> (`zfeeder-1.6.zip`); the minimal 2004 corpus the tests
+need now lives in `tests/fixtures/legacy-1.6/`.

@@ -22,9 +22,10 @@ ended up running on more than 20,000 websites. Development stopped at version 1.
 2004. This is version 2.0: the same product and the same architecture, on a current
 stack, with the security problems of 2004 fixed.
 
-The original is still here, unmodified, in [`legacy/zfeeder-1.6/`](legacy/zfeeder-1.6/) —
-and the classic templates in this version are tested byte for byte against output
-captured from that code running on PHP 5.6. See [docs/HISTORY.md](docs/HISTORY.md).
+The original is archived, unmodified, as `zfeeder-1.6.zip` in
+[andreibesleaga/old-projects](https://github.com/andreibesleaga/old-projects) — and the
+classic templates in this version are tested byte for byte against output captured from
+that code running on PHP 5.6. See [docs/HISTORY.md](docs/HISTORY.md).
 
 ## What it does
 
@@ -149,7 +150,8 @@ Each of the eighteen controls has a class in `tests/Security/`, `S01…` to `S18
 suite is 484 tests. See [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md), which also records
 the four defects found in 2.0 itself and closed, and [SECURITY.md](SECURITY.md).
 
-**Do not deploy `legacy/zfeeder-1.6/`.** It is kept as history, and it is not safe.
+**Do not deploy the 2004 release.** It is kept as history in
+[andreibesleaga/old-projects](https://github.com/andreibesleaga/old-projects), and it is not safe.
 
 ## Documentation
 

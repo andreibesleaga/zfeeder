@@ -298,14 +298,19 @@ equality with the 2004 output, and it is off in every other code path: no route,
 no CLI command and no configuration key turns it on. If you enable it in your own
 code, you have re-opened defect L6.
 
-**`legacy/zfeeder-1.6/` is in the repository.** It is 2004 code with all of the
-defects below, and the release archive and the container image are built from
-`tools/build-dist.sh` and `deploy/Dockerfile`. Do not serve that directory.
+**A small 2004 corpus is in the repository.** The 1.6 application code is no longer
+here; it is archived as `zfeeder-1.6.zip` at
+<https://github.com/andreibesleaga/old-projects>, with all of the defects below. What
+remains is `tests/fixtures/legacy-1.6/`: the eleven original OPML category files and
+1.6's `config.php`, which the tests read as text and never execute. The release
+archive and the container image, built by `tools/build-dist.sh` and
+`deploy/Dockerfile`, do not carry it.
 
 ## The 1.6 defect catalogue
 
-Line references are into `legacy/zfeeder-1.6/`, which is the untouched 2004 tree,
-so every row can be checked.
+Line references are into the untouched zFeeder 1.6 release of 25 April 2004, archived
+as `zfeeder-1.6.zip` at <https://github.com/andreibesleaga/old-projects>, so every row
+can be checked.
 
 | # | Defect | Where in 1.6 | Closed by |
 |---|---|---|---|

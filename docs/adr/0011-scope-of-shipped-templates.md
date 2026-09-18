@@ -45,3 +45,7 @@ The WAP templates are not ported; that output was retired in ADR 0000.
   `mainframe`, `sidebar`, the CSS-only `rij` — untested.
 - **Modernise the classic markup in place.** It would have produced fourteen responsive templates and
   destroyed the byte-for-byte evidence in the same move.
+
+**Update, 18 September 2026.** The 1.6 tree was removed from this repository and archived at
+<https://github.com/andreibesleaga/old-projects> (`zfeeder-1.6.zip`); the minimal 2004 corpus the tests
+need now lives in `tests/fixtures/legacy-1.6/`.

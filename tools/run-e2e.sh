@@ -9,8 +9,18 @@ cd "$(dirname "$0")/.."
 
 PORT="${ZF_PORT:-8181}"
 MODE="${ZF_MODE:-container}"
-E2E_PASSWORD='e2e-password-2026'
-# Generated with: bin/zfeeder hash-password 'e2e-password-2026'
+# A hash on its own would not match the password generated below, and the suite
+# would then fail at the login screen with nothing to explain why.
+if [ -n "${ZF_E2E_HASH:-}" ] && [ -z "${ZF_E2E_PASSWORD:-}" ]; then
+    echo "ZF_E2E_HASH is set but ZF_E2E_PASSWORD is not; set both or neither" >&2
+    exit 1
+fi
+
+# Generated fresh for each run and handed to the suite through the environment,
+# so no credential is written down anywhere in the repository. It only ever
+# unlocks the throwaway instance this script starts and then destroys.
+E2E_PASSWORD="${ZF_E2E_PASSWORD:-$(head -c 24 /dev/urandom | base64 | tr -d '\n=/+')}"
+export ZF_E2E_PASSWORD="$E2E_PASSWORD"
 HASH="${ZF_E2E_HASH:-}"
 DATA_DIR="$(mktemp -d)"
 CONTAINER="zfeeder-e2e-$$"

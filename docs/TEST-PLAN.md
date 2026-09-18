@@ -89,6 +89,7 @@ count is stable; the assertion count is a reading of one checkout.
 | `tests/fixtures/html/` | `two-feeds.html`, `base-href.html`, `scheme-relative.html`, `no-feeds.html` — autodiscovery cases |
 | `tests/fixtures/payloads/` | `xxe.xml`, `billion-laughs.xml`, `xss-corpus.json` |
 | `tests/fixtures/goldens/` | 49 recorded HTML files |
+| `tests/fixtures/legacy-1.6/` | The minimal 2004 corpus: the eleven original `newsfeeds/categories/*.opml` files, 1.6's `templates/` directory, and its `config.php`, read as text and never executed |
 
 `tests/bootstrap.php` sets the timezone to UTC and provides `zf_fixture()` and
 `zf_fixture_contents()`, so a fixture is always addressed by its relative path.
@@ -99,9 +100,12 @@ count is stable; the assertion count is a reading of one checkout.
 builds `deploy/Dockerfile` and runs the container; `ZF_MODE=builtin` uses
 `php -S` instead, which is faster locally; `ZF_BASE_URL` plus
 `ZF_BASE_URL_EXTERNAL=1` points the suite at an already deployed instance. Either
-way the script writes a scratch data directory, generates an Argon2id hash for
-the password `e2e-password-2026`, pre-seeds the cache through
-`tools/seed-e2e-cache.php`, and waits for `/healthz` before starting.
+way the script writes a scratch data directory, invents a random administrator
+password and hashes it with Argon2id, pre-seeds the cache through
+`tools/seed-e2e-cache.php`, and waits for `/healthz` before starting. The
+password reaches the suite as `ZF_E2E_PASSWORD`, so no credential is written
+down in the repository and the tests must be started through this script rather
+than by calling Playwright directly.
 
 `tests/e2e/playwright.config.js` defines three projects, and every test runs in
 all three: `desktop` (Desktop Chrome, 1280×900), `mobile` (Pixel 7) and `dark`
@@ -126,7 +130,8 @@ findings. The classic set is deliberately outside that bar;
 needed to run the tests; it exists so the corpus can be regenerated and so the
 method is checkable. What it does:
 
-1. Copies `legacy/zfeeder-1.6/` — the untouched 2004 tree — into a temporary
+1. Downloads `zfeeder-1.6.zip` — the untouched 2004 tree — from
+   <https://github.com/andreibesleaga/old-projects> and unpacks it into a temporary
    directory.
 2. Deletes the shipped OPML categories and writes three of its own —
    `goldenA`, `goldenB`, `goldenC` — each with two subscriptions whose

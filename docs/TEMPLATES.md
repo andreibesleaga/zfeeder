@@ -546,7 +546,8 @@ A template written for zFeeder 1.x in 2004 runs in 2.0 unchanged. Drop it in
 are all optional.
 
 This is not an aspiration; it is tested. `tools/record-goldens.sh` builds a
-`php:5.6-apache` container, installs the original `legacy/zfeeder-1.6/` tree in it
+`php:5.6-apache` container, downloads `zfeeder-1.6.zip` from
+<https://github.com/andreibesleaga/old-projects> and installs the original 1.6 tree in it
 with fixture feeds pre-placed in the 1.6 cache at a fixed far-future mtime so nothing
 is fetched, and curls the output of every classic template across three categories
 plus the `zfposition`, `zfmore`, `zf_link` and channel-location variants. The result

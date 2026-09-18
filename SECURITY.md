@@ -5,7 +5,7 @@
 | Version | Supported |
 |---------|-----------|
 | 2.0.x   | Yes |
-| 1.6 (2004) | No. It is kept in `legacy/` as history and must not be run on a public server. |
+| 1.6 (2004) | No. It is kept as history at <https://github.com/andreibesleaga/old-projects> and must not be run on a public server. |
 
 ## Reporting a vulnerability
 
@@ -33,8 +33,9 @@ the release can be scheduled.
 
 ## What is not in scope
 
-- Anything in `legacy/zfeeder-1.6/`. The 2004 code is published as a historical artefact
-  and is documented as unsafe to deploy; its defects are catalogued in `docs/THREAT-MODEL.md`.
+- Anything in the 1.6 release, archived at <https://github.com/andreibesleaga/old-projects>.
+  The 2004 code is published as a historical artefact and is documented as unsafe to deploy;
+  its defects are catalogued in `docs/THREAT-MODEL.md`.
 - Attacks that need an existing administrator session or filesystem access.
 - Missing hardening headers on a deployment that has overridden the shipped configuration.
 - Resource exhaustion from subscribing to thousands of feeds; the feed count is the

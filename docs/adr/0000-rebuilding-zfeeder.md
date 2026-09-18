@@ -83,3 +83,7 @@ templates correctly.
 - Security work (`project/PLAN.md` §5) is treated as the primary reason for the rebuild, not an add-on:
   authentication, CSRF, XSS sanitisation, SSRF guards, path-traversal validation, config storage, file
   permissions and XML parsing are each redesigned, not patched.
+
+**Update, 18 September 2026.** The 1.6 tree was removed from this repository and archived at
+<https://github.com/andreibesleaga/old-projects> (`zfeeder-1.6.zip`); the minimal 2004 corpus the tests
+need now lives in `tests/fixtures/legacy-1.6/`.

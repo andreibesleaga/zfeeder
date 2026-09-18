@@ -18,7 +18,30 @@ cleanup() {
     exit "$status"
 }
 trap cleanup EXIT
-cp -r "$ROOT/legacy/zfeeder-1.6/." "$WORK/"
+# The 2004 release is not in this repository: it is 14 MB that nothing loads, and
+# publishing the original source next to something people install invites someone
+# to deploy it. It is archived instead, and fetched here — this is the one task
+# that needs the whole tree rather than the corpus in tests/fixtures/legacy-1.6/.
+# Set ZF_LEGACY_ZIP to a local copy to work offline.
+ARCHIVE="${ZF_LEGACY_ZIP:-}"
+if [ -z "$ARCHIVE" ]; then
+    ARCHIVE="$WORK/zfeeder-1.6.zip"
+    echo "fetching the 2004 release from the archive"
+    curl -fsSL -o "$ARCHIVE" \
+        https://github.com/andreibesleaga/old-projects/raw/main/zfeeder-1.6.zip
+fi
+unzip -q "$ARCHIVE" -d "$WORK/unpacked"
+
+# The archive holds the release directory; find the tree that has newsfeeds/ in it
+# rather than assuming how deeply it is nested.
+SRC="$(dirname "$(find "$WORK/unpacked" -type d -name newsfeeds -print -quit)")"
+if [ -z "$SRC" ] || [ ! -d "$SRC/newsfeeds" ]; then
+    echo "the archive does not contain a newsfeeds/ directory" >&2
+    exit 1
+fi
+cp -r "$SRC/." "$WORK/"
+# $WORK becomes the container's web root, so nothing may be left lying in it.
+rm -rf "$WORK/unpacked" "$WORK/zfeeder-1.6.zip"
 NF="$WORK/newsfeeds"
 rm -f "$NF/categories"/*.opml
 mangle() { printf '%s' "$1" | sed 's/[^[:alnum:]]/_/g'; }

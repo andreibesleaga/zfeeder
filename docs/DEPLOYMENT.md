@@ -322,7 +322,7 @@ Railway runs the public demo, at **<https://zfeeder.up.railway.app>**.
 There is no `railway.toml` in this repository. The service is configured through
 Railway variables and one volume, for the reasons in the next two paragraphs.
 `.railwayignore` at the repository root is the one file that does affect the
-build: it keeps `tests/`, `tools/`, `vendor/`, `legacy/`, `project/` and the
+build: it keeps `tests/`, `tools/`, `vendor/`, `project/` and the
 development-only configuration out of the build context, and is deliberately
 anchored so that `docs/` is still shipped, because the running instance links to
 it.

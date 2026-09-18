@@ -2,8 +2,17 @@
 const { expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
-/** Credentials the test server is started with; see tools/run-e2e.sh. */
-const ADMIN = { user: 'admin', password: 'e2e-password-2026' };
+/**
+ * Credentials the test server was started with. The password is generated for
+ * each run by tools/run-e2e.sh and passed in the environment, so there is no
+ * fixed credential anywhere in the repository; run the suite through that
+ * script rather than calling playwright directly.
+ */
+const ADMIN = { user: 'admin', password: process.env.ZF_E2E_PASSWORD };
+
+if (!ADMIN.password) {
+  throw new Error('ZF_E2E_PASSWORD is not set — start the suite with tools/run-e2e.sh');
+}
 
 /** Widths every layout must survive. */
 const WIDTHS = [320, 768, 1280, 1920];

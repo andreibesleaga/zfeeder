@@ -238,7 +238,7 @@ These are not requirements, now or in 2.x. The reasoning is in
 | More than one user account | The panel is a single-administrator tool, as 1.6 was |
 | A database server (MySQL, PostgreSQL) | The product's identity is that it runs where nothing is installed |
 | A JavaScript framework | Five server-rendered screens; htmx is vendored and there is no build step |
-| WAP and WML output | The transport no longer exists. `legacy/zfeeder-1.6/newsfeeds/wap.php` is kept as history |
+| WAP and WML output | The transport no longer exists. 1.6's `newsfeeds/wap.php` is kept as history at <https://github.com/andreibesleaga/old-projects> |
 | HTML frames | Replaced by the CSS-grid aggregator page |
 | Server HTTP Basic authentication as a login mode | Left to the web server; the panel implements one authentication system |
 | A third template set | `Render\TemplateLocator::SETS` is a closed list of `classic` and `modern` |

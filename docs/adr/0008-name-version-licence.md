@@ -48,3 +48,7 @@ The 2004 logo is kept: `public/assets/classic/images/zflogo.png` is byte-identic
 - **MIT or Apache-2.0.** Not available: a derivative of GPL v2 code cannot be relicensed that way.
 - **GPL-3.0-only.** Permitted by the "or later" clause, but it would exclude the result from GPL-2-only
   projects for no benefit this project needs.
+
+**Update, 18 September 2026.** The 1.6 tree was removed from this repository and archived at
+<https://github.com/andreibesleaga/old-projects> (`zfeeder-1.6.zip`); the minimal 2004 corpus the tests
+need now lives in `tests/fixtures/legacy-1.6/`.

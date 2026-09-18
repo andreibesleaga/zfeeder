@@ -69,7 +69,7 @@ final class FlatSubscriptionStoreTest extends SubscriptionStoreContractTestCase
     {
         $directory = $this->tempPath('categories');
         AtomicFile::ensureDirectory($directory);
-        $legacy = \dirname(__DIR__, 3) . '/legacy/zfeeder-1.6/newsfeeds/categories/technology.opml';
+        $legacy = \dirname(__DIR__, 3) . '/tests/fixtures/legacy-1.6/newsfeeds/categories/technology.opml';
         copy($legacy, $directory . '/technology.opml');
 
         $category = $this->store->category('technology');

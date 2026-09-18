@@ -248,8 +248,9 @@ vendor/bin/phpunit --testsuite golden
 OK (51 tests, 263 assertions)
 ```
 
-49 files in `tests/fixtures/goldens/` were recorded from the unmodified
-`legacy/zfeeder-1.6/` tree running on `php:5.6-apache`, with the feed cache
+49 files in `tests/fixtures/goldens/` were recorded from the unmodified 1.6 tree,
+archived at <https://github.com/andreibesleaga/old-projects>, running on
+`php:5.6-apache`, with the feed cache
 timestamped far in the future so 1.6 never opened a socket. The test rebuilds
 each case and compares with `assertSame` on the whole string — not
 `assertEquals`, not whitespace-normalised, not a DOM comparison. CRLF line
@@ -283,7 +284,7 @@ matching, and the file was restored byte-identically (verified by `sha256sum`).
 | A 2004 template loads unchanged | The golden corpus is fourteen 2004 templates, loaded by the 2.0 engine |
 | `include 'zfeeder.php';` still works | `Integration\Http\EmbedEndpointsTest::testTheIncludeFunctionProducesTheSameHtmlAsTheEndpoint`, `testEmbedAcceptsBothTheModernAndThe2004ParameterNames`, `testAnEmbeddedBlockNeverBreaksThePageThatHostsIt` |
 | The 1.6 `?zfrefresh=<key>` spelling still works | `PublicController::refreshKey()` reads `key` then `zfrefresh`. **No test names the 1.6 spelling**; `Integration\Http\EmbedEndpointsTest::testRefreshingWithTheKeyPrintsThe2004Report` covers the modern one only |
-| A 2004 `newsfeeds/` directory can be imported | `Cli\LegacyImportCommandTest` (10 tests), against `legacy/zfeeder-1.6/` |
+| A 2004 `newsfeeds/` directory can be imported | `Cli\LegacyImportCommandTest` (10 tests), against `tests/fixtures/legacy-1.6/` |
 
 ## 5. Portability review
 

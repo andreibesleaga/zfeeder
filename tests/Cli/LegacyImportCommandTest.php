@@ -15,7 +15,8 @@ use Zfeeder\Subscription\Opml\Reader;
 
 /**
  * The acceptance test for the upgrade path: the real 2004 `newsfeeds/`
- * directory that ships in `legacy/`, imported into a scratch installation.
+ * directory from `tests/fixtures/legacy-1.6/`, imported into a scratch
+ * installation.
  */
 #[CoversClass(LegacyImportCommand::class)]
 final class LegacyImportCommandTest extends CliTestCase
@@ -196,8 +197,8 @@ final class LegacyImportCommandTest extends CliTestCase
 
     private function legacyPath(): string
     {
-        $path = \dirname(__DIR__, 2) . '/legacy/zfeeder-1.6/newsfeeds';
-        self::assertDirectoryExists($path, 'the 1.6 corpus must ship with the repository');
+        $path = \dirname(__DIR__, 2) . '/tests/fixtures/legacy-1.6/newsfeeds';
+        self::assertDirectoryExists($path, 'the 2004 corpus must ship with the repository');
 
         return $path;
     }

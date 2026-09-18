@@ -34,14 +34,6 @@ final class S18SecretsTest extends SecurityTestCase
     private const int MAX_FILE_BYTES = 1_048_576;
 
     /**
-     * The one match in the tree today, listed so that the scan can stay strict
-     * about everything else. See the test at the bottom of this class.
-     *
-     * @var list<string>
-     */
-    private const array KNOWN = ['tools/smoke-image.sh'];
-
-    /**
      * Patterns that mean "a credential is written down here", built piecewise
      * so the scanner does not find itself.
      *
@@ -250,9 +242,6 @@ final class S18SecretsTest extends SecurityTestCase
         $patterns = self::patterns();
 
         foreach (self::trackedTextFiles() as $path) {
-            if (in_array($path, self::KNOWN, true)) {
-                continue;
-            }
             $contents = self::readFile(self::projectRoot() . '/' . $path);
             foreach ($patterns as $label => $pattern) {
                 $matches = [];
@@ -311,20 +300,15 @@ final class S18SecretsTest extends SecurityTestCase
     }
 
     /**
-     * OPEN GAP — `tools/smoke-image.sh` hard-codes a complete Argon2id hash.
+     * There is no credential anywhere in the tree, and no file is exempt from
+     * the scan above.
      *
-     * Line 8 sets `HASH='$argon2id$…'` and passes it to the container as
-     * `ZF_ADMIN_PASSWORD_HASH`. It is a throwaway credential for a smoke test,
-     * not a production one, so the exposure is small — but it is a real
-     * administrator hash in a repository that is about to be public, it can be
-     * attacked offline at leisure, and anyone who copies the script into a
-     * deployment inherits a password that everybody knows.
-     * `tools/run-e2e.sh:27` already does the right thing: it generates the hash
-     * at run time from `$E2E_PASSWORD`.
-     *
-     * The assertion records today's state; when the script generates its hash
-     * the assertion fails, which is the signal to delete this test and the
-     * `KNOWN` entry above.
+     * Both scripts that need an administrator account once carried one: a
+     * complete Argon2id hash for the smoke test, and a fixed password for the
+     * browser suite. Neither was a production credential, but a hash in a
+     * public repository can be attacked offline at leisure, and anyone who
+     * copies a script into a deployment inherits a password everybody knows.
+     * Each script now derives what it needs when it runs.
      */
     public function testNoShippedScriptCarriesAPasswordHash(): void
     {
