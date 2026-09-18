@@ -3,17 +3,17 @@ title: "Components, by enforced layer"
 ---
 flowchart TB
     subgraph infra["Infrastructure — delivery and adapters"]
-        http["Http<br/><i>Router, controllers,<br/>SecurityHeaders, ErrorHandler</i>"]
-        admin["Admin<br/><i>Auth, CSRF, 7 screens, Twig</i>"]
-        clic["Cli<br/><i>12 commands</i>"]
-        legacy["Legacy<br/><i>1.6 importers</i>"]
+        http["Http<br/>Router, controllers,<br/>SecurityHeaders, ErrorHandler"]
+        admin["Admin<br/>Auth, CSRF, 7 screens, Twig"]
+        clic["Cli<br/>12 commands"]
+        legacy["Legacy<br/>1.6 importers"]
     end
 
     subgraph appl["Application — the use cases"]
-        fetch["Fetch<br/><i>FeedFetcher, UrlGuard</i>"]
-        parse["Parse<br/><i>FeedParser, Autodiscovery</i>"]
-        render["Render<br/><i>TemplateEngine, Renderer,<br/>Sanitizer, Tokens</i>"]
-        embed["Embed<br/><i>zfeeder#40;#41;</i>"]
+        fetch["Fetch<br/>FeedFetcher, UrlGuard"]
+        parse["Parse<br/>FeedParser, Autodiscovery"]
+        render["Render<br/>TemplateEngine, Renderer,<br/>Sanitizer, Tokens"]
+        embed["Embed<br/>zfeeder()"]
     end
 
     subgraph store["Storage — one port, two adapters"]
@@ -23,12 +23,12 @@ flowchart TB
     end
 
     subgraph dom["Domain — knows nothing outside itself"]
-        subs["Subscription<br/><i>Category, Feed</i>"]
-        model["Parse#92;Model<br/><i>Channel, Item</i>"]
+        subs["Subscription<br/>Category, Feed"]
+        model["Parse\Model<br/>Channel, Item"]
     end
 
-    cfg["Config<br/><i>Schema, Loader, Writer</i>"]
-    comp["Composition root<br/><i>Kernel, FeedService</i>"]
+    cfg["Config<br/>Schema, Loader, Writer"]
+    comp["Composition root<br/>Kernel, FeedService"]
 
     infra --> appl
     infra --> comp

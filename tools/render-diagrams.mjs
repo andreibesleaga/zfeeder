@@ -32,7 +32,16 @@ await page.evaluate(() => {
       lineColor: '#55636f',
       fontSize: '15px',
     },
-    flowchart: { htmlLabels: true, curve: 'basis', useMaxWidth: true },
+    // Native SVG text, not HTML in a foreignObject. Two reasons, both fatal
+    // otherwise: mermaid's HTML labels emit unclosed <br>, which makes the
+    // file invalid XML and unopenable as an image; and GitHub's SVG sanitiser
+    // strips foreignObject, so the labels vanish when the file is viewed on
+    // the site it is committed to.
+    htmlLabels: false,
+    // Wide enough that a class name such as SubscriptionStoreInterface fits
+    // on one line. Native SVG wrapping breaks at the width regardless of word
+    // boundaries, so a narrower setting splits identifiers mid-word.
+    flowchart: { htmlLabels: false, curve: 'basis', useMaxWidth: true, wrappingWidth: 280 },
     sequence: { useMaxWidth: true },
   });
 });
@@ -42,10 +51,27 @@ for (const file of files) {
   const source = readFileSync(join(dir, file), 'utf8');
   const id = 'd' + basename(file, '.mmd').replace(/[^a-z0-9]/gi, '');
   try {
-    const svg = await page.evaluate(
-      async ([graph, renderId]) => (await window.mermaid.render(renderId, graph)).svg,
+    const { svg, problem } = await page.evaluate(
+      async ([graph, renderId]) => {
+        const { svg } = await window.mermaid.render(renderId, graph);
+        // An SVG file is XML. A browser shows the diagram either way, but
+        // anything that opens it as an image rejects a malformed one, so the
+        // output is checked here rather than trusted.
+        const parsed = new DOMParser().parseFromString(svg, 'image/svg+xml');
+        const error = parsed.querySelector('parsererror');
+        if (error) {
+          return { svg, problem: error.textContent.trim().split('\n')[0] };
+        }
+        if (parsed.querySelector('foreignObject')) {
+          return { svg, problem: 'contains foreignObject; GitHub strips it and the labels disappear' };
+        }
+        return { svg, problem: null };
+      },
       [source, id],
     );
+    if (problem !== null) {
+      throw new Error(problem);
+    }
     writeFileSync(join(dir, basename(file, '.mmd') + '.svg'), svg);
     console.log(`  ${file} -> ${basename(file, '.mmd')}.svg  (${(svg.length / 1024).toFixed(1)} kB)`);
   } catch (error) {

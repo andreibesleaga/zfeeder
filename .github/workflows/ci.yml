@@ -37,6 +37,8 @@ jobs:
         run: vendor/bin/deptrac analyse --config-file=deptrac.yaml --no-progress
       - name: Forbidden constructs
         run: ./tools/check-forbidden.sh
+      - name: Diagrams
+        run: php tools/check-diagrams.php
 
   tests:
     name: PHP ${{ matrix.php }} / ${{ matrix.storage }} storage
@@ -85,10 +87,22 @@ jobs:
       - run: composer install --no-interaction --no-progress --prefer-dist
       - name: Known vulnerabilities in dependencies
         run: composer audit --no-interaction
+      # The gitleaks action derives a commit range from the push event, which
+      # has no valid form for the first push to a repository and breaks again
+      # after any history rewrite. The whole history is scanned instead: it is
+      # the question worth asking, and the answer does not depend on how the
+      # commits arrived. The binary is pinned and its checksum verified.
       - name: Secret scan
-        uses: gitleaks/gitleaks-action@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: 8.24.3
+          GITLEAKS_SHA256: 9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c
+        run: |
+          set -euo pipefail
+          url="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSL -o /tmp/gitleaks.tar.gz "$url"
+          echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tar.gz" | sha256sum -c -
+          tar xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          /tmp/gitleaks git . --redact --no-banner --exit-code=1
 
   image:
     name: Container image
@@ -119,6 +133,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      # The pages under test run in the container, but the harness runs on the
+      # runner: it hashes the demo password and seeds a deterministic cache
+      # through the application's own storage code, so it needs PHP and the
+      # autoloader here as well.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, mbstring, simplexml, pdo_sqlite, sqlite3
+          coverage: none
+          tools: composer:v2
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
       - name: Build image
         uses: docker/build-push-action@v6
         with:

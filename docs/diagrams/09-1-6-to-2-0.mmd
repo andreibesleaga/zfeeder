@@ -11,13 +11,13 @@ flowchart LR
         o6["MD5 password"]
         o7["config.php rewritten<br/>from $_POST"]
         o8["$_GET used as a file path"]
-        o9["fopen#40;#41; on any URL"]
+        o9["fopen() on any URL"]
         o10["Feed HTML printed raw"]
         o11["WAP / WML output"]
     end
 
     subgraph new["zFeeder 2.0 — 2026"]
-        n1["Flat files <b>or</b> SQLite"]
+        n1["Flat files or SQLite"]
         n2["OPML 2.0; 2004 files still load"]
         n3["Same sections, same 15 tokens,<br/>9 more and 3 filters"]
         n4["Same, plus /embed and /api"]

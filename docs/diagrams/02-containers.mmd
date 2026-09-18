@@ -4,15 +4,15 @@ title: "What runs, and what it writes to"
 flowchart TB
     subgraph runtime["One installation"]
         direction TB
-        web["Web front controller<br/><code>public/index.php</code><br/><i>demo site, /embed, /api, /admin, /healthz</i>"]
-        cli["Command line<br/><code>bin/zfeeder</code><br/><i>12 commands; what cron runs</i>"]
-        shim["Include shim<br/><code>zfeeder.php</code><br/><i>the 2004 one-liner</i>"]
+        web["Web front controller<br/>public/index.php<br/>demo site, /embed, /api, /admin, /healthz"]
+        cli["Command line<br/>bin/zfeeder<br/>12 commands; what cron runs"]
+        shim["Include shim<br/>zfeeder.php<br/>the 2004 one-liner"]
     end
 
     subgraph data["Data directory — outside the web root"]
         direction LR
-        flat[("Flat backend<br/><i>OPML per category<br/>+ cache files</i>")]
-        sqlite[("SQLite backend<br/><i>one file</i>")]
+        flat[("Flat backend<br/>OPML per category<br/>+ cache files")]
+        sqlite[("SQLite backend<br/>one file")]
         conf["config.json"]
     end
 
@@ -23,7 +23,7 @@ flowchart TB
     shim --> web
     web -->|"on-request refresh"| feeds
     cli -->|"scheduled refresh"| feeds
-    flat <-.->|"bin/zfeeder migrate<br/><b>both directions</b>"| sqlite
+    flat <-.->|"bin/zfeeder migrate<br/>both directions"| sqlite
 
     classDef run fill:#006699,stroke:#003d5c,color:#fff
     classDef store fill:#f6f8fa,stroke:#8aa4b5,color:#16202a

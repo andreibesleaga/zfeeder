@@ -82,6 +82,12 @@ without the fix.
 | 20 | Documentation review | `S18SecretsTest` walked the working tree, so its assertion count changed with whatever files were lying around — a breach of the project's own determinism rule | Reads git's tracked list, with a filesystem fallback for a checkout without git |
 | 21 | Documentation review | `bin/zfeeder seed` was the only command with no test, and the container runs it on every boot | `tests/Cli/SeedCommandTest.php`, including both backends and repeat runs |
 | 22 | v3 research | `SecurityHeaders::forEmbed()` set `Vary: Origin` only when an origin matched, so a shared cache could serve the no-CORS variant to a permitted site | Varies on every embed and API response |
+| 23 | **First push** | Mermaid's HTML labels put unclosed `<br>` inside a `foreignObject`, so every diagram was invalid XML and unopenable as an image — and GitHub strips `foreignObject`, so the labels would have vanished anyway | Native SVG text labels; the renderer now parses its own output and refuses to write a malformed file |
+| 24 | First push | The `#40;` entity escape silently failed in one diagram of nine, printing `fopen&#40;&#41;` | Literal characters throughout; the escape form is gone |
+| 25 | First push | The secret scan derived a commit range from the push event, which has no valid form for the first push to a repository | Full history scanned with a pinned, checksummed binary; the result no longer depends on how the commits arrived |
+| 26 | First push | The browser job built the image but never installed Composer dependencies, and the test harness itself runs on the runner | PHP and `composer install` added to that job |
+| 27 | First push | CodeQL uploaded its results and then failed reading its own workflow run | `actions: read` added |
+| 28 | First push | The Pages workflow required someone to have enabled Pages by hand first | `enablement: true` turns it on from the workflow |
 
 Numbers 15 to 17 were only reachable by actually deploying. That is the argument for
 the live demo being part of the build rather than a follow-up.

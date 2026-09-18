@@ -11,6 +11,10 @@ on:
 permissions:
   security-events: write
   contents: read
+  # The analyse action reads its own workflow run to attach the results to it.
+  # Without this it uploads the SARIF and then fails on "Resource not
+  # accessible by integration".
+  actions: read
 
 jobs:
   analyse:

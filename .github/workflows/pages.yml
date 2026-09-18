@@ -22,7 +22,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Render the portfolio page
         run: ./tools/build-pages.sh
+      # enablement turns the Pages site on from here, so publishing the
+      # portfolio page does not depend on someone having clicked through the
+      # repository settings first.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/pages

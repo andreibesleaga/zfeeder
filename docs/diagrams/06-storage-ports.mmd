@@ -2,27 +2,27 @@
 title: "One port, two adapters"
 ---
 flowchart LR
-    users["FeedService · Admin · CLI<br/><i>name no concrete store</i>"]
+    users["FeedService · Admin · CLI<br/>name no concrete store"]
 
     subgraph ports["Ports"]
-        si["SubscriptionStoreInterface<br/><i>categories, read, save,<br/>create, delete, import, export</i>"]
-        ci["CacheStoreInterface<br/><i>get, put, delete, purge, urls</i>"]
+        si["SubscriptionStoreInterface<br/>categories, read, save,<br/>create, delete, import, export"]
+        ci["CacheStoreInterface<br/>get, put, delete, purge, urls"]
     end
 
     subgraph flat["Flat adapter — the 2004 shape"]
-        fo["OpmlSubscriptionStore<br/><i>one .opml per category</i>"]
-        fc["FileCacheStore<br/><i>sha256#40;url#41; + sidecar metadata</i>"]
+        fo["OpmlSubscriptionStore<br/>one .opml per category"]
+        fc["FileCacheStore<br/>sha256(url) + sidecar metadata"]
     end
 
     subgraph sql["SQLite adapter"]
         so["SqliteSubscriptionStore"]
         sc["SqliteCacheStore"]
-        db["Database<br/><i>WAL, prepared statements,<br/>versioned migrations</i>"]
+        db["Database<br/>WAL, prepared statements,<br/>versioned migrations"]
     end
 
-    fac["StoreFactory<br/><i>reads ZF_STORAGE</i>"]
-    mig["Migrator<br/><i>copies and verifies counts</i>"]
-    test["One abstract test case<br/><i>run against both</i>"]
+    fac["StoreFactory<br/>reads ZF_STORAGE"]
+    mig["Migrator<br/>copies and verifies counts"]
+    test["One abstract test case<br/>run against both"]
 
     users --> ports
     fac --> ports

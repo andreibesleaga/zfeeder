@@ -3,26 +3,26 @@ title: "How it is deployed"
 ---
 flowchart TB
     subgraph img["Container image — php:8.3-apache"]
-        ep["entrypoint<br/><i>listen on $PORT · own the volume ·<br/>migrate · seed</i>"]
-        ap["Apache<br/><i>master as root, workers as www-data</i>"]
+        ep["entrypoint<br/>listen on $PORT · own the volume ·<br/>migrate · seed"]
+        ap["Apache<br/>master as root, workers as www-data"]
         code["public/ src/ templates/ vendor/"]
     end
 
-    vol[("Volume at /var/www/data<br/><i>subscriptions · cache · config</i>")]
-    env["Environment<br/><i>44 options, ZF_*</i>"]
-    hc["/healthz<br/><i>stays up even when paused</i>"]
+    vol[("Volume at /var/www/data<br/>subscriptions · cache · config")]
+    env["Environment<br/>44 options, ZF_*"]
+    hc["/healthz<br/>stays up even when paused"]
 
     subgraph targets["Runs unchanged on"]
         direction LR
-        rw["Railway<br/><i>the live demo</i>"]
+        rw["Railway<br/>the live demo"]
         fly["Fly.io"]
         rn["Render"]
         k8["Kubernetes"]
         vps["A plain VPS"]
     end
 
-    zip["Release archive<br/><i>vendor/ included, no Composer needed</i>"]
-    shared["Shared hosting<br/><i>how 1.6 was installed in 2004</i>"]
+    zip["Release archive<br/>vendor/ included, no Composer needed"]
+    shared["Shared hosting<br/>how 1.6 was installed in 2004"]
 
     img --> vol
     env --> ep

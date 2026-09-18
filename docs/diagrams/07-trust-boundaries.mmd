@@ -4,30 +4,30 @@ title: "Trust boundaries and where each control sits"
 flowchart TB
     subgraph outside["Outside — nothing here is trusted"]
         anon["Anonymous visitor"]
-        pub["Feed publisher<br/><i>supplies attacker-controlled text</i>"]
+        pub["Feed publisher<br/>supplies attacker-controlled text"]
     end
 
     subgraph edge["Request boundary"]
-        hdrs["SecurityHeaders<br/><i>CSP, nosniff, HSTS, frame-ancestors</i>"]
-        rate["RateLimiter<br/><i>login, per identity</i>"]
-        csrf["Csrf<br/><i>every mutating request</i>"]
+        hdrs["SecurityHeaders<br/>CSP, nosniff, HSTS, frame-ancestors"]
+        rate["RateLimiter<br/>login, per identity"]
+        csrf["Csrf<br/>every mutating request"]
     end
 
     subgraph outbound["Outbound boundary"]
-        guard["UrlGuard<br/><i>scheme + resolved IP,<br/>re-checked on every redirect</i>"]
+        guard["UrlGuard<br/>scheme + resolved IP,<br/>re-checked on every redirect"]
         limits["Size, timeout,<br/>redirect caps"]
     end
 
     subgraph content["Content boundary"]
-        xml["XML parsing<br/><i>DTDs with an internal subset refused</i>"]
-        san["Sanitizer<br/><i>allow-list</i>"]
-        esc["Escape once<br/>+ safeUrl#40;#41;"]
+        xml["XML parsing<br/>DTDs with an internal subset refused"]
+        san["Sanitizer<br/>allow-list"]
+        esc["Escape once<br/>+ safeUrl()"]
     end
 
     subgraph paths["Filesystem boundary"]
-        names["Name pattern<br/><i>^#91;a-z0-9_-#93;#123;1,40#125;$</i>"]
+        names["Name pattern<br/>^[a-z0-9_-]{1,40}$"]
         real["realpath containment"]
-        json["Config written as JSON,<br/><b>never PHP</b>"]
+        json["Config written as JSON,<br/>never PHP"]
     end
 
     app["zFeeder"]

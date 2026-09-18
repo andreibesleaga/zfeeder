@@ -14,6 +14,14 @@ Edit the `.mmd`, then regenerate:
 It installs Mermaid into a scratch directory on first run and renders with the browser
 the end-to-end tests already use. Nothing is added to the project's dependencies.
 
+Two rules the renderer enforces, both learned by getting them wrong. Labels are drawn as
+native SVG text, never as HTML in a `foreignObject`: Mermaid's HTML labels emit unclosed
+`<br>`, which makes the file invalid XML and unopenable as an image, and GitHub's SVG
+sanitiser drops `foreignObject` anyway, so those labels disappear on the very site the
+file is committed to. And label text uses literal `(`, `[`, `{` and `\` rather than
+Mermaid's `#40;` entity escapes, which resolve in most diagrams but not all. After
+rendering, each file is parsed back; a malformed one is never written.
+
 | | Diagram | What it answers |
 |---|---|---|
 | 1 | [Context](01-context.svg) · [src](01-context.mmd) | Who uses zFeeder and what it talks to. Note that every network arrow points outward: nothing calls in except readers and the operator. |
