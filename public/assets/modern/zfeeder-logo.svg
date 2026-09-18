@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 64" width="248" height="64" role="img" aria-labelledby="zfeeder-logo-title">
+  <title id="zfeeder-logo-title">zFeeder</title>
+  <style>
+    .zfl-word { font-family: Verdana, Geneva, "DejaVu Sans", Tahoma, sans-serif; font-weight: 700; }
+    .zfl-ink  { fill: #35414c; }
+    .zfl-dot  { fill: #2f8f4e; }
+    .zfl-tile { fill: #e8f4ec; }
+    .zfl-edge { fill: none; stroke: #c9e2d3; stroke-width: 2; }
+    @media (prefers-color-scheme: dark) {
+      .zfl-ink  { fill: #e6edf3; }
+      .zfl-dot  { fill: #63d3a0; }
+      .zfl-tile { fill: #14251c; }
+      .zfl-edge { stroke: #2c4a38; }
+    }
+  </style>
+
+  <!-- the 2004 mark was a clump of grass beside the wordmark; same idea,
+       five blades, three greens, drawn as curves instead of 15px of pixels -->
+  <rect class="zfl-tile" x="2" y="4" width="56" height="56" rx="14"/>
+  <rect class="zfl-edge" x="3" y="5" width="54" height="54" rx="13"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M16 50C16 40 13 33 10 28" stroke="#8bc79a" stroke-width="4"/>
+    <path d="M22 50C22 38 20 28 17 20" stroke="#4caf6a" stroke-width="4"/>
+    <path d="M30 50C30 34 30 24 30 14" stroke="#2f8f4e" stroke-width="5"/>
+    <path d="M38 50C38 38 40 28 43 20" stroke="#4caf6a" stroke-width="4"/>
+    <path d="M44 50C44 40 47 33 50 28" stroke="#8bc79a" stroke-width="4"/>
+  </g>
+
+  <!-- the feed dot, the one thing 2004 could not have meant -->
+  <circle class="zfl-dot" cx="30" cy="52" r="3.5"/>
+
+  <text class="zfl-word zfl-ink" x="72" y="43" font-size="34" letter-spacing="-0.5">zFeeder</text>
+</svg>

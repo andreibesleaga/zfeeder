@@ -1,0 +1,287 @@
+/*
+ * Chrome for the demonstration site: the top bar, the cards, the demo layouts
+ * and the footer. The feed output itself is styled by zf.css, which is scoped
+ * to .zf so it can be dropped into someone else's page; this file styles the
+ * page around it and is only ever loaded by zFeeder's own site.
+ */
+
+:root {
+  color-scheme: light dark;
+  --site-bg: #ffffff;
+  --site-surface: #f6f8fa;
+  --site-fg: #16202a;
+  --site-fg-muted: #55636f;
+  --site-accent: #006699;         /* the 2004 blue, kept deliberately */
+  --site-accent-fg: #ffffff;
+  --site-border: #d8dee4;
+  --site-radius: 10px;
+  --site-gap: 1rem;
+  --site-maxw: 68rem;
+  --site-font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --site-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-site-theme="light"]) {
+    --site-bg: #0d1117;
+    --site-surface: #161b22;
+    --site-fg: #e6edf3;
+    --site-fg-muted: #9aa7b2;      /* 7.1:1 on #0d1117 */
+    --site-accent: #58a6ff;        /* 7.4:1 on #0d1117 */
+    --site-accent-fg: #04121f;
+    --site-border: #30363d;
+  }
+}
+
+:root[data-site-theme="dark"] {
+  --site-bg: #0d1117;
+  --site-surface: #161b22;
+  --site-fg: #e6edf3;
+  --site-fg-muted: #9aa7b2;
+  --site-accent: #58a6ff;
+  --site-accent-fg: #04121f;
+  --site-border: #30363d;
+}
+
+* { box-sizing: border-box; }
+
+body.zf-site {
+  margin: 0;
+  background: var(--site-bg);
+  color: var(--site-fg);
+  font-family: var(--site-font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--site-accent);
+  color: var(--site-accent-fg);
+  padding: 0.75rem 1rem;
+  z-index: 10;
+  border-radius: 0 0 var(--site-radius) 0;
+}
+.skip:focus { left: 0; }
+
+a { color: var(--site-accent); }
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--site-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- top bar ---- */
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--site-gap);
+  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  border-bottom: 1px solid var(--site-border);
+  background: var(--site-surface);
+}
+.topbar .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--site-fg);
+  font-size: 1.05rem;
+}
+.topbar ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+}
+.topbar a { text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.topbar li a {
+  display: inline-block;
+  padding: 0.35rem 0.25rem;   /* keeps the tap target above 44px with the bar padding */
+  min-height: 2.2rem;
+}
+
+/* ---- page ---- */
+
+main.zf {
+  max-width: var(--site-maxw);
+  margin: 0 auto;
+  padding: clamp(1rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+.hero h1 {
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.35rem;
+}
+.hero h1 span {
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--site-fg-muted);
+  vertical-align: middle;
+}
+.lead {
+  font-size: 1.1rem;
+  color: var(--site-fg-muted);
+  max-width: 48ch;
+  margin: 0 0 1rem;
+}
+.back, .switch, .origin { color: var(--site-fg-muted); font-size: 0.92rem; }
+.origin code { font-size: 0.9em; }
+
+main.zf section { margin-block: 2.5rem; }
+main.zf h2 { font-size: 1.3rem; margin: 0 0 0.75rem; }
+
+/* ---- cards and chips ---- */
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--site-gap);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+.card {
+  display: block;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+  background: var(--site-surface);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+.card:hover { border-color: var(--site-accent); transform: translateY(-2px); }
+.card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; color: var(--site-accent); }
+.card p { margin: 0 0 0.35rem; color: var(--site-fg-muted); font-size: 0.95rem; }
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  padding: 0;
+}
+.chips li a, .chips li code {
+  display: inline-block;
+  padding: 0.4rem 0.75rem;
+  min-height: 2.4rem;
+  line-height: 1.6;
+  border: 1px solid var(--site-border);
+  border-radius: 999px;
+  background: var(--site-surface);
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+.chips li a:hover { border-color: var(--site-accent); }
+.chips li a[aria-current="page"] {
+  background: var(--site-accent);
+  border-color: var(--site-accent);
+  color: var(--site-accent-fg);
+}
+
+/*
+ * A region that scrolls must be reachable with the keyboard, or a keyboard-only
+ * reader cannot see the part that is cut off. The markup carries tabindex="0";
+ * this gives the focus a visible ring without making the block look clickable.
+ */
+pre:focus-visible,
+.output:focus-visible {
+  outline: 3px solid var(--site-accent);
+  outline-offset: 2px;
+}
+
+pre {
+  background: var(--site-surface);
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  font-family: var(--site-mono);
+  font-size: 0.9rem;
+}
+code { font-family: var(--site-mono); }
+
+/* ---- demo layouts ---- */
+
+.output {
+  border: 1px solid var(--site-border);
+  border-radius: var(--site-radius);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  background: var(--site-bg);
+  overflow-x: auto;                /* 2004 templates use fixed-width tables */
+}
+.output.columns {
+  display: grid;
+  gap: var(--site-gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+}
+.output.split {
+  display: grid;
+  gap: var(--site-gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  align-items: start;
+}
+.output.with-menu,
+.output.aggregator {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 52rem) {
+  .output.with-menu { grid-template-columns: 12rem 1fr; }
+  .output.aggregator { grid-template-columns: 16rem 1fr; }
+}
+.output .column h2 { font-size: 1rem; margin-bottom: 0.5rem; }
+.output .column h2 small { color: var(--site-fg-muted); font-weight: 400; }
+
+.menu { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.25rem; }
+.menu a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.menu a:hover { background: var(--site-surface); }
+.menu a[aria-current="page"] {
+  background: var(--site-accent);
+  color: var(--site-accent-fg);
+  font-weight: 600;
+}
+
+.reading { min-width: 0; }        /* lets a grid child shrink instead of overflowing */
+
+/* ---- footer ---- */
+
+.sitefoot {
+  border-top: 1px solid var(--site-border);
+  padding: 1.25rem clamp(1rem, 4vw, 2rem);
+  color: var(--site-fg-muted);
+  font-size: 0.9rem;
+}
+.sitefoot p { max-width: var(--site-maxw); margin: 0 auto; }
+
+img { max-width: 100%; height: auto; }
+table { max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

@@ -1,0 +1,2 @@
+# If the data directory ever ends up inside a web root by mistake, deny everything.
+Require all denied

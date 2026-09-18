@@ -1,0 +1,46 @@
+<!--
+	zFeeder 2.0 template: mainframe
+	The reading pane of the aggregator: one feed at a measured line length, full
+	summaries, generous type. Pair it with the sidebar template.
+	Descends from: classic/mainframe (2004, RJ - the right frame of the frames demo).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<article class="zf zf--read zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar">
+		<span class="zf-bar__logo">{chanlogo}</span>
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+			<span class="zf-bar__time">Last updated: {lastupdated}</span>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{moreurl}">All items</a>
+			<a class="zf-tool" href="{feedurl}">Feed</a>
+		</div>
+	</div>
+	<div class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<section class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+			<div class="zf-item__desc">{description}</div>
+		</section>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</div>
+</article>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

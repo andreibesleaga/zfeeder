@@ -1,0 +1,87 @@
+# zFeeder 2.0 — nginx + PHP-FPM server block.
+#
+# Copy to /etc/nginx/sites-available/zfeeder, edit the lines marked
+# CHANGE, symlink into sites-enabled, then: nginx -t && systemctl reload nginx
+#
+# This file assumes:
+#   - the release is unpacked at /var/www/zfeeder
+#   - the data directory is the default, /var/www/zfeeder/data, one level
+#     above the document root
+#   - PHP 8.3 FPM listens on /run/php/php8.3-fpm.sock
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name feeds.example.com;          # CHANGE
+
+    # HTTPS: let certbot rewrite this block, or redirect by hand.
+    # return 301 https://$host$request_uri;
+
+    root /var/www/zfeeder/public;           # CHANGE — always the public/ directory
+    index index.php;
+
+    charset utf-8;
+    client_max_body_size 4m;                # OPML uploads; matches post_max_size in deploy/php.ini
+
+    access_log /var/log/nginx/zfeeder.access.log;
+    error_log  /var/log/nginx/zfeeder.error.log;
+
+    # Real files first, then the front controller.
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    # Only index.php is ever executed. Anything else ending in .php is a 404,
+    # so an uploaded or stray file cannot be run.
+    location ~ ^/index\.php(/|$) {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;   # CHANGE if your socket differs
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $document_root;
+
+        # Configuration. ConfigLoader reads getenv() first and then $_SERVER,
+        # and fastcgi_param lands in $_SERVER, so these take effect. Every key
+        # in docs/CONFIGURATION.md can be set this way. The alternative is
+        # env[...] lines in the PHP-FPM pool, or data/config.json.
+        fastcgi_param ZF_ENV production;
+        # ZF_DATA_DIR defaults to <project root>/data — /var/www/zfeeder/data
+        # here — which is already outside the document root. Set it only to put
+        # the data on another filesystem, and note that config.json is always
+        # read from <project root>/data/config.json either way.
+        # fastcgi_param ZF_DATA_DIR /srv/zfeeder-data;
+        fastcgi_param ZF_URL https://feeds.example.com/;   # CHANGE — trailing slash required
+        fastcgi_param ZF_TEMPLATE_SET modern;
+        fastcgi_param ZF_LOG_LEVEL warning;
+        # fastcgi_param ZF_STORAGE sqlite;
+        # fastcgi_param ZF_ADMIN_PASSWORD_HASH "$argon2id$v=19$m=65536,t=4,p=1$...";
+
+        fastcgi_read_timeout 60s;           # matches max_execution_time in deploy/php.ini
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+
+    # Static assets shipped in public/assets and public/images.
+    location ~* \.(css|js|png|gif|jpg|jpeg|svg|woff2)$ {
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800, immutable";
+        access_log off;
+        try_files $uri =404;
+    }
+
+    # The health endpoint, for a load balancer or an uptime check.
+    # It returns 200 when the data directory is writable and 503 when it is not.
+    location = /healthz {
+        access_log off;
+        try_files $uri /index.php$is_args$args;
+    }
+
+    # Dot files, and anything that looks like data that escaped into the root.
+    location ~ /\. {
+        deny all;
+    }
+    location ~* \.(sqlite|sqlite-wal|sqlite-shm|log|opml|md)$ {
+        deny all;
+    }
+}

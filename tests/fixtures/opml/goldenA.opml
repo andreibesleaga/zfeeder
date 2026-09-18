@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<opml version="1.0">
+  <head>
+    <title>goldenA</title>
+    <dateModified>Wed, 25 Feb 2004 14:00:00 GMT</dateModified>
+  </head>
+  <body>
+    <outline type="rss" position="1" text="zFeeder" title="zFeeder" description="zFeeder description" xmlUrl="http://fixtures.test/rss20-zfeeder.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="3" isSubscribed="yes" language="en" />
+    <outline type="rss" position="2" text="Old News Daily" title="Old News Daily" description="Old News Daily description" xmlUrl="http://fixtures.test/rss091-oldnews.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="2" isSubscribed="yes" language="en" />
+  </body>
+</opml>

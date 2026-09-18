@@ -1,0 +1,41 @@
+<!--
+	zFeeder 2.0 template: simplecss
+	The newspaper: a serif masthead per feed, then two columns - headline and date on
+	the left, the story on the right - collapsing to one column in a narrow container.
+	Descends from: classic/simplecss (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--paper zf-paper zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<header class="zf-paper__head">
+		<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+		<span class="zf-bar__desc">{chandesc|trunc:160}</span>
+		<span class="zf-bar__time">{lastupdated}</span>
+	</header>
+	<ul class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+			<div class="zf-item__desc">{description}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+	<p class="zf-credit"><a class="zf-tool" href="{moreurl}">All stored news</a> <a class="zf-tool" href="{hideurl}">Hide</a></p>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

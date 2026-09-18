@@ -1,0 +1,47 @@
+<!--
+	zFeeder 2.0 template: infojunkie
+	Built for a page with many feeds: each channel is a collapsible disclosure, so a
+	long subscription list stays scannable. The 2004 JavaScript folder is now <details>.
+	Descends from: classic/infojunkie (2004, LCX).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<details class="zf-fold" open>
+		<summary>
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}">{chantitle}</h2>
+		</summary>
+		<div class="zf-bar zf-bar--flat">
+			<div class="zf-bar__head"><span class="zf-bar__logo">{chanlogo}</span><span class="zf-bar__time">Last updated: {lastupdated}</span></div>
+			<div class="zf-bar__tools">
+				<a class="zf-tool" href="{chanlink}">Site</a>
+				<a class="zf-tool" href="{moreurl}">More</a>
+				<a class="zf-tool" href="{feedurl}">XML</a>
+			</div>
+		</div>
+		<ul class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+			<li class="zf-item">
+				<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+				<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+				<div class="zf-item__desc">{description|trunc:240}</div>
+			</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+		</ul>
+	</details>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<!-- ENDbetween -->

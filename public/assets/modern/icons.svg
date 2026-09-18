@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">
+  <!--
+    zFeeder 2.0 icon sprite. Every icon is a 24x24 <symbol> that paints with
+    fill="currentColor", so it takes the colour of the button it sits in.
+
+    Use:
+      <svg class="zfa-icon" aria-hidden="true"><use href="assets/modern/icons.svg#zfi-save"></use></svg>
+    Always aria-hidden with a real text label beside it; these icons never
+    carry meaning on their own.
+  -->
+
+  <symbol id="zfi-add" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5z"/>
+  </symbol>
+
+  <symbol id="zfi-delete" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M9 2h6l1 2h4v2H4V4h4l1-2zm-3 6h12l-.93 12.07A2 2 0 0 1 15.08 22H8.92a2 2 0 0 1-1.99-1.93L6 8zm4 2v9h1.5v-9H10zm4 0v9h1.5v-9H14z"/>
+  </symbol>
+
+  <symbol id="zfi-save" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M4 4a1 1 0 0 1 1-1h11l4 4v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4zm4 1v5h7V5H8zm-1 9h10v5H7v-5z"/>
+  </symbol>
+
+  <symbol id="zfi-import" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M11 3h2v9.17l3.29-3.29 1.42 1.41L12 16l-5.71-5.71 1.42-1.41L11 12.17V3zM4 18h16v3H4v-3z"/>
+  </symbol>
+
+  <symbol id="zfi-refresh" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 4V1L7.5 5.5 12 10V7a5 5 0 1 1-4.9 6h-2.02A7 7 0 1 0 12 4z"/>
+  </symbol>
+
+  <symbol id="zfi-settings" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/>
+    <circle cx="16" cy="7" r="3.2"/>
+    <circle cx="8" cy="12" r="3.2"/>
+    <circle cx="16" cy="17" r="3.2"/>
+  </symbol>
+
+  <symbol id="zfi-signout" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M5 3h8v2H7v14h6v2H5V3zm11.6 5.6L22 12l-5.4 3.4V13H10v-2h6.6V8.6z"/>
+  </symbol>
+
+  <symbol id="zfi-external" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M14 3h7v7h-2V6.41l-7.29 7.3-1.42-1.42L17.59 5H14V3zM5 5h5v2H7v10h10v-3h2v5H5V5z"/>
+  </symbol>
+
+  <symbol id="zfi-chevron" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M9.29 6.29 15 12l-5.71 5.71-1.42-1.42L12.17 12 7.87 7.71l1.42-1.42z"/>
+  </symbol>
+</svg>

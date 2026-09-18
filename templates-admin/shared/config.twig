@@ -1,0 +1,110 @@
+{% extends 'layout.twig' %}
+{% block heading %}Configuration{% endblock %}
+{% block content %}
+{% if general_error %}
+<p class="zf-error" role="alert">{{ general_error }}</p>
+{% elseif errors is not empty %}
+<p class="zf-error" role="alert">Nothing was saved: {{ errors|length }} value{{ errors|length == 1 ? '' : 's' }} need{{ errors|length == 1 ? 's' : '' }} attention below.</p>
+{% endif %}
+
+<p class="zf-note">Options are saved as JSON in <code>{{ config_path }}</code>. Anything the environment
+sets wins over this screen, and is shown here read-only so you can see what is really in force.</p>
+
+<form class="zf-form" method="post" action="{{ admin_url('/admin/config') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="save">
+
+{% for group, options in groups %}
+<fieldset class="zf-fieldset">
+<legend class="zf-legend">{{ group }}</legend>
+{% for option in options %}
+{% set field_id = 'config-' ~ option.key %}
+{% set described = (option.help ? field_id ~ '-help ' : '') ~ (option.note ? field_id ~ '-note ' : '') ~ (option.error ? field_id ~ '-error' : '') %}
+<div class="zf-field{% if not option.editable %} is-locked{% endif %}{% if option.type == 'bool' %} zf-field-check{% endif %}">
+
+{% if option.secret and not option.editable %}
+<span class="zf-label" id="{{ field_id }}-label">{{ option.label }}</span>
+<p class="zf-value" aria-labelledby="{{ field_id }}-label">{{ option.display }}</p>
+
+{% elseif option.type == 'bool' %}
+<input class="zf-checkbox" type="checkbox" id="{{ field_id }}" name="config[{{ option.key }}]" value="1"
+       {% if option.value %}checked{% endif %}{% if not option.editable %} disabled{% endif %}
+       {% if described %}aria-describedby="{{ described|trim }}"{% endif %}>
+<label class="zf-label" for="{{ field_id }}">{{ option.label }}</label>
+
+{% elseif option.type == 'enum' %}
+<label class="zf-label" for="{{ field_id }}">{{ option.label }}</label>
+<select class="zf-select" id="{{ field_id }}" name="config[{{ option.key }}]"
+        {% if not option.editable %}disabled{% endif %}
+        {% if option.error %}aria-invalid="true"{% endif %}
+        {% if described %}aria-describedby="{{ described|trim }}"{% endif %}>
+{% for value in option.values %}
+<option value="{{ value }}"{% if value == option.value %} selected{% endif %}>{{ value }}</option>
+{% endfor %}
+</select>
+
+{% elseif option.type == 'int' %}
+<label class="zf-label" for="{{ field_id }}">{{ option.label }}</label>
+<input class="zf-input zf-input-number" type="number" id="{{ field_id }}" name="config[{{ option.key }}]"
+       value="{{ option.value }}" step="1"
+       {% if option.min is not null %}min="{{ option.min }}"{% endif %}
+       {% if option.max is not null %}max="{{ option.max }}"{% endif %}
+       {% if not option.editable %}disabled{% endif %}
+       {% if option.error %}aria-invalid="true"{% endif %}
+       {% if described %}aria-describedby="{{ described|trim }}"{% endif %}>
+
+{% else %}
+<label class="zf-label" for="{{ field_id }}">{{ option.label }}</label>
+<input class="zf-input" type="text" id="{{ field_id }}" name="config[{{ option.key }}]"
+       value="{{ option.secret ? '' : option.value }}" spellcheck="false"
+       {% if option.secret %}placeholder="{{ option.display }} - type a new value to replace it" autocomplete="off"{% endif %}
+       {% if not option.editable %}disabled{% endif %}
+       {% if option.error %}aria-invalid="true"{% endif %}
+       {% if described %}aria-describedby="{{ described|trim }}"{% endif %}>
+{% endif %}
+
+{% if option.help %}<p class="zf-help" id="{{ field_id }}-help">{{ option.help }}</p>{% endif %}
+{% if option.note %}<p class="zf-note zf-note-locked" id="{{ field_id }}-note">{{ option.note }}</p>{% endif %}
+{% if option.error %}<p class="zf-error" id="{{ field_id }}-error" role="alert">{{ option.error }}</p>{% endif %}
+</div>
+{% endfor %}
+</fieldset>
+{% endfor %}
+
+<div class="zf-actions zf-actions-sticky">
+<button class="zf-button zf-button-primary" type="submit">Save configuration</button>
+</div>
+</form>
+
+<section class="zf-panel" aria-labelledby="zf-password-heading">
+<h2 class="zf-subheading" id="zf-password-heading">Change the administrator password</h2>
+{% if password_locked %}
+<p class="zf-note zf-note-locked">The password hash comes from the ZF_ADMIN_PASSWORD_HASH environment
+variable, so it cannot be changed here. Use <code>bin/zfeeder hash-password</code> and update that variable.</p>
+{% else %}
+<form class="zf-form" method="post" action="{{ admin_url('/admin/config') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="password">
+<div class="zf-field">
+<label class="zf-label" for="new_password">New password</label>
+<input class="zf-input" type="password" id="new_password" name="new_password" autocomplete="new-password"
+       minlength="{{ password_minimum }}"
+       {% if errors.new_password is defined %}aria-invalid="true"{% endif %}
+       aria-describedby="new_password-help{% if errors.new_password is defined %} new_password-error{% endif %}">
+<p class="zf-help" id="new_password-help">At least {{ password_minimum }} characters. It is stored as an Argon2id hash, never as text.</p>
+{% if errors.new_password is defined %}<p class="zf-error" id="new_password-error" role="alert">{{ errors.new_password }}</p>{% endif %}
+</div>
+<div class="zf-field">
+<label class="zf-label" for="new_password_confirm">New password again</label>
+<input class="zf-input" type="password" id="new_password_confirm" name="new_password_confirm" autocomplete="new-password"
+       minlength="{{ password_minimum }}"
+       {% if errors.new_password_confirm is defined %}aria-invalid="true" aria-describedby="new_password_confirm-error"{% endif %}>
+{% if errors.new_password_confirm is defined %}<p class="zf-error" id="new_password_confirm-error" role="alert">{{ errors.new_password_confirm }}</p>{% endif %}
+</div>
+<div class="zf-actions">
+<button class="zf-button zf-button-primary" type="submit">Change password</button>
+</div>
+</form>
+{% endif %}
+</section>
+{% endblock %}

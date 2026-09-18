@@ -1,0 +1,43 @@
+<!--	zFeeder template
+	name / description: bluelogos / simple html tables blue scheme with channel logos (images)
+	author: AB
+	note: Do NOT delete or modify comments in the template files
+-->
+
+<!-- zFeeder template header -->
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<table width="100%" cellpadding="0" cellspacing="0"> 
+<!-- ENDheader --> 
+  <!-- channel --> 
+  <tr> 
+     <td> <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#66CCFF"> 
+         <tr> 
+          <td rowspan="2" align="left" valign="middle"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{chanlogo}</font></td> 
+          <td align="right" valign="middle"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> <a href="{chanlink}" title="{chandesc}" target="_blank">{chantitle}</a></font></td> 
+          <td width="3" rowspan="2" align="right" valign="middle">&nbsp;</td> 
+          <td width="120" rowspan="2" align="right" valign="middle"><a href="{moreurl}"><img src="{scripturl}images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a>&nbsp; <a href="{feedurl}"><img src="{scripturl}images/xml.png" border="0" alt="xml" title="RSS feed" /></a>&nbsp; <a href="{hideurl}"><img src="{scripturl}images/close.png" alt="hide" border="0" /></a></td> 
+          <td width="1" rowspan="2" align="right" valign="middle">&nbsp;</td> 
+        </tr> 
+         <tr> 
+          <td height="12" align="right" valign="middle"><font color="#006699" size="1" face="Verdana, Arial, Helvetica, sans-serif"> last updated: {lastupdated}</font></td> 
+        </tr> 
+       </table> 
+      <br /> </td> 
+  </tr> 
+  <!-- ENDchannel --> 
+  <!-- news --> 
+  <tr align="left" valign="middle"> 
+     <td bgcolor="#E7F6FF"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> &nbsp;<a href="{link}" title="{link}" target="_blank">{pubdate}&nbsp;{title}</a> </font></td> 
+  </tr> 
+  <tr align="left"> 
+     <td bgcolor="#FBFBFB"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{description}</font></td> 
+  </tr> 
+  <!-- ENDnews --> 
+<!-- footer --> 
+</table> 
+<!-- ENDfooter --> 
+<!-- between --> 
+<br /> 
+<!-- ENDbetween --> 

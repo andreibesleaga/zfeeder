@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- zFeeder 2.0 subscription list. Edit in the admin panel, with bin/zfeeder, or by hand. -->
+<opml version="2.0">
+  <head>
+    <title>science</title>
+    <dateModified>Thu, 18 Sep 2026 00:00:00 GMT</dateModified>
+    <ownerName>zFeeder</ownerName>
+  </head>
+  <body>
+    <outline type="rss" position="1" text="BBC News - Science &amp; Environment" title="BBC News - Science &amp; Environment" description="BBC News - Science and Environment" xmlUrl="https://feeds.bbci.co.uk/news/science_and_environment/rss.xml" htmlUrl="https://www.bbc.co.uk/news/science_and_environment" refreshTime="120" showedItems="3" isSubscribed="yes" language="en-gb" />
+    <outline type="rss" position="2" text="LWN.net" title="LWN.net" description="Linux and free software news" xmlUrl="https://lwn.net/headlines/rss" htmlUrl="https://lwn.net/" refreshTime="120" showedItems="2" isSubscribed="yes" language="en" />
+  </body>
+</opml>

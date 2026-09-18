@@ -1,0 +1,24 @@
+{# The classic frame: the 2004 look. Everything inside the blocks comes from templates-admin/shared,
+   so the two skins can never drift apart in markup, only in appearance. #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} - zFeeder administration</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="{{ asset('modern/zf-admin.css') }}">
+<script src="{{ asset('modern/htmx.min.js') }}" nonce="{{ nonce }}" defer></script>
+</head>
+<body class="zf-admin zf-skin-classic">
+<a class="zf-skip" href="#zf-main">Skip to the main content</a>
+{% include 'partials/header.twig' %}
+{% if user %}{% include 'partials/menu.twig' %}{% endif %}
+{% include 'partials/flash.twig' with {oob: false} %}
+<main class="zf-main" id="zf-main" tabindex="-1">
+<h1 class="zf-heading">{% block heading %}{{ title }}{% endblock %}</h1>
+{% block content %}{% endblock %}
+</main>
+{% include 'partials/footer.twig' %}
+</body>
+</html>

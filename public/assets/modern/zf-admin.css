@@ -1,0 +1,1162 @@
+/* ==========================================================================
+   zFeeder 2.0 — zf-admin.css
+   The design system for the ADMIN PANEL.
+
+   It styles the markup in templates-admin/ exactly as that markup is written:
+   every class name here is one the Twig templates use. Nothing is renamed and
+   nothing is invented. Everything is scoped under `.zf-admin` (the body class
+   both layouts set) so this file and zf.css, which share the `zf-` prefix, can
+   never reach into each other.
+
+   Two skins over ONE set of markup, chosen by the layout:
+     <body class="zf-admin zf-skin-modern">    8-pt grid, cards, dark mode
+     <body class="zf-admin zf-skin-classic">   the 2004 panel, rebuilt
+
+   ---------------------------------------------------------------------------
+   MEASURED CONTRAST (WCAG 2.2, sRGB relative luminance):
+     modern light  fg #16202a on #ffffff 16.48 · muted #516070 on #ffffff 6.45
+                   accent #006699 on #ffffff 6.25 · #ffffff on accent 6.25
+                   danger #b3261e 6.54 · ok #1b6b3a 6.54 · warn #8a4b00 6.32
+     modern dark   fg #e6edf3 on #12181f 14.85 · muted #a3b2c0 8.24
+                   accent #5fc0ef 8.73 · danger #ff8a80 7.82 · ok #6ee7a0 11.56
+                   #04131d on accent 9.20
+     classic       fg #16202a on the #d0ecfd bar 13.42 · #006699 on #d0ecfd 5.09
+                   fg on #ffffff 16.48 · muted #4a5b6b on #ffffff 7.00
+   All body and helper text is >= 4.5:1 in both themes. The focus ring is the
+   accent, 3px with a 2px offset: 6.25:1 light, 8.73:1 dark (>= 3:1).
+   Every control is at least 44x44 CSS px. No `!important` anywhere.
+   ---------------------------------------------------------------------------
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens. 8-pt spacing scale with a 4px half step; one accent colour.
+   -------------------------------------------------------------------------- */
+:root {
+  --zfa-s-half: 4px;
+  --zfa-s1: 8px;
+  --zfa-s2: 16px;
+  --zfa-s3: 24px;
+  --zfa-s4: 32px;
+  --zfa-s5: 48px;
+  --zfa-s6: 64px;
+
+  --zfa-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --zfa-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --zfa-text: 1rem;
+  --zfa-text-sm: 0.8125rem;
+  --zfa-text-lg: 1.25rem;
+  --zfa-text-xl: 1.5rem;
+
+  --zfa-radius: 10px;
+  --zfa-radius-sm: 6px;
+  --zfa-tap: 44px;
+  --zfa-maxw: 76rem;
+
+  /* light */
+  --zfa-bg-l: #eef2f6;
+  --zfa-surface-l: #ffffff;
+  --zfa-surface-2-l: #f5f7f9;
+  --zfa-fg-l: #16202a;
+  --zfa-muted-l: #516070;
+  --zfa-accent-l: #006699;
+  --zfa-accent-fg-l: #ffffff;
+  --zfa-border-l: #ccd6de;
+  --zfa-danger-l: #b3261e;
+  --zfa-ok-l: #1b6b3a;
+  --zfa-warn-l: #8a4b00;
+  --zfa-shadow-l: 0 1px 2px rgb(16 32 48 / 8%), 0 8px 20px rgb(16 32 48 / 6%);
+
+  /* dark */
+  --zfa-bg-d: #0d1216;
+  --zfa-surface-d: #12181f;
+  --zfa-surface-2-d: #19212a;
+  --zfa-fg-d: #e6edf3;
+  --zfa-muted-d: #a3b2c0;
+  --zfa-accent-d: #5fc0ef;
+  --zfa-accent-fg-d: #04131d;
+  --zfa-border-d: #2b3640;
+  --zfa-danger-d: #ff8a80;
+  --zfa-ok-d: #6ee7a0;
+  --zfa-warn-d: #f0b45c;
+  --zfa-shadow-d: 0 1px 2px rgb(0 0 0 / 50%), 0 8px 20px rgb(0 0 0 / 40%);
+
+  /* live */
+  --zfa-bg: var(--zfa-bg-l);
+  --zfa-surface: var(--zfa-surface-l);
+  --zfa-surface-2: var(--zfa-surface-2-l);
+  --zfa-fg: var(--zfa-fg-l);
+  --zfa-muted: var(--zfa-muted-l);
+  --zfa-accent: var(--zfa-accent-l);
+  --zfa-accent-fg: var(--zfa-accent-fg-l);
+  --zfa-border: var(--zfa-border-l);
+  --zfa-danger: var(--zfa-danger-l);
+  --zfa-ok: var(--zfa-ok-l);
+  --zfa-warn: var(--zfa-warn-l);
+  --zfa-shadow: var(--zfa-shadow-l);
+  --zfa-inset: var(--zfa-surface-2);
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-zf-theme="light"]) {
+    --zfa-bg: var(--zfa-bg-d);
+    --zfa-surface: var(--zfa-surface-d);
+    --zfa-surface-2: var(--zfa-surface-2-d);
+    --zfa-fg: var(--zfa-fg-d);
+    --zfa-muted: var(--zfa-muted-d);
+    --zfa-accent: var(--zfa-accent-d);
+    --zfa-accent-fg: var(--zfa-accent-fg-d);
+    --zfa-border: var(--zfa-border-d);
+    --zfa-danger: var(--zfa-danger-d);
+    --zfa-ok: var(--zfa-ok-d);
+    --zfa-warn: var(--zfa-warn-d);
+    --zfa-shadow: var(--zfa-shadow-d);
+    --zfa-inset: var(--zfa-surface-2-d);
+  }
+}
+
+:root[data-zf-theme="dark"] {
+  --zfa-bg: var(--zfa-bg-d);
+  --zfa-surface: var(--zfa-surface-d);
+  --zfa-surface-2: var(--zfa-surface-2-d);
+  --zfa-fg: var(--zfa-fg-d);
+  --zfa-muted: var(--zfa-muted-d);
+  --zfa-accent: var(--zfa-accent-d);
+  --zfa-accent-fg: var(--zfa-accent-fg-d);
+  --zfa-border: var(--zfa-border-d);
+  --zfa-danger: var(--zfa-danger-d);
+  --zfa-ok: var(--zfa-ok-d);
+  --zfa-warn: var(--zfa-warn-d);
+  --zfa-shadow: var(--zfa-shadow-d);
+  --zfa-inset: var(--zfa-surface-2-d);
+}
+
+/* 1.1 The classic skin: the 2004 panel, same HTML, no <font>, no layout
+   tables. Light only, as it was. It only re-declares tokens. */
+.zf-skin-classic {
+  --zfa-font: Verdana, Geneva, Tahoma, sans-serif;
+  --zfa-text: 0.8125rem;
+  --zfa-text-sm: 0.6875rem;
+  --zfa-text-lg: 1rem;
+  --zfa-text-xl: 1.125rem;
+  --zfa-radius: 0;
+  --zfa-radius-sm: 0;
+  --zfa-s2: 12px;
+  --zfa-s3: 16px;
+  --zfa-bg: #ffffff;
+  --zfa-surface: #ffffff;
+  --zfa-surface-2: #d0ecfd; /* the 2004 bar blue */
+  --zfa-fg: #16202a;
+  --zfa-muted: #4a5b6b;
+  --zfa-accent: #006699;
+  --zfa-accent-fg: #ffffff;
+  --zfa-border: #a8cde4;
+  --zfa-danger: #b3261e;
+  --zfa-ok: #1b6b3a;
+  --zfa-warn: #8a4b00;
+  --zfa-shadow: none;
+  --zfa-inset: #eef2f6; /* the bar blue is a *bar*; a disabled field is grey */
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   2. Page frame
+   -------------------------------------------------------------------------- */
+.zf-admin {
+  margin: 0;
+  background: var(--zfa-bg);
+  color: var(--zfa-fg);
+  font-family: var(--zfa-font);
+  font-size: var(--zfa-text);
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+.zf-admin *,
+.zf-admin *::before,
+.zf-admin *::after {
+  box-sizing: border-box;
+}
+
+.zf-admin :where(img, svg) {
+  max-width: 100%;
+  height: auto;
+}
+
+.zf-admin a {
+  color: var(--zfa-accent);
+  text-underline-offset: 0.15em;
+}
+
+.zf-admin :focus-visible {
+  outline: 3px solid var(--zfa-accent);
+  outline-offset: 2px;
+  border-radius: var(--zfa-radius-sm);
+}
+
+.zf-admin code {
+  font-family: var(--zfa-font-mono);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+/* Visually hidden, still announced. The subscriptions table labels every
+   control this way; the narrow layout in §9 shows them again, because there
+   the column header is no longer beside the field. */
+.zf-admin .zf-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.zf-admin .zf-skip {
+  position: absolute;
+  inset-inline-start: var(--zfa-s2);
+  inset-block-start: -6rem;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  padding: var(--zfa-s1) var(--zfa-s2);
+  background: var(--zfa-accent);
+  border-radius: var(--zfa-radius-sm);
+  color: var(--zfa-accent-fg);
+}
+
+.zf-admin .zf-skip:focus {
+  inset-block-start: var(--zfa-s2);
+}
+
+/* 2.1 Masthead ------------------------------------------------------------ */
+.zf-admin .zf-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s2);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--zfa-s1) var(--zfa-s2);
+  background: var(--zfa-surface);
+  border-block-end: 1px solid var(--zfa-border);
+}
+
+.zf-skin-classic .zf-header {
+  background: var(--zfa-surface-2);
+}
+
+.zf-admin .zf-brand {
+  display: flex;
+  gap: var(--zfa-s1);
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  color: var(--zfa-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.zf-admin .zf-brand:hover .zf-brand-name {
+  text-decoration: underline;
+}
+
+.zf-admin .zf-logo {
+  flex: 0 0 auto;
+  inline-size: 79px;
+}
+
+/* the 2004 logo is a dark mark on white, so give it a chip on a dark masthead */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-zf-theme="light"]) .zf-skin-modern .zf-logo {
+    padding: 2px;
+    background: #ffffff;
+    border-radius: 3px;
+  }
+}
+
+.zf-admin .zf-brand-name {
+  font-size: var(--zfa-text-lg);
+}
+
+.zf-admin .zf-signout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s1) var(--zfa-s2);
+  align-items: center;
+  margin: 0;
+}
+
+.zf-admin .zf-signed-in {
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+}
+
+/* 2.2 Navigation. A wrapping list of links: it needs no JavaScript at any
+   width, and on a phone it simply becomes two or three rows. */
+.zf-admin .zf-nav {
+  padding: var(--zfa-s-half) var(--zfa-s2);
+  background: var(--zfa-surface);
+  border-block-end: 1px solid var(--zfa-border);
+}
+
+.zf-skin-classic .zf-nav {
+  background: var(--zfa-surface-2);
+}
+
+.zf-admin .zf-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s-half);
+  max-inline-size: var(--zfa-maxw);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.zf-admin .zf-nav-item {
+  display: flex;
+}
+
+.zf-admin .zf-nav-link {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  padding: var(--zfa-s1) var(--zfa-s2);
+  border-radius: var(--zfa-radius-sm);
+  color: var(--zfa-accent);
+  text-decoration: none;
+}
+
+.zf-admin .zf-nav-link:hover {
+  background: var(--zfa-surface-2);
+  text-decoration: underline;
+}
+
+.zf-skin-classic .zf-nav-link {
+  text-decoration: underline;
+}
+
+.zf-skin-classic .zf-nav-link:hover {
+  background: #ffffff;
+}
+
+.zf-admin .zf-nav-link.is-current {
+  background: var(--zfa-accent);
+  color: var(--zfa-accent-fg);
+}
+
+/* 2.3 Main column and footer --------------------------------------------- */
+.zf-admin .zf-main {
+  max-inline-size: var(--zfa-maxw);
+  margin-inline: auto;
+  padding: var(--zfa-s3) var(--zfa-s2) var(--zfa-s6);
+}
+
+.zf-admin .zf-main:focus {
+  outline: none;
+}
+
+.zf-admin .zf-heading {
+  margin: 0 0 var(--zfa-s3);
+  color: var(--zfa-accent);
+  font-size: var(--zfa-text-xl);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.zf-admin .zf-subheading {
+  margin: 0 0 var(--zfa-s2);
+  color: var(--zfa-accent);
+  font-size: var(--zfa-text-lg);
+}
+
+.zf-skin-classic .zf-heading,
+.zf-skin-classic .zf-subheading {
+  text-align: center;
+}
+
+.zf-admin .zf-lede {
+  margin: 0 0 var(--zfa-s3);
+}
+
+.zf-admin .zf-footer {
+  padding: var(--zfa-s3) var(--zfa-s2) var(--zfa-s4);
+  border-block-start: 1px solid var(--zfa-border);
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+  text-align: center;
+}
+
+.zf-admin .zf-footer-line {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Panels, notes, messages
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-panel {
+  padding: var(--zfa-s3);
+  margin-block-end: var(--zfa-s3);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius);
+  box-shadow: var(--zfa-shadow);
+}
+
+.zf-admin .zf-note,
+.zf-admin .zf-error,
+.zf-admin .zf-empty {
+  padding: var(--zfa-s2);
+  margin: 0 0 var(--zfa-s3);
+  background: var(--zfa-surface-2);
+  border: 1px solid var(--zfa-border);
+  border-inline-start: 4px solid var(--zfa-muted);
+  border-radius: var(--zfa-radius-sm);
+  font-size: var(--zfa-text-sm);
+}
+
+.zf-skin-classic .zf-note,
+.zf-skin-classic .zf-error,
+.zf-skin-classic .zf-empty {
+  background: #ffffff;
+}
+
+.zf-admin .zf-note-locked {
+  border-inline-start-color: var(--zfa-warn);
+}
+
+.zf-admin .zf-note-attention {
+  border-inline-start-color: var(--zfa-ok);
+  font-weight: 600;
+}
+
+.zf-admin .zf-error {
+  border-inline-start-color: var(--zfa-danger);
+  color: var(--zfa-danger);
+  font-weight: 600;
+}
+
+.zf-admin .zf-empty {
+  border-inline-start-color: var(--zfa-accent);
+}
+
+/* the one live region; it is always in the DOM, so it must leave no gap when
+   there is nothing to announce */
+.zf-admin .zf-flash {
+  max-inline-size: var(--zfa-maxw);
+  margin: var(--zfa-s2) auto 0;
+  padding-inline: var(--zfa-s2);
+}
+
+.zf-admin .zf-flash:empty {
+  display: none;
+}
+
+.zf-admin .zf-flash-message {
+  padding: var(--zfa-s2);
+  margin: 0 0 var(--zfa-s1);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-inline-start: 4px solid var(--zfa-accent);
+  border-radius: var(--zfa-radius-sm);
+  box-shadow: var(--zfa-shadow);
+  font-weight: 600;
+}
+
+.zf-admin .zf-flash-success {
+  border-inline-start-color: var(--zfa-ok);
+  color: var(--zfa-ok);
+}
+
+.zf-admin .zf-flash-error {
+  border-inline-start-color: var(--zfa-danger);
+  color: var(--zfa-danger);
+}
+
+.zf-admin .zf-flash-info {
+  border-inline-start-color: var(--zfa-accent);
+}
+
+.zf-admin .zf-help {
+  margin: var(--zfa-s-half) 0 0;
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+}
+
+/* a value the environment owns: shown, never edited */
+.zf-admin .zf-value {
+  margin: 0;
+  padding: var(--zfa-s1) var(--zfa-s2);
+  background: var(--zfa-inset);
+  border: 1px dashed var(--zfa-border);
+  border-radius: var(--zfa-radius-sm);
+  font-family: var(--zfa-font-mono);
+  font-size: var(--zfa-text-sm);
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   4. Status list (main screen, and "what this feed says about itself")
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-status {
+  margin: 0;
+}
+
+.zf-admin .zf-status-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 var(--zfa-s2);
+  padding: var(--zfa-s1) 0;
+  border-block-end: 1px solid var(--zfa-border);
+}
+
+.zf-admin .zf-status-item:last-child {
+  border-block-end: 0;
+}
+
+.zf-admin .zf-status-item dt {
+  color: var(--zfa-muted);
+  font-weight: 600;
+}
+
+.zf-admin .zf-status-item dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   5. Link lists: screens, discovery results, exports
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-screen-list,
+.zf-admin .zf-export-list,
+.zf-admin .zf-found-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--zfa-s-half);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zf-admin .zf-screen-item,
+.zf-admin .zf-export-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--zfa-s1);
+  align-items: baseline;
+  border-block-end: 1px solid var(--zfa-border);
+}
+
+.zf-admin .zf-screen-item:last-child,
+.zf-admin .zf-export-item:last-child {
+  border-block-end: 0;
+}
+
+.zf-admin .zf-screen-link,
+.zf-admin .zf-export-link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  font-weight: 600;
+}
+
+.zf-admin .zf-screen-description {
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+}
+
+.zf-admin .zf-external::after,
+.zf-admin .zf-export-link::after {
+  content: " ↗";
+  font-size: 0.85em;
+}
+
+.zf-admin .zf-discovery {
+  margin-block-start: var(--zfa-s2);
+}
+
+.zf-admin .zf-discovery:empty {
+  display: none;
+}
+
+.zf-admin .zf-found-item {
+  padding: var(--zfa-s1);
+  background: var(--zfa-surface-2);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius-sm);
+}
+
+.zf-skin-classic .zf-found-item {
+  background: #ffffff;
+}
+
+.zf-admin .zf-found-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s1) var(--zfa-s2);
+  align-items: center;
+  margin: 0;
+}
+
+.zf-admin .zf-found-title {
+  flex: 1 1 14rem;
+  min-inline-size: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.zf-admin .zf-found-type {
+  padding: 2px var(--zfa-s1);
+  border: 1px solid var(--zfa-border);
+  border-radius: 999px;
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+  white-space: nowrap;
+}
+
+.zf-admin .zf-bookmarklet {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  padding: var(--zfa-s-half) var(--zfa-s2);
+  background: var(--zfa-surface-2);
+  border: 1px dashed var(--zfa-accent);
+  border-radius: var(--zfa-radius-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.zf-skin-classic .zf-bookmarklet {
+  background: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   6. Forms
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-form {
+  margin: 0;
+}
+
+.zf-admin .zf-field {
+  margin-block-end: var(--zfa-s3);
+}
+
+.zf-admin .zf-field.is-locked {
+  padding-inline-start: var(--zfa-s2);
+  border-inline-start: 3px solid var(--zfa-warn);
+}
+
+.zf-admin .zf-label {
+  display: block;
+  margin-block-end: var(--zfa-s-half);
+  font-weight: 600;
+}
+
+.zf-admin .zf-input,
+.zf-admin .zf-select {
+  inline-size: 100%;
+  max-inline-size: 36rem;
+  min-block-size: var(--zfa-tap);
+  padding: var(--zfa-s1) var(--zfa-s2);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius-sm);
+  color: var(--zfa-fg);
+  font: inherit;
+}
+
+.zf-admin .zf-input-number {
+  max-inline-size: 7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zf-admin .zf-input-file {
+  padding: var(--zfa-s1);
+}
+
+.zf-admin .zf-input:disabled,
+.zf-admin .zf-select:disabled {
+  background: var(--zfa-inset);
+  color: var(--zfa-muted);
+  cursor: not-allowed;
+}
+
+.zf-admin .zf-input[aria-invalid="true"],
+.zf-admin .zf-select[aria-invalid="true"] {
+  border-color: var(--zfa-danger);
+  border-inline-start-width: 4px;
+}
+
+.zf-admin .zf-input::placeholder {
+  color: var(--zfa-muted);
+}
+
+.zf-admin .zf-checkbox,
+.zf-admin .zf-radio {
+  flex: 0 0 auto;
+  inline-size: 20px;
+  block-size: 20px;
+  margin: 0;
+  accent-color: var(--zfa-accent);
+}
+
+/* a checkbox or radio and its label on one 44px row */
+.zf-admin .zf-field-check {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--zfa-s1);
+  align-items: center;
+  min-block-size: var(--zfa-tap);
+  margin-block-end: var(--zfa-s2);
+}
+
+.zf-admin .zf-field-check .zf-label {
+  flex: 1 1 8rem;
+  min-inline-size: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+.zf-admin .zf-field-check .zf-help,
+.zf-admin .zf-field-check .zf-note,
+.zf-admin .zf-field-check .zf-error {
+  flex: 1 1 100%;
+}
+
+/* label + control + button on one row (the category toolbar) */
+.zf-admin .zf-field-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s1) var(--zfa-s2);
+  align-items: center;
+  margin-block-end: 0;
+}
+
+.zf-admin .zf-field-inline .zf-label {
+  margin: 0;
+}
+
+.zf-admin .zf-field-inline .zf-select {
+  inline-size: auto;
+  min-inline-size: 12rem;
+}
+
+.zf-admin .zf-toolbar {
+  padding: var(--zfa-s2);
+  margin-block-end: var(--zfa-s3);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius);
+}
+
+.zf-admin .zf-fieldset {
+  padding: var(--zfa-s3);
+  margin: 0 0 var(--zfa-s3);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius);
+}
+
+.zf-admin .zf-legend {
+  padding-inline: var(--zfa-s1);
+  color: var(--zfa-accent);
+  font-size: var(--zfa-text-lg);
+  font-weight: 700;
+}
+
+.zf-admin .zf-form-login {
+  max-inline-size: 30rem;
+  padding: var(--zfa-s3);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius);
+  box-shadow: var(--zfa-shadow);
+}
+
+/* --------------------------------------------------------------------------
+   7. Buttons and action bars
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-button {
+  display: inline-flex;
+  gap: var(--zfa-s1);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--zfa-tap);
+  min-inline-size: var(--zfa-tap);
+  padding: var(--zfa-s1) var(--zfa-s3);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius-sm);
+  color: var(--zfa-fg);
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.zf-admin .zf-button:hover {
+  border-color: var(--zfa-accent);
+}
+
+.zf-admin .zf-button-primary {
+  background: var(--zfa-accent);
+  border-color: var(--zfa-accent);
+  color: var(--zfa-accent-fg);
+}
+
+.zf-admin .zf-button-danger {
+  border-color: var(--zfa-danger);
+  color: var(--zfa-danger);
+}
+
+.zf-admin .zf-button-quiet {
+  background: transparent;
+  border-color: transparent;
+  color: var(--zfa-accent);
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.zf-admin .zf-button-quiet:hover {
+  border-color: var(--zfa-border);
+}
+
+.zf-admin .zf-button-icon {
+  padding-inline: var(--zfa-s1);
+  font-size: var(--zfa-text-lg);
+  line-height: 1;
+}
+
+.zf-admin .zf-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.zf-admin .zf-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zfa-s2);
+  align-items: center;
+  margin-block-start: var(--zfa-s3);
+}
+
+/* the save/delete bar of the subscriptions and configuration screens */
+.zf-admin .zf-actions-sticky {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 8;
+  padding: var(--zfa-s2);
+  margin-block-start: var(--zfa-s2);
+  background: var(--zfa-surface);
+  border: 1px solid var(--zfa-border);
+  border-radius: var(--zfa-radius);
+  box-shadow: 0 -4px 16px rgb(16 32 48 / 12%);
+}
+
+/* --------------------------------------------------------------------------
+   8. The subscriptions table
+   -------------------------------------------------------------------------- */
+.zf-admin .zf-subscriptions {
+  margin-block-start: var(--zfa-s2);
+}
+
+/* the form is only a wrapper around the table and its action bar */
+.zf-admin .zf-form-table {
+  margin: 0;
+}
+
+.zf-admin .zf-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  background: var(--zfa-surface);
+}
+
+.zf-admin .zf-table-caption {
+  padding-block-end: var(--zfa-s1);
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+  text-align: start;
+}
+
+.zf-admin .zf-table th,
+.zf-admin .zf-table td {
+  padding: var(--zfa-s1);
+  border-block-end: 1px solid var(--zfa-border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.zf-admin .zf-table thead th {
+  background: var(--zfa-surface-2);
+  color: var(--zfa-accent);
+  font-size: var(--zfa-text-sm);
+  white-space: nowrap;
+}
+
+.zf-admin .zf-th-note {
+  display: block;
+  color: var(--zfa-muted);
+  font-weight: 400;
+}
+
+.zf-admin .zf-row.is-unsubscribed .zf-cell-channel {
+  opacity: 0.75;
+}
+
+.zf-admin .zf-cell-channel {
+  inline-size: 40%;
+  min-inline-size: 14rem;
+}
+
+.zf-admin .zf-cell-order {
+  white-space: nowrap;
+}
+
+.zf-admin .zf-cell-order .zf-button {
+  margin-inline-end: var(--zfa-s-half);
+}
+
+.zf-admin .zf-channel-title {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.zf-admin .zf-channel-language {
+  margin-inline-start: var(--zfa-s1);
+  padding: 1px var(--zfa-s-half);
+  border: 1px solid var(--zfa-border);
+  border-radius: 999px;
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.zf-admin .zf-channel-status,
+.zf-admin .zf-channel-description,
+.zf-admin .zf-channel-address {
+  margin: var(--zfa-s-half) 0 0;
+  color: var(--zfa-muted);
+  font-size: var(--zfa-text-sm);
+}
+
+.zf-admin .zf-channel-error {
+  margin: var(--zfa-s-half) 0 0;
+  color: var(--zfa-danger);
+  font-size: var(--zfa-text-sm);
+  font-weight: 600;
+}
+
+.zf-admin .zf-feed-link {
+  font-family: var(--zfa-font-mono);
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   9. Viewport breakpoints. The admin owns its page, so these are real media
+   queries (zf.css, which does not own its page, uses container queries).
+   -------------------------------------------------------------------------- */
+
+/* Under 40rem the table becomes one block per feed. The column headers are no
+   longer beside the fields, so each control's own label — visually hidden in
+   the wide layout — becomes the visible one. Nothing loses its name. */
+@media (max-width: 39.999rem) {
+  .zf-admin .zf-table,
+  .zf-admin .zf-table tbody,
+  .zf-admin .zf-cell {
+    display: block;
+    inline-size: auto;
+  }
+
+  /* a column, so the channel can head its own card whatever the cell order */
+  .zf-admin .zf-row {
+    display: flex;
+    flex-direction: column;
+    inline-size: auto;
+  }
+
+  .zf-admin .zf-cell-channel {
+    order: -1;
+  }
+
+  .zf-admin .zf-table thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .zf-admin .zf-row {
+    padding: var(--zfa-s2);
+    margin-block-end: var(--zfa-s2);
+    border: 1px solid var(--zfa-border);
+    border-radius: var(--zfa-radius);
+  }
+
+  .zf-admin .zf-cell {
+    padding: var(--zfa-s-half) 0;
+    border-block-end: 0;
+  }
+
+  .zf-admin .zf-cell-channel {
+    min-inline-size: 0;
+    padding-block-end: var(--zfa-s2);
+    border-block-end: 1px solid var(--zfa-border);
+  }
+
+  .zf-admin .zf-cell .zf-sr-only {
+    position: static;
+    display: block;
+    inline-size: auto;
+    block-size: auto;
+    margin: 0 0 var(--zfa-s-half);
+    overflow: visible;
+    clip-path: none;
+    color: var(--zfa-muted);
+    font-size: var(--zfa-text-sm);
+    font-weight: 600;
+    white-space: normal;
+  }
+
+  /* on the checkbox and the arrow buttons the label sits beside the control */
+  .zf-admin .zf-cell-check {
+    display: flex;
+    gap: var(--zfa-s1);
+    align-items: center;
+    min-block-size: var(--zfa-tap);
+  }
+
+  .zf-admin .zf-cell-check .zf-sr-only {
+    margin: 0;
+  }
+
+  /* the arrow buttons keep their labels hidden: the arrow is the visible one */
+  .zf-admin .zf-cell-order .zf-sr-only {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .zf-admin .zf-cell-order {
+    display: flex;
+    gap: var(--zfa-s1);
+    white-space: normal;
+  }
+
+  .zf-admin .zf-cell-order .zf-button {
+    flex: 1 1 auto;
+    margin-inline-end: 0;
+  }
+
+  .zf-admin .zf-input-number {
+    max-inline-size: 100%;
+  }
+}
+
+@media (min-width: 40rem) {
+  .zf-admin .zf-status-item {
+    grid-template-columns: minmax(8rem, 16rem) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 48rem) {
+  .zf-admin .zf-header,
+  .zf-admin .zf-nav,
+  .zf-admin .zf-footer {
+    padding-inline: var(--zfa-s3);
+  }
+
+  .zf-admin .zf-main {
+    padding-inline: var(--zfa-s3);
+  }
+
+  /* Labels beside their controls, right-aligned — the 2004 configuration
+     screen did exactly this, and it reads well in both skins. */
+  .zf-admin .zf-form .zf-field:not(.zf-field-check, .zf-field-inline) {
+    display: grid;
+    grid-template-columns: minmax(10rem, 16rem) minmax(0, 1fr);
+    gap: var(--zfa-s-half) var(--zfa-s3);
+    align-items: start;
+  }
+
+  .zf-admin .zf-form .zf-field:not(.zf-field-check, .zf-field-inline) > .zf-label {
+    padding-block-start: var(--zfa-s1);
+    text-align: end;
+  }
+
+  .zf-admin .zf-form .zf-field:not(.zf-field-check, .zf-field-inline) > :not(.zf-label) {
+    grid-column: 2;
+  }
+
+  /* checkbox rows and the buttons under a form line up with the control column */
+  .zf-admin .zf-form .zf-field-check,
+  .zf-admin .zf-form > .zf-actions:not(.zf-actions-sticky) {
+    padding-inline-start: calc(16rem + var(--zfa-s3));
+  }
+
+  .zf-admin .zf-form-login > .zf-actions {
+    padding-inline-start: 0;
+  }
+
+  /* the login form is a single narrow column: labels stay above their fields */
+  .zf-admin .zf-form-login .zf-field {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .zf-admin .zf-form-login .zf-field > .zf-label {
+    padding-block-start: 0;
+    text-align: start;
+  }
+
+  .zf-admin .zf-form-login .zf-field > :not(.zf-label) {
+    grid-column: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Motion, forced colours, print
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .zf-admin .zf-button,
+  .zf-admin .zf-nav-link,
+  .zf-admin .zf-input,
+  .zf-admin .zf-select {
+    transition: background-color 120ms ease, border-color 120ms ease;
+  }
+}
+
+@media (forced-colors: active) {
+  .zf-admin .zf-panel,
+  .zf-admin .zf-button,
+  .zf-admin .zf-actions-sticky,
+  .zf-admin .zf-fieldset,
+  .zf-admin .zf-flash-message {
+    border-color: CanvasText;
+  }
+}
+
+@media print {
+  .zf-admin .zf-nav,
+  .zf-admin .zf-actions,
+  .zf-admin .zf-skip,
+  .zf-admin .zf-signout {
+    display: none;
+  }
+
+  .zf-admin .zf-panel,
+  .zf-admin .zf-fieldset {
+    box-shadow: none;
+    border-color: #999;
+  }
+}

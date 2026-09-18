@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<opml version="1.0">
+  <head>
+    <title>goldenB</title>
+    <dateModified>Wed, 25 Feb 2004 14:00:00 GMT</dateModified>
+  </head>
+  <body>
+    <outline type="rss" position="1" text="DevChannel" title="DevChannel" description="DevChannel description" xmlUrl="http://fixtures.test/rdf10-devchannel.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="3" isSubscribed="yes" language="en" />
+    <outline type="rss" position="2" text="Weblog Central" title="Weblog Central" description="Weblog Central description" xmlUrl="http://fixtures.test/rss092-weblog.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="2" isSubscribed="yes" language="en" />
+  </body>
+</opml>

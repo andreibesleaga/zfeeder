@@ -1,0 +1,125 @@
+<!-- zFeeder template header -->
+<SCRIPT LANGUAGE="JavaScript">
+function SwitchChannel( obj )
+{
+if(document.getElementById(escape(obj)))
+        {
+
+            var el = document.getElementById(escape(obj));
+       
+            if (el.style.display != "block") {
+               el.style.display = "block";
+            } else {
+                el.style.display = "none";
+            }
+
+        }
+}
+</SCRIPT>
+<!-- header -->
+<div class="feed">
+<!-- channel -->
+<div class="channel">
+    <div class="fold">
+       <img src="http://zf.test/newsfeeds/images/infojunkie_triangle.png" alt="unfold" border="0" onclick="SwitchChannel(1);" />
+    </div>
+    <div class="logo">      
+       <a href="https://techwire.example.com/"><img src="https://techwire.example.com/logo.png" border="0" alt="[logo]" title="Tech Wire" /></a>
+    </div>
+    <div class="controls">
+      <a href="/golden.php?zfmore=1&amp;zftemplate=infojunkie&amp;zfcategory=goldenC&amp;zfposition=p1,p2,#zfchannel1"><img src="http://zf.test/newsfeeds/images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a> &nbsp;
+    </div>
+    <div class="chanlink">
+           <a href="https://techwire.example.com/" title="Technology headlines, updated daily">Tech Wire</a>
+    </div>
+</div>
+<div class="newslist" id=1>
+    <div class="dateline">
+        last updated: Mon, 31 Dec 2029 22:00:00 GMT
+    </div>
+<!-- news --> 
+    <div class="newstitle">
+      <a href="https://techwire.example.com/2026/discovery-spec" title="https://techwire.example.com/2026/discovery-spec">Standards body publishes discovery specification</a>
+      <span class="footer">[Mon, 14 Sep 2026 23:07:56 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        The specification defines how agents locate machine readable descriptions.<p>The specification defines how agents locate machine readable descriptions of a site.</p><p>Implementers have <a href="https://techwire.example.com/2026/discovery-spec#timeline">six months</a> to comply.</p>
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="https://techwire.example.com/2026/headset" title="https://techwire.example.com/2026/headset">Headset review: impressive but expensive</a>
+      <span class="footer">[Mon, 14 Sep 2026 17:05:31 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        Hands on with the latest virtual reality hardware.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="https://techwire.example.com/2026/ml-explainer" title="https://techwire.example.com/2026/ml-explainer">What is machine learning, and why the concern?</a>
+      <span class="footer">[Mon, 14 Sep 2026 16:09:56 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        An explainer covering the basics and the open questions.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="https://techwire.example.com/2026/perf" title="https://techwire.example.com/2026/perf">Open source release adds performance work</a>
+      <span class="footer">[Mon, 14 Sep 2026 13:45:05 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        The maintainers list twenty eight changes in this cycle.
+    </div>
+ <!-- footer --> 
+  </div> <!-- newslist section -->
+</div> <!-- channel section -->
+<!-- between --> 
+<!-- header -->
+<div class="feed">
+<!-- channel -->
+<div class="channel">
+    <div class="fold">
+       <img src="http://zf.test/newsfeeds/images/infojunkie_triangle.png" alt="unfold" border="0" onclick="SwitchChannel(2);" />
+    </div>
+    <div class="logo">      
+       
+    </div>
+    <div class="controls">
+      <a href="/golden.php?zfmore=2&amp;zftemplate=infojunkie&amp;zfcategory=goldenC&amp;zfposition=p1,p2,#zfchannel2"><img src="http://zf.test/newsfeeds/images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a> &nbsp;
+    </div>
+    <div class="chanlink">
+           <a href="https://science.example.com/" title="Research news and explainers">Science Desk</a>
+    </div>
+</div>
+<div class="newslist" id=2>
+    <div class="dateline">
+        last updated: Mon, 31 Dec 2029 22:00:00 GMT
+    </div>
+<!-- news --> 
+    <div class="newstitle">
+      <a href="https://science.example.com/2026/deep-sea" title="https://science.example.com/2026/deep-sea">Deep sea survey finds unrecorded species</a>
+      <span class="footer">[Mon, 14 Sep 2026 19:00:00 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        The survey catalogued eleven organisms new to science.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="https://science.example.com/2026/sky-map" title="https://science.example.com/2026/sky-map">Telescope array completes first sky map</a>
+      <span class="footer">[Mon, 14 Sep 2026 12:00:00 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        Three years of observation produced a single composite image.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="https://science.example.com/2026/battery" title="https://science.example.com/2026/battery">Battery chemistry doubles cycle life</a>
+      <span class="footer">[Sun, 13 Sep 2026 08:00:00 GMT]</span>
+    </div>
+    <div class="newsdesc">
+        A coating change slows the growth of dendrites.
+    </div>
+ <!-- footer --> 
+  </div> <!-- newslist section -->
+</div> <!-- channel section -->
+<!-- between --> 
+<span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-small;">powered by <a href="http://zvonnews.sourceforge.net">zFeeder</a></span>

@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * zFeeder command line interface.
+ *
+ * Everything the admin panel does can be done from here, which is what makes
+ * cron jobs, container entrypoints and scripted installs possible.
+ */
+
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') {
+    fwrite(STDERR, "bin/zfeeder is a command line tool.\n");
+    exit(1);
+}
+
+$autoload = null;
+foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $candidate) {
+    if (is_file($candidate)) {
+        $autoload = $candidate;
+        break;
+    }
+}
+if ($autoload === null) {
+    fwrite(STDERR, "Dependencies are not installed. Run: composer install\n");
+    exit(1);
+}
+require $autoload;
+
+use Zfeeder\Cli\Application;
+use Zfeeder\Kernel;
+
+try {
+    $kernel = Kernel::boot(null, dirname(__DIR__));
+} catch (Throwable $e) {
+    fwrite(STDERR, 'Configuration error: ' . $e->getMessage() . "\n");
+    exit(78); // EX_CONFIG
+}
+
+exit((new Application($kernel))->run());

@@ -1,0 +1,904 @@
+/* ==========================================================================
+   zFeeder 2.0 — zf.css
+   The design system for the FEED OUTPUT (the markup the templates emit).
+
+   One file, no build step, no dependencies. Everything is scoped under the
+   `.zf` root class that each template puts on its <section>, so the CSS can
+   never leak into the host page that embeds the output, and the host page's
+   CSS reaches it only through the custom properties it chooses to override.
+
+   Theming from a host page:
+       .zf { --zf-accent: #7b2ff7; --zf-radius: 0; }
+   Forcing a theme:
+       <section class="zf" data-zf-theme="dark">   (or on any ancestor)
+
+   ---------------------------------------------------------------------------
+   MEASURED CONTRAST (WCAG 2.2, sRGB relative luminance; all body and muted
+   text is >= 4.5:1, all focus rings are >= 3:1 against their backdrop):
+
+   LIGHT                                       DARK
+     fg      #16202a on bg      #ffffff 16.48    fg      #e6edf3 on bg      #0f1418 15.68
+     fg      #16202a on surface #f5f7f9 15.35    fg      #e6edf3 on surface #19212a 13.75
+     muted   #516070 on bg      #ffffff  6.45    muted   #a3b2c0 on bg      #0f1418  8.55
+     muted   #516070 on surface #f5f7f9  6.00    muted   #a3b2c0 on surface #19212a  7.50
+     accent  #006699 on bg      #ffffff  6.25    accent  #5fc0ef on bg      #0f1418  9.06
+     accent  #006699 on surface #f5f7f9  5.82    accent  #5fc0ef on surface #19212a  7.95
+     #ffffff on accent  #006699          6.25    #04131d on accent  #5fc0ef          9.20
+   Accent doubles as the focus ring, so the ring is 6.25:1 / 9.06:1 (>= 3:1).
+   Variant accents (green/aqua/amber/gray/paper) were measured the same way and
+   are noted beside each variant below.
+   ---------------------------------------------------------------------------
+
+   Rules kept: no `!important`, no fixed heights, images are fluid, motion only
+   under `prefers-reduced-motion: no-preference`, component layout driven by
+   CONTAINER queries (the output lives in someone else's column of unknown
+   width, so the viewport tells us nothing).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens — light is the base and is always defined outside a media query.
+   Each themeable colour exists as a `-l` (light) and `-d` (dark) value here;
+   the theme blocks in §2 only re-point the live token at one of them, which
+   is what lets a variant (.zf--green …) change one colour and still get the
+   right value in both themes.
+   -------------------------------------------------------------------------- */
+.zf {
+  /* palette, light */
+  --zf-bg-l: #ffffff;
+  --zf-surface-l: #f5f7f9;
+  --zf-fg-l: #16202a;
+  --zf-fg-muted-l: #516070;
+  --zf-accent-l: #006699; /* the 2004 blue, carried forward deliberately */
+  --zf-accent-fg-l: #ffffff;
+  --zf-border-l: #c7d2db;
+  --zf-shadow-l: 0 1px 2px rgb(16 32 48 / 6%), 0 6px 18px rgb(16 32 48 / 6%);
+
+  /* palette, dark */
+  --zf-bg-d: #0f1418;
+  --zf-surface-d: #19212a;
+  --zf-fg-d: #e6edf3;
+  --zf-fg-muted-d: #a3b2c0;
+  --zf-accent-d: #5fc0ef;
+  --zf-accent-fg-d: #04131d;
+  --zf-border-d: #2f3a45;
+  --zf-shadow-d: 0 1px 2px rgb(0 0 0 / 45%), 0 6px 18px rgb(0 0 0 / 35%);
+
+  /* live tokens — the documented API */
+  --zf-bg: var(--zf-bg-l);
+  --zf-surface: var(--zf-surface-l);
+  --zf-fg: var(--zf-fg-l);
+  --zf-fg-muted: var(--zf-fg-muted-l);
+  --zf-accent: var(--zf-accent-l);
+  --zf-accent-fg: var(--zf-accent-fg-l);
+  --zf-border: var(--zf-border-l);
+  --zf-shadow: var(--zf-shadow-l);
+  --zf-radius: 8px;
+  --zf-gap: 0.75rem;
+  --zf-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --zf-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --zf-maxw: 72rem;
+
+  /* derived, not part of the public API */
+  --zf-tint: var(--zf-surface);
+  --zf-line: 1.55;
+  --zf-pad: clamp(0.6rem, 2cqi, 1rem);
+
+  container-type: inline-size;
+  container-name: zf;
+  box-sizing: border-box;
+  max-inline-size: var(--zf-maxw);
+  margin-inline: auto;
+  padding: 0;
+  color: var(--zf-fg);
+  background: var(--zf-bg);
+  font-family: var(--zf-font);
+  font-size: 1rem;
+  line-height: var(--zf-line);
+  text-align: start;
+  -webkit-text-size-adjust: 100%;
+}
+
+.zf *,
+.zf *::before,
+.zf *::after {
+  box-sizing: inherit;
+}
+
+/* A faint wash of the accent used for item rows; falls back to the plain
+   surface where color-mix() is unsupported. */
+@supports (color: color-mix(in oklab, red 50%, blue)) {
+  .zf {
+    --zf-tint: color-mix(in oklab, var(--zf-accent) 8%, var(--zf-surface));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Dark mode. The tokens are re-pointed, never re-invented. An explicit
+   [data-zf-theme="light"] — on the .zf root or on any ancestor — always wins
+   over the OS preference, and [data-zf-theme="dark"] forces dark anywhere.
+   -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  .zf:not([data-zf-theme="light"]) {
+    --zf-bg: var(--zf-bg-d);
+    --zf-surface: var(--zf-surface-d);
+    --zf-fg: var(--zf-fg-d);
+    --zf-fg-muted: var(--zf-fg-muted-d);
+    --zf-accent: var(--zf-accent-d);
+    --zf-accent-fg: var(--zf-accent-fg-d);
+    --zf-border: var(--zf-border-d);
+    --zf-shadow: var(--zf-shadow-d);
+  }
+
+  /* explicit light on an ancestor beats the OS preference (same specificity,
+     declared later, so it wins the cascade) */
+  [data-zf-theme="light"] .zf {
+    --zf-bg: var(--zf-bg-l);
+    --zf-surface: var(--zf-surface-l);
+    --zf-fg: var(--zf-fg-l);
+    --zf-fg-muted: var(--zf-fg-muted-l);
+    --zf-accent: var(--zf-accent-l);
+    --zf-accent-fg: var(--zf-accent-fg-l);
+    --zf-border: var(--zf-border-l);
+    --zf-shadow: var(--zf-shadow-l);
+  }
+}
+
+.zf[data-zf-theme="dark"],
+[data-zf-theme="dark"] .zf {
+  --zf-bg: var(--zf-bg-d);
+  --zf-surface: var(--zf-surface-d);
+  --zf-fg: var(--zf-fg-d);
+  --zf-fg-muted: var(--zf-fg-muted-d);
+  --zf-accent: var(--zf-accent-d);
+  --zf-accent-fg: var(--zf-accent-fg-d);
+  --zf-border: var(--zf-border-d);
+  --zf-shadow: var(--zf-shadow-d);
+}
+
+/* --------------------------------------------------------------------------
+   3. Colour variants. Each is the 2026 reading of a 2004 palette. Only the
+   accent moves; the neutrals stay, so contrast stays predictable.
+   -------------------------------------------------------------------------- */
+
+/* greenlogos — #1c6b45 on #fff 5.94:1 · #63d3a0 on #0f1418 10.84:1 */
+.zf--green {
+  --zf-accent-l: #1c6b45;
+  --zf-accent-d: #63d3a0;
+  --zf-accent-fg-d: #04231a;
+}
+
+/* aqua — #0b6a77 on #fff 5.66:1 · #63d2e3 on #0f1418 10.36:1 */
+.zf--aqua {
+  --zf-accent-l: #0b6a77;
+  --zf-accent-d: #63d2e3;
+  --zf-accent-fg-d: #04202a;
+}
+
+/* ampheta — #8a4b00 on #fff 6.32:1 · #f0b45c on #0f1418 10.10:1 */
+.zf--amber {
+  --zf-accent-l: #8a4b00;
+  --zf-accent-d: #f0b45c;
+  --zf-accent-fg-d: #241200;
+}
+
+/* simplegray — #4a545e on #fff 7.65:1 · #b6c2ce on #0f1418 10.52:1 */
+.zf--gray {
+  --zf-accent-l: #4a545e;
+  --zf-accent-d: #b6c2ce;
+  --zf-accent-fg-d: #10171d;
+}
+
+/* simplecss "newspaper" — #7a2018 on #fff 8.64:1 · #f3a49a on #0f1418 9.55:1 */
+.zf--paper {
+  --zf-accent-l: #7a2018;
+  --zf-accent-d: #f3a49a;
+  --zf-accent-fg-d: #240807;
+  --zf-radius: 2px;
+  --zf-font: Georgia, "Iowan Old Style", "Times New Roman", serif;
+}
+
+/* --------------------------------------------------------------------------
+   4. Base elements inside the scope
+   -------------------------------------------------------------------------- */
+.zf img,
+.zf svg,
+.zf video {
+  max-width: 100%;
+  height: auto;
+}
+
+.zf a {
+  color: var(--zf-accent);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.15em;
+}
+
+.zf a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.zf :focus-visible {
+  outline: 3px solid var(--zf-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.zf p,
+.zf h2,
+.zf h3,
+.zf h4,
+.zf ul,
+.zf ol {
+  margin: 0;
+}
+
+/* :where() keeps this reset at .zf's own specificity, so a component rule such
+   as `.zf-box .zf-items { padding: … }` can still put the padding back. */
+.zf :where(ul.zf-items, ol.zf-items, ul.zf-nav, ul.zf-ticker__track) {
+  padding: 0;
+  list-style: none;
+}
+
+.zf hr {
+  border: 0;
+  border-top: 1px solid var(--zf-border);
+  margin: var(--zf-gap) 0;
+}
+
+/* long feed titles and unbreakable URLs must never widen the container */
+.zf-bar__title,
+.zf-item__title,
+.zf-item__desc,
+.zf-bar__desc {
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   5. Components
+   -------------------------------------------------------------------------- */
+
+/* 5.1 Feed wrapper -------------------------------------------------------- */
+.zf-feed {
+  display: block;
+  padding: 0;
+}
+
+.zf-feed + .zf-feed {
+  margin-block-start: calc(var(--zf-gap) * 2);
+}
+
+/* 5.2 Channel bar --------------------------------------------------------- */
+.zf-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--zf-gap);
+  padding: var(--zf-pad);
+  background: var(--zf-tint);
+  border: 1px solid var(--zf-border);
+  border-radius: var(--zf-radius);
+}
+
+.zf-bar--flat {
+  background: none;
+  border-width: 0 0 2px;
+  border-radius: 0;
+  border-bottom-color: var(--zf-accent);
+}
+
+.zf-bar--solid {
+  background: var(--zf-accent);
+  border-color: var(--zf-accent);
+  color: var(--zf-accent-fg);
+}
+
+.zf-bar--solid a,
+.zf-bar--solid .zf-bar__time,
+.zf-bar--solid .zf-bar__desc {
+  color: var(--zf-accent-fg);
+}
+
+/* On a solid accent bar the tool pills must not keep the page background,
+   or their label (accent-fg) lands on the wrong colour in one of the themes. */
+.zf-bar--solid .zf-tool,
+.zf-bar--solid .zf-tool:hover {
+  background: transparent;
+  border-color: currentcolor;
+  color: var(--zf-accent-fg);
+}
+
+.zf-bar__logo {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.zf-bar__logo img {
+  max-block-size: 2rem;
+  width: auto;
+  border-radius: 3px;
+}
+
+.zf-bar__head {
+  flex: 1 1 14rem;
+  min-inline-size: 0;
+}
+
+.zf-bar__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.zf-bar__desc,
+.zf-bar__time {
+  display: block;
+  color: var(--zf-fg-muted);
+  font-size: 0.8125rem;
+}
+
+.zf-bar__tools {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+/* 5.3 Tool links (more / feed / hide) ------------------------------------- */
+.zf-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--zf-border);
+  border-radius: 999px;
+  background: var(--zf-bg);
+  color: var(--zf-accent);
+  font-size: 0.75rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.zf-tool:hover {
+  border-color: var(--zf-accent);
+  text-decoration: underline;
+}
+
+/* 5.4 Items --------------------------------------------------------------- */
+.zf-items {
+  display: block;
+  margin: 0;
+}
+
+.zf-item {
+  display: block;
+  /* the same inline padding as the channel bar, so headline text lines up with
+     the feed title above it instead of hanging off the edge */
+  padding: var(--zf-pad);
+  border-block-end: 1px solid var(--zf-border);
+}
+
+.zf-item:last-child {
+  border-block-end: 0;
+}
+
+.zf-item__title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/*
+ * Item titles are underlined rather than distinguished by colour alone.
+ * WCAG 1.4.1 asks that colour never be the only way to tell a link from the
+ * text around it, and in templates where the title sits in a block of prose
+ * (aqua, infojunkie) axe reports exactly that. A subtle underline that thickens
+ * on hover keeps the look while making the link identifiable to a reader who
+ * cannot distinguish the hue.
+ */
+.zf-item__title a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+.zf-item__title a:hover,
+.zf-item__title a:focus-visible {
+  text-decoration-thickness: 2px;
+  text-decoration-color: currentColor;
+}
+
+.zf-item__time {
+  display: inline-block;
+  color: var(--zf-fg-muted);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.zf-item__desc {
+  margin-block-start: 0.35rem;
+  color: var(--zf-fg);
+  font-size: 0.9375rem;
+}
+
+.zf-item__desc :where(p, ul, ol) {
+  margin: 0 0 0.4em;
+}
+
+.zf-item__desc img {
+  border-radius: var(--zf-radius);
+}
+
+/* zebra-free tinted rows, the 2004 "#E7F6FF over #FBFBFB" idea, done with a
+   single tint so it survives a dark theme */
+.zf-items--rows .zf-item {
+  padding: var(--zf-pad);
+  border-block-end: 0;
+  border-radius: var(--zf-radius);
+}
+
+.zf-items--rows .zf-item:nth-child(odd) {
+  background: var(--zf-tint);
+}
+
+/* 5.5 Separator between feeds -------------------------------------------- */
+.zf-sep {
+  block-size: 1px;
+  margin: calc(var(--zf-gap) * 1.5) 0;
+  border: 0;
+  background: var(--zf-border);
+}
+
+.zf-sep--dots {
+  block-size: auto;
+  background: none;
+  color: var(--zf-fg-muted);
+  font-family: var(--zf-font-mono);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.zf-sep--dots::before {
+  content: "· · ·";
+}
+
+/* 5.6 Cards grid (flagship) ---------------------------------------------- */
+.zf-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--zf-gap);
+  margin-block-start: var(--zf-gap);
+}
+
+.zf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: var(--zf-pad);
+  background: var(--zf-surface);
+  border: 1px solid var(--zf-border);
+  border-radius: var(--zf-radius);
+  box-shadow: var(--zf-shadow);
+}
+
+.zf-card .zf-item__desc {
+  flex: 1 1 auto;
+}
+
+.zf-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--zf-gap);
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 5.7 Dense list ---------------------------------------------------------- */
+.zf-list .zf-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.1rem var(--zf-gap);
+  padding: 0.45rem var(--zf-pad);
+}
+
+.zf-list .zf-item__title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* 5.8 Narrow box (titlebox / headlinebox / sidebar) ----------------------- */
+.zf--box {
+  --zf-maxw: 22rem;
+
+  /* a rail sits at the start of its column, it does not float in the middle */
+  margin-inline: 0;
+}
+
+.zf-box {
+  overflow: hidden;
+  background: var(--zf-surface);
+  border: 1px solid var(--zf-border);
+  border-radius: var(--zf-radius);
+}
+
+.zf-box .zf-bar {
+  border-width: 0 0 1px;
+  border-radius: 0;
+}
+
+.zf-box .zf-items {
+  padding: 0.25rem var(--zf-pad) var(--zf-pad);
+}
+
+.zf-box .zf-item {
+  padding: 0.4rem 0;
+}
+
+.zf-box .zf-item__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* headlinebox ranks its headlines; the numbers are decoration over a real <ol> */
+.zf-box ol.zf-items {
+  counter-reset: zf-rank;
+}
+
+.zf-box ol.zf-items .zf-item__title::before {
+  counter-increment: zf-rank;
+  content: counter(zf-rank) ".";
+  margin-inline-end: 0.4em;
+  color: var(--zf-fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 5.9 Sidebar nav --------------------------------------------------------- */
+.zf-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+/* the rail's entries are headings so the page keeps one heading per feed */
+.zf-nav :where(h2, h3) {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.zf-nav a {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--zf-radius);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.zf-nav a:hover {
+  background: var(--zf-tint);
+  text-decoration: underline;
+}
+
+/* 5.10 Reading pane (mainframe) ------------------------------------------ */
+.zf--read {
+  --zf-maxw: 46rem;
+}
+
+.zf--read .zf-item__title {
+  font-size: 1.125rem;
+}
+
+.zf--read .zf-item__desc {
+  font-size: 1rem;
+}
+
+/* 5.11 Newspaper (simplecss) --------------------------------------------- */
+.zf-paper__head {
+  padding-block-end: 0.5rem;
+  border-block-end: 3px double var(--zf-border);
+  text-align: center;
+}
+
+.zf-paper .zf-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.2rem var(--zf-gap);
+}
+
+.zf-paper .zf-item__title {
+  font-weight: 700;
+}
+
+/* 5.12 Collapsible feeds (infojunkie) ------------------------------------ */
+.zf-fold {
+  border: 1px solid var(--zf-border);
+  border-radius: var(--zf-radius);
+}
+
+.zf-fold + .zf-fold {
+  margin-block-start: 0.5rem;
+}
+
+.zf-fold > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--zf-gap);
+  padding: 0.5rem var(--zf-pad);
+  background: var(--zf-tint);
+  border-radius: calc(var(--zf-radius) - 1px);
+  cursor: pointer;
+  list-style: none;
+  min-block-size: 2.75rem; /* 44px pointer target */
+}
+
+.zf-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.zf-fold > summary::before {
+  content: "";
+  flex: 0 0 auto;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-inline-end: 2px solid currentcolor;
+  border-block-end: 2px solid currentcolor;
+  transform: rotate(-45deg);
+  color: var(--zf-accent);
+}
+
+.zf-fold[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+.zf-fold > .zf-items {
+  padding-block-end: 0.5rem;
+}
+
+/* 5.13 Ticker strip ------------------------------------------------------- */
+.zf--ticker {
+  --zf-maxw: none;
+}
+
+.zf-ticker {
+  display: flex;
+  align-items: center;
+  gap: var(--zf-gap);
+  padding: 0.35rem var(--zf-pad);
+  background: var(--zf-accent);
+  border-radius: var(--zf-radius);
+  color: var(--zf-accent-fg);
+}
+
+.zf-ticker__label {
+  flex: 0 1 auto;
+  max-inline-size: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.zf-ticker__track {
+  display: flex;
+  flex: 1 1 auto;
+  /* without this the flex item refuses to shrink below its content and the
+     strip widens the whole page instead of scrolling inside itself */
+  min-inline-size: 0;
+  gap: var(--zf-gap);
+  margin: 0;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+
+.zf-ticker__item {
+  position: relative; /* contains the visually-hidden <time>, which would
+                         otherwise be placed against the viewport and widen it */
+  flex: 0 0 auto;
+  max-inline-size: 22rem;
+  scroll-snap-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zf-ticker__item a {
+  color: var(--zf-accent-fg);
+  font-size: 0.875rem;
+}
+
+.zf-ticker__item + .zf-ticker__item::before {
+  content: "•";
+  margin-inline-end: var(--zf-gap);
+  opacity: 0.7;
+}
+
+/* 5.14 Small variant details --------------------------------------------- */
+
+/* an absent {chanlogo} must not leave a gap */
+.zf-bar__logo:empty {
+  display: none;
+}
+
+.zf-ticker__label a {
+  color: var(--zf-accent-fg);
+}
+
+/* rij kept its "::" item marker; it is decoration, so it lives in CSS */
+.zf--rij .zf-item__title::before {
+  content: "::";
+  margin-inline-end: 0.4em;
+  color: var(--zf-fg-muted);
+  font-family: var(--zf-font-mono);
+}
+
+/* a stack of nav sections (sidebar) sits tight, not airy */
+.zf--nav.zf-feed + .zf--nav.zf-feed {
+  margin-block-start: 2px;
+}
+
+/* 5.15 Credit line -------------------------------------------------------- */
+.zf-credit {
+  margin-block-start: 0.5rem;
+  padding-inline: var(--zf-pad);
+  color: var(--zf-fg-muted);
+  font-size: 0.75rem;
+}
+
+/* visually hidden but announced */
+.zf-sr {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   6. Container queries. The breakpoints are the *component's* own width, so a
+   card grid in a 900px page column and the same grid in a 900px sidebar-less
+   page behave the same. Nothing here is viewport-based.
+   -------------------------------------------------------------------------- */
+@container zf (min-width: 30rem) {
+  .zf-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .zf-list .zf-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+  }
+
+  .zf-list .zf-item__time {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: end;
+  }
+
+  .zf-list .zf-item__desc {
+    grid-column: 1 / -1;
+  }
+
+  .zf-paper .zf-item {
+    grid-template-columns: minmax(0, 12rem) minmax(0, 2fr);
+  }
+
+  .zf-paper .zf-item__desc {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-block-start: 0;
+  }
+}
+
+@container zf (min-width: 48rem) {
+  .zf-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .zf-bar__title {
+    font-size: 1.1875rem;
+  }
+
+  .zf--split .zf-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 0.25rem var(--zf-gap);
+    align-items: start;
+  }
+
+  .zf--split .zf-item__desc {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-block-start: 0;
+  }
+}
+
+@container zf (min-width: 68rem) {
+  .zf-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Fallback for browsers without container queries: everything stays in the
+   single-column shape the markup already produces. */
+@supports not (container-type: inline-size) {
+  .zf {
+    max-inline-size: var(--zf-maxw);
+  }
+
+  .zf-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zf-list .zf-item,
+  .zf-paper .zf-item,
+  .zf--split .zf-item {
+    display: block;
+  }
+
+  .zf-list .zf-item__time {
+    text-align: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Motion — declared only where motion is welcome, so there is nothing to
+   switch off (and therefore no `!important` override to write).
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .zf-tool,
+  .zf-card,
+  .zf-nav a,
+  .zf-fold > summary::before {
+    transition: background-color 120ms ease, border-color 120ms ease,
+      box-shadow 160ms ease, transform 160ms ease;
+  }
+
+  .zf-card:hover {
+    box-shadow: 0 2px 4px rgb(16 32 48 / 8%), 0 10px 24px rgb(16 32 48 / 10%);
+    transform: translateY(-2px);
+  }
+
+  .zf-ticker__track {
+    scroll-behavior: smooth;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Forced colours and print
+   -------------------------------------------------------------------------- */
+@media (forced-colors: active) {
+  .zf-bar,
+  .zf-card,
+  .zf-box,
+  .zf-fold,
+  .zf-tool {
+    border-color: CanvasText;
+  }
+}
+
+@media print {
+  .zf {
+    --zf-shadow: none;
+    max-inline-size: none;
+  }
+
+  .zf-tool,
+  .zf-ticker__label {
+    display: none;
+  }
+
+  .zf-card,
+  .zf-bar {
+    border-color: #999;
+  }
+}

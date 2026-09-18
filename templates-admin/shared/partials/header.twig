@@ -1,0 +1,13 @@
+<header class="zf-header">
+<a class="zf-brand" href="{{ admin_url('/admin') }}">
+<img class="zf-logo" src="{{ asset('classic/images/zflogo.png') }}" alt="" width="79" height="15" decoding="async">
+<span class="zf-brand-name">zFeeder administration panel</span>
+</a>
+{% if user %}
+<form class="zf-signout" method="post" action="{{ admin_url('/admin/logout') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<span class="zf-signed-in">Signed in as {{ user }}</span>
+<button class="zf-button zf-button-quiet" type="submit">Sign out</button>
+</form>
+{% endif %}
+</header>

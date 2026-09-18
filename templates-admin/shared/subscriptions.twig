@@ -1,0 +1,23 @@
+{% extends 'layout.twig' %}
+{% block heading %}Subscriptions{% endblock %}
+{% block content %}
+{% if problem %}
+<p class="zf-error" role="alert">{{ problem }}</p>
+{% endif %}
+
+<form class="zf-toolbar" method="get" action="{{ admin_url('/admin/subscriptions') }}">
+<div class="zf-field zf-field-inline">
+<label class="zf-label" for="category-select">Category</label>
+<select class="zf-select" id="category-select" name="category"
+        hx-get="{{ admin_url('/admin/_/subscriptions') }}" hx-target="#zf-subscriptions"
+        hx-swap="outerHTML" hx-trigger="change">
+{% for name in categories %}
+<option value="{{ name }}"{% if name == category %} selected{% endif %}>{{ name }}</option>
+{% endfor %}
+</select>
+<button class="zf-button" type="submit">Select</button>
+</div>
+</form>
+
+{% include 'partials/subscriptions_table.twig' with {fragment: false} %}
+{% endblock %}

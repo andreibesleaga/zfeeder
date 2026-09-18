@@ -1,0 +1,44 @@
+<!--
+	zFeeder 2.0 template: rij
+	RJ's pure-CSS template: no tables, no images, a flat rule under the channel name and
+	"::" before every headline - the 2004 template that already did it the modern way.
+	Descends from: classic/rij (2004, RJ).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--rij zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar zf-bar--flat">
+		<span class="zf-bar__logo">{chanlogo}</span>
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+			<span class="zf-bar__time">{lastupdated}</span>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{moreurl}">[more]</a>
+		</div>
+	</div>
+	<ul class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<div class="zf-item__desc">{description}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf zf--rij"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

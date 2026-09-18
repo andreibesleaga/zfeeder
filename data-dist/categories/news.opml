@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- zFeeder 2.0 subscription list. Edit in the admin panel, with bin/zfeeder, or by hand. -->
+<opml version="2.0">
+  <head>
+    <title>news</title>
+    <dateModified>Thu, 18 Sep 2026 00:00:00 GMT</dateModified>
+    <ownerName>zFeeder</ownerName>
+  </head>
+  <body>
+    <outline type="rss" position="1" text="BBC News - World" title="BBC News - World" description="BBC News - World" xmlUrl="https://feeds.bbci.co.uk/news/world/rss.xml" htmlUrl="https://www.bbc.co.uk/news/world" refreshTime="120" showedItems="3" isSubscribed="yes" language="en-gb" />
+    <outline type="rss" position="2" text="The Guardian - World" title="The Guardian - World" description="Guardian world news" xmlUrl="https://www.theguardian.com/world/rss" htmlUrl="https://www.theguardian.com/world" refreshTime="120" showedItems="3" isSubscribed="yes" language="en-gb" />
+    <outline type="rss" position="3" text="BBC News - Technology" title="BBC News - Technology" description="BBC News - Technology" xmlUrl="https://feeds.bbci.co.uk/news/technology/rss.xml" htmlUrl="https://www.bbc.co.uk/news/technology" refreshTime="120" showedItems="3" isSubscribed="yes" language="en-gb" />
+    <outline type="rss" position="4" text="NYT &gt; Technology" title="NYT &gt; Technology" description="New York Times technology section" xmlUrl="https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml" htmlUrl="https://www.nytimes.com/section/technology" refreshTime="120" showedItems="3" isSubscribed="yes" language="en" />
+  </body>
+</opml>

@@ -1,0 +1,25 @@
+---
+title: "zFeeder in context"
+---
+flowchart LR
+    reader["Reader<br/><i>visits a site that embeds feeds</i>"]
+    operator["Operator<br/><i>runs this installation</i>"]
+    host["Host page<br/><i>someone else's website</i>"]
+
+    subgraph zf["zFeeder"]
+        app["zFeeder 2.0<br/><i>PHP 8.3, no database server</i>"]
+    end
+
+    publisher["Feed publishers<br/><i>BBC, LWN, any RSS/Atom/JSON feed</i>"]
+    cron["Scheduler<br/><i>cron, or the platform's timer</i>"]
+
+    reader -->|"reads a page"| host
+    host -->|"one line of PHP, or /embed, or /api/feeds"| app
+    operator -->|"manages subscriptions<br/>through /admin or the CLI"| app
+    app -->|"fetches feeds over HTTPS<br/><b>outbound only</b>"| publisher
+    cron -->|"bin/zfeeder refresh"| app
+
+    classDef sys fill:#006699,stroke:#003d5c,color:#fff
+    classDef ext fill:#eef3f7,stroke:#8aa4b5,color:#16202a
+    class app sys
+    class reader,operator,host,publisher,cron ext

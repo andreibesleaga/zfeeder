@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+parameters:
+    level: 8
+    paths:
+        - src
+        - bin
+        - tests
+    excludePaths:
+        analyse:
+            - tests/fixtures
+    treatPhpDocTypesAsCertain: false
+    checkMissingCallableSignature: true
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Test doubles and data providers describe their shapes in the assertions
+        # rather than in docblocks; requiring both is noise.
+        -
+            identifier: missingType.iterableValue
+            path: tests/*

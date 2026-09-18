@@ -1,0 +1,50 @@
+{% extends 'layout.twig' %}
+{% block heading %}Add new feed{% endblock %}
+{% block content %}
+{% if error %}
+<p class="zf-error" id="addfeed-error" role="alert">{{ error }}</p>
+{% endif %}
+
+<section class="zf-panel" aria-labelledby="zf-discovery-heading">
+<h2 class="zf-subheading" id="zf-discovery-heading">Feed autodiscovery</h2>
+<form class="zf-form" method="post" action="{{ admin_url('/admin/add-new') }}"
+      hx-post="{{ admin_url('/admin/_/discover') }}" hx-target="#zf-discovery" hx-swap="innerHTML"
+      hx-indicator="#zf-discovery">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="discover">
+<div class="zf-field">
+<label class="zf-label" for="site_url">Site address</label>
+<input class="zf-input" id="site_url" name="site_url" type="url" inputmode="url"
+       placeholder="https://example.com" autocomplete="url" spellcheck="false"
+       aria-describedby="site_url-help" value="{{ discovery ? discovery.site_url : '' }}">
+<p class="zf-help" id="site_url-help">zFeeder reads the page and lists the feeds it declares. Example: https://example.com</p>
+</div>
+<div class="zf-actions"><button class="zf-button zf-button-primary" type="submit">Search this site</button></div>
+</form>
+<div id="zf-discovery" class="zf-discovery" aria-live="polite">
+{% if discovery %}{% include 'partials/discovery.twig' %}{% endif %}
+</div>
+</section>
+
+<section class="zf-panel" aria-labelledby="zf-feedurl-heading">
+<h2 class="zf-subheading" id="zf-feedurl-heading">Or a feed address</h2>
+<form class="zf-form" method="post" action="{{ admin_url('/admin/add-new') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="preview">
+<div class="zf-field">
+<label class="zf-label" for="feed_url">Feed address</label>
+<input class="zf-input" id="feed_url" name="feed_url" type="url" inputmode="url"
+       placeholder="https://example.com/feed.xml" spellcheck="false" aria-describedby="feed_url-help">
+<p class="zf-help" id="feed_url-help">RSS, Atom, RDF or JSON Feed. Example: https://example.com/feed.xml</p>
+</div>
+<div class="zf-actions"><button class="zf-button zf-button-primary" type="submit">Look at this feed</button></div>
+</form>
+</section>
+
+<section class="zf-panel" aria-labelledby="zf-bookmarklet-heading">
+<h2 class="zf-subheading" id="zf-bookmarklet-heading">Bookmarklet</h2>
+<p>Drag <a class="zf-bookmarklet" href="{{ bookmarklet }}">ShowOnMySite</a> to your bookmarks bar.
+On any site you are reading, use it and zFeeder opens this screen with that site's feed already filled in.</p>
+<p class="zf-help">If you move this installation to another address, replace the bookmark: it points at this one.</p>
+</section>
+{% endblock %}

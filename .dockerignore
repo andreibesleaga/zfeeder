@@ -1,0 +1,33 @@
+# Build context: only what the image actually needs at runtime.
+.git
+.github
+.railway
+.phpunit.cache
+.php-cs-fixer.cache
+build
+dist
+coverage
+node_modules
+test-results
+playwright-report
+data
+legacy
+old
+project
+tests
+tools
+vendor
+
+# Development-only configuration.
+deptrac.yaml
+phpstan.neon
+phpunit.xml.dist
+.php-cs-fixer.dist.php
+.editorconfig
+
+# Root-level notes that are not shipped. docs/ IS shipped: the running
+# instance links to it, so the pattern below is anchored to the root.
+/CONTRIBUTING.md
+/CODE_OF_CONDUCT.md
+/SUPPORT.md
+/VERSIONING.md

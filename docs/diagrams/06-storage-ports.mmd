@@ -1,0 +1,42 @@
+---
+title: "One port, two adapters"
+---
+flowchart LR
+    users["FeedService · Admin · CLI<br/><i>name no concrete store</i>"]
+
+    subgraph ports["Ports"]
+        si["SubscriptionStoreInterface<br/><i>categories, read, save,<br/>create, delete, import, export</i>"]
+        ci["CacheStoreInterface<br/><i>get, put, delete, purge, urls</i>"]
+    end
+
+    subgraph flat["Flat adapter — the 2004 shape"]
+        fo["OpmlSubscriptionStore<br/><i>one .opml per category</i>"]
+        fc["FileCacheStore<br/><i>sha256#40;url#41; + sidecar metadata</i>"]
+    end
+
+    subgraph sql["SQLite adapter"]
+        so["SqliteSubscriptionStore"]
+        sc["SqliteCacheStore"]
+        db["Database<br/><i>WAL, prepared statements,<br/>versioned migrations</i>"]
+    end
+
+    fac["StoreFactory<br/><i>reads ZF_STORAGE</i>"]
+    mig["Migrator<br/><i>copies and verifies counts</i>"]
+    test["One abstract test case<br/><i>run against both</i>"]
+
+    users --> ports
+    fac --> ports
+    ports --> flat
+    ports --> sql
+    so --> db
+    sc --> db
+    flat <-.->|"migrate --to="| mig
+    mig <-.-> sql
+    test -.->|"proves they are<br/>indistinguishable"| ports
+
+    classDef p fill:#e8f2f8,stroke:#006699,color:#16202a
+    classDef a fill:#eef7ee,stroke:#4a9a5a,color:#16202a
+    classDef t fill:#fffbe6,stroke:#d19a4a,color:#16202a
+    class si,ci p
+    class fo,fc,so,sc,db a
+    class test t

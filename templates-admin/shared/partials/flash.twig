@@ -1,0 +1,7 @@
+{# The one live region on the page: anything the panel wants announced after an
+   action goes here, so a screen reader hears it without the focus moving. #}
+<div class="zf-flash" id="zf-flash" role="status" aria-live="polite"{% if oob %} hx-swap-oob="true"{% endif %}>
+{% for flash in flashes %}
+<p class="zf-flash-message zf-flash-{{ flash.level }}">{{ flash.message }}</p>
+{% endfor %}
+</div>

@@ -1,0 +1,49 @@
+---
+title: "How a template becomes output"
+---
+flowchart TB
+    tpl["Template file<br/><i>sections marked by HTML comments</i>"]
+    eng["TemplateEngine<br/><i>cuts each section out</i>"]
+
+    subgraph chunks["Sections"]
+        direction LR
+        ph["page header<br/><i>once per page</i>"]
+        hd["header"]
+        ch["channel"]
+        nw["news"]
+        ft["footer"]
+        bt["between"]
+    end
+
+    subgraph pass["Two substitution passes, in this order"]
+        direction TB
+        p1["1 — the 2.0 pass<br/><i>filters and the nine new tokens,<br/>on the template text only</i>"]
+        p2["2 — the 1.6 pass<br/><i>str_replace in 2004's exact order</i>"]
+    end
+
+    esc{"Where does<br/>the value come from?"}
+    feedval["From a feed<br/><i>{chantitle} {title} {description} …</i>"]
+    ownval["Built by the renderer<br/><i>{moreurl} {hideurl} {lastupdated} {scripturl} {chanlogo}</i>"]
+    urlval["A link from a feed<br/><i>{chanlink} {feedurl} {link}</i>"]
+
+    escaped["HTML-escaped<br/><b>exactly once</b>"]
+    raw["Left alone<br/><i>already well formed</i>"]
+    guard["safeUrl#40;#41;<br/><i>scheme allow-list, then escaped</i>"]
+    out["Output"]
+
+    tpl --> eng --> chunks --> pass
+    p1 --> p2
+    pass --> esc
+    esc --> feedval --> escaped --> out
+    esc --> ownval --> raw --> out
+    esc --> urlval --> guard --> out
+
+    note["Running the 2.0 pass first means feed text<br/>can never be re-scanned for tokens."]
+    p2 -.-> note
+
+    classDef safe fill:#eef7ee,stroke:#4a9a5a,color:#16202a
+    classDef risk fill:#fdf0ee,stroke:#c0614a,color:#16202a
+    classDef n fill:#fffbe6,stroke:#d19a4a,color:#16202a
+    class escaped,guard,raw safe
+    class feedval,urlval risk
+    class note n

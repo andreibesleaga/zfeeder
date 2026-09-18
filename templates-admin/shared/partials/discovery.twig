@@ -1,0 +1,35 @@
+{% if discovery.error %}
+<p class="zf-error" role="alert">{{ discovery.error }}</p>
+{% endif %}
+{% if discovery.feeds %}
+<h3 class="zf-subheading">Feeds found on {{ discovery.site_url }}</h3>
+<ul class="zf-found-list">
+{% for feed in discovery.feeds %}
+<li class="zf-found-item">
+<form class="zf-found-form" method="post" action="{{ admin_url('/admin/add-new') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="preview">
+<input type="hidden" name="feed_url" value="{{ feed.url }}">
+<span class="zf-found-title">{{ feed.title ?: feed.url }}</span>
+<span class="zf-found-type">{{ feed.type }}</span>
+<button class="zf-button" type="submit">Use this feed</button>
+</form>
+</li>
+{% endfor %}
+</ul>
+{% elseif discovery.guesses %}
+<h3 class="zf-subheading">Addresses worth trying</h3>
+<ul class="zf-found-list">
+{% for guess in discovery.guesses %}
+<li class="zf-found-item">
+<form class="zf-found-form" method="post" action="{{ admin_url('/admin/add-new') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="preview">
+<input type="hidden" name="feed_url" value="{{ guess }}">
+<span class="zf-found-title">{{ guess }}</span>
+<button class="zf-button" type="submit">Try this address</button>
+</form>
+</li>
+{% endfor %}
+</ul>
+{% endif %}

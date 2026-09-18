@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Tech Wire</title>
+    <link>https://techwire.example.com/</link>
+    <description>Technology headlines, updated daily</description>
+    <language>en-gb</language>
+    <lastBuildDate>Tue, 15 Sep 2026 06:00:00 GMT</lastBuildDate>
+    <copyright>Copyright 2026 Tech Wire</copyright>
+    <image><url>https://techwire.example.com/logo.png</url><title>Tech Wire</title><link>https://techwire.example.com/</link></image>
+    <item>
+      <title>Standards body publishes discovery specification</title>
+      <link>https://techwire.example.com/2026/discovery-spec</link>
+      <description>The specification defines how agents locate machine readable descriptions.</description>
+      <content:encoded><![CDATA[<p>The specification defines how agents locate machine readable descriptions of a site.</p><p>Implementers have <a href="https://techwire.example.com/2026/discovery-spec#timeline">six months</a> to comply.</p>]]></content:encoded>
+      <pubDate>Mon, 14 Sep 2026 23:07:56 GMT</pubDate>
+      <dc:creator>Newsroom</dc:creator>
+      <guid isPermaLink="true">https://techwire.example.com/2026/discovery-spec</guid>
+    </item>
+    <item>
+      <title>Headset review: impressive but expensive</title>
+      <link>https://techwire.example.com/2026/headset</link>
+      <description>Hands on with the latest virtual reality hardware.</description>
+      <pubDate>Mon, 14 Sep 2026 17:05:31 GMT</pubDate>
+      <guid isPermaLink="true">https://techwire.example.com/2026/headset</guid>
+      <enclosure url="https://techwire.example.com/audio/headset.mp3" length="18204404" type="audio/mpeg"/>
+    </item>
+    <item>
+      <title>What is machine learning, and why the concern?</title>
+      <link>https://techwire.example.com/2026/ml-explainer</link>
+      <description>An explainer covering the basics and the open questions.</description>
+      <pubDate>Mon, 14 Sep 2026 16:09:56 GMT</pubDate>
+      <guid isPermaLink="true">https://techwire.example.com/2026/ml-explainer</guid>
+    </item>
+    <item>
+      <title>Open source release adds performance work</title>
+      <link>https://techwire.example.com/2026/perf</link>
+      <description>The maintainers list twenty eight changes in this cycle.</description>
+      <pubDate>Mon, 14 Sep 2026 13:45:05 GMT</pubDate>
+      <guid isPermaLink="true">https://techwire.example.com/2026/perf</guid>
+    </item>
+  </channel>
+</rss>

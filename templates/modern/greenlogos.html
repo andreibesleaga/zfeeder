@@ -1,0 +1,47 @@
+<!--
+	zFeeder 2.0 template: greenlogos
+	The bluelogos layout in the 2004 green scheme: channel logo, green title bar, tinted
+	rows; use it when the blue would clash with the host page.
+	Descends from: classic/greenlogos (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--green zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar">
+		<span class="zf-bar__logo">{chanlogo}</span>
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}">{chantitle}</a></h2>
+			<span class="zf-bar__time">Last updated: {lastupdated}</span>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{moreurl}">More</a>
+			<a class="zf-tool" href="{feedurl}">XML</a>
+			<a class="zf-tool" href="{hideurl}">Hide</a>
+		</div>
+	</div>
+	<ul class="zf-items zf-items--rows">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+			<div class="zf-item__desc">{description}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest something zFeeder should do
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read [docs/ROADMAP.md](../blob/main/docs/ROADMAP.md) first — read/unread state,
+        search, multiple accounts and a database server are deliberately out of scope for 2.x.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do that zFeeder makes hard today?
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like it to do
+    validations: { required: true }
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried instead
+      description: A template change, a CLI script, another tool — what did not work?

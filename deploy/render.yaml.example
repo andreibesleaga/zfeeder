@@ -1,0 +1,74 @@
+# zFeeder 2.0 — Render blueprint.
+#
+#   cp deploy/render.yaml.example render.yaml
+# then point a Render Blueprint at the repository. Render builds
+# deploy/Dockerfile with the repository root as the build context.
+#
+# The persistent disk requires a paid instance type. On the free tier there is
+# no disk, so subscriptions and the feed cache are lost on every deploy and on
+# every cold start; remove the `disk:` block if you accept that.
+
+services:
+  - type: web
+    name: zfeeder
+    runtime: docker
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    plan: starter
+    region: frankfurt                # CHANGE
+    branch: main
+    healthCheckPath: /healthz
+    autoDeploy: true
+
+    disk:
+      name: zfeeder-data
+      mountPath: /var/www/data       # must match ZF_DATA_DIR
+      sizeGB: 1
+
+    envVars:
+      # The image's Apache listens on 80; tell Render to route there.
+      - key: PORT
+        value: "80"
+      - key: ZF_ENV
+        value: production
+      - key: ZF_DATA_DIR
+        value: /var/www/data
+      - key: ZF_STORAGE
+        value: flat
+      - key: ZF_TEMPLATE_SET
+        value: modern
+      - key: ZF_ADMIN_SKIN
+        value: modern
+      - key: ZF_ADMIN_USER
+        value: admin
+      - key: ZF_LOG_PATH
+        value: php://stdout
+      - key: ZF_LOG_LEVEL
+        value: info
+      # Render terminates TLS at its edge and forwards X-Forwarded-Proto.
+      - key: ZF_TRUSTED_PROXIES
+        value: "*"
+      # Set in the dashboard, not here: bin/zfeeder hash-password
+      - key: ZF_ADMIN_PASSWORD_HASH
+        sync: false
+      # Only needed if you drive /refresh over HTTP instead of cron.
+      - key: ZF_REFRESH_KEY
+        sync: false
+
+# Render cron jobs run in their own container and cannot mount the web
+# service's disk, so the refresh has to go over HTTP. Set ZF_REFRESH_KEY on
+# both services to the same value.
+  - type: cron
+    name: zfeeder-refresh
+    runtime: docker
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    plan: starter
+    region: frankfurt                # CHANGE
+    schedule: "*/15 * * * *"
+    dockerCommand: sh -c 'curl -fsS "$ZF_TARGET_URL/refresh?key=$ZF_REFRESH_KEY"'
+    envVars:
+      - key: ZF_TARGET_URL
+        value: https://zfeeder.onrender.com    # CHANGE to the web service URL
+      - key: ZF_REFRESH_KEY
+        sync: false

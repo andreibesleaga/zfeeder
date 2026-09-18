@@ -1,0 +1,36 @@
+---
+title: "How it is deployed"
+---
+flowchart TB
+    subgraph img["Container image — php:8.3-apache"]
+        ep["entrypoint<br/><i>listen on $PORT · own the volume ·<br/>migrate · seed</i>"]
+        ap["Apache<br/><i>master as root, workers as www-data</i>"]
+        code["public/ src/ templates/ vendor/"]
+    end
+
+    vol[("Volume at /var/www/data<br/><i>subscriptions · cache · config</i>")]
+    env["Environment<br/><i>44 options, ZF_*</i>"]
+    hc["/healthz<br/><i>stays up even when paused</i>"]
+
+    subgraph targets["Runs unchanged on"]
+        direction LR
+        rw["Railway<br/><i>the live demo</i>"]
+        fly["Fly.io"]
+        rn["Render"]
+        k8["Kubernetes"]
+        vps["A plain VPS"]
+    end
+
+    zip["Release archive<br/><i>vendor/ included, no Composer needed</i>"]
+    shared["Shared hosting<br/><i>how 1.6 was installed in 2004</i>"]
+
+    img --> vol
+    env --> ep
+    img --> targets
+    targets --> hc
+    zip --> shared
+
+    classDef c fill:#006699,stroke:#003d5c,color:#fff
+    classDef s fill:#f6f8fa,stroke:#8aa4b5,color:#16202a
+    class ep,ap,code c
+    class vol,env,hc,rw,fly,rn,k8,vps,zip,shared s

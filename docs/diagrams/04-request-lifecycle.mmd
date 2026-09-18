@@ -1,0 +1,42 @@
+---
+title: "Rendering one page"
+---
+sequenceDiagram
+    autonumber
+    participant B as Browser
+    participant F as Front controller
+    participant S as FeedService
+    participant C as Cache store
+    participant N as Network
+    participant P as FeedParser
+    participant R as Renderer
+
+    B->>F: GET /demos/one-line
+    F->>S: render(RenderRequest)
+    S->>S: resolveCategory() — unknown names fall back, never error
+    loop each subscribed feed, in position order
+        S->>C: get(url)
+        alt cached and still inside its interval
+            C-->>S: body
+        else expired, or nothing cached
+            S->>N: conditional GET (ETag / If-Modified-Since)
+            alt 304 Not Modified
+                N-->>S: 304 — keep the body, bump the timestamp
+            else 200
+                N-->>S: new body — store it
+            else failure
+                N-->>S: error — serve the stale copy if there is one
+            end
+        end
+        S->>P: parse(body)
+        alt will not parse
+            P-->>S: throws
+            Note over S,C: A fresh-looking but damaged entry is<br/>discarded and refetched exactly once
+        else
+            P-->>S: Channel + Items
+        end
+    end
+    S->>R: render(category, feeds, request)
+    R->>R: substitute tokens, escape once, sanitise item bodies
+    R-->>F: HTML
+    F-->>B: 200 with the hardening headers

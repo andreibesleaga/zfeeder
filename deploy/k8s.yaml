@@ -1,0 +1,210 @@
+# zFeeder 2.0 — Kubernetes manifest.
+#
+#   kubectl create namespace zfeeder
+#   kubectl -n zfeeder create secret generic zfeeder \
+#       --from-literal=ZF_ADMIN_PASSWORD_HASH="$(bin/zfeeder hash-password | head -1)" \
+#       --from-literal=ZF_REFRESH_KEY="$(openssl rand -hex 24)"
+#   kubectl -n zfeeder apply -f deploy/k8s.yaml
+#
+# Everything below assumes the image built from deploy/Dockerfile:
+# Apache on port 80, running as www-data (uid 33), data on a volume at
+# /var/www/data, HTTP health at /healthz.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zfeeder
+  labels:
+    app.kubernetes.io/name: zfeeder
+data:
+  ZF_ENV: "production"
+  ZF_DATA_DIR: "/var/www/data"
+  ZF_STORAGE: "flat"
+  ZF_TEMPLATE_SET: "modern"
+  ZF_ADMIN_SKIN: "modern"
+  ZF_ADMIN_USER: "admin"
+  # Logs to the container's stdout, so `kubectl logs` shows them.
+  ZF_LOG_PATH: "php://stdout"
+  ZF_LOG_LEVEL: "info"
+  # An ingress controller terminates TLS and forwards X-Forwarded-Proto.
+  # Without this zFeeder reads the request as plaintext and will not mark the
+  # admin session cookie Secure. Narrow "*" to the controller's pod CIDR if
+  # you can.
+  ZF_TRUSTED_PROXIES: "*"
+---
+# Subscriptions, the feed cache, config.json and (when ZF_LOG_PATH is a file)
+# the log. ReadWriteOnce is enough because the Deployment runs one replica.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zfeeder-data
+  labels:
+    app.kubernetes.io/name: zfeeder
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+  # storageClassName: standard        # CHANGE if your cluster has no default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zfeeder
+  labels:
+    app.kubernetes.io/name: zfeeder
+spec:
+  replicas: 1
+  # One replica, and a ReadWriteOnce volume: the old pod must release the
+  # volume before the new one can claim it.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zfeeder
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: zfeeder
+    spec:
+      securityContext:
+        # www-data in the image. fsGroup makes the mounted volume writable by
+        # it without an init container.
+        runAsUser: 33
+        runAsGroup: 33
+        fsGroup: 33
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: zfeeder
+          image: ghcr.io/andreibesleaga/zfeeder:2.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: zfeeder
+            - secretRef:
+                name: zfeeder
+          volumeMounts:
+            - name: data
+              mountPath: /var/www/data
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+              # Apache binds port 80 as www-data. Docker lowers
+              # net.ipv4.ip_unprivileged_port_start to 0 by default;
+              # Kubernetes does not, so the capability has to be granted.
+              add: ["NET_BIND_SERVICE"]
+            # Apache writes its pid and lock files under /var/run and
+            # /var/lock, so the root filesystem cannot be read-only.
+            readOnlyRootFilesystem: false
+          # /healthz returns 200 when the data directory is writable and 503
+          # when it is not. See docs/OBSERVABILITY.md.
+          startupProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 3
+            failureThreshold: 20
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              # memory_limit in deploy/php.ini is 192M per request.
+              memory: 512Mi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: zfeeder-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zfeeder
+  labels:
+    app.kubernetes.io/name: zfeeder
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: zfeeder
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+# Refreshing the feeds. The pod cannot mount the ReadWriteOnce volume while
+# the web pod holds it, so the cron job calls the HTTP trigger instead of
+# running bin/zfeeder refresh. It needs ZF_REFRESH_KEY in the secret; without
+# a key /refresh answers 403.
+#
+# The alternative, if you would rather run the command:
+#   kubectl -n zfeeder exec deploy/zfeeder -- bin/zfeeder refresh
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zfeeder-refresh
+  labels:
+    app.kubernetes.io/name: zfeeder
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: refresh
+              # The application image already carries curl.
+              image: ghcr.io/andreibesleaga/zfeeder:2.0.0
+              command: ["sh", "-c"]
+              args:
+                - 'curl -fsS --max-time 300 "http://zfeeder/refresh?key=${ZF_REFRESH_KEY}"'
+              env:
+                - name: ZF_REFRESH_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: zfeeder
+                      key: ZF_REFRESH_KEY
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
+---
+# Optional. Uncomment and edit for an ingress controller with TLS.
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: zfeeder
+#   annotations:
+#     cert-manager.io/cluster-issuer: letsencrypt
+# spec:
+#   ingressClassName: nginx
+#   tls:
+#     - hosts: ["feeds.example.com"]
+#       secretName: zfeeder-tls
+#   rules:
+#     - host: feeds.example.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: zfeeder
+#                 port:
+#                   name: http

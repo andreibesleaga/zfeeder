@@ -1,0 +1,24 @@
+# Local run:  docker compose -f deploy/docker-compose.yml up --build
+services:
+  zfeeder:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: zfeeder:local
+    ports: ["8080:80"]
+    environment:
+      ZF_ENV: production
+      ZF_STORAGE: flat
+      ZF_TEMPLATE_SET: modern
+      ZF_ADMIN_SKIN: modern
+      ZF_ADMIN_USER: admin
+      # bin/zfeeder hash-password 'your password'
+      ZF_ADMIN_PASSWORD_HASH: ${ZF_ADMIN_PASSWORD_HASH:-}
+      ZF_LOG_PATH: php://stdout
+      ZF_LOG_LEVEL: info
+    volumes:
+      - zfeeder-data:/var/www/data
+    restart: unless-stopped
+
+volumes:
+  zfeeder-data:

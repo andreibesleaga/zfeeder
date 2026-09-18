@@ -1,0 +1,51 @@
+<!--
+	zFeeder 2.0 template: cards
+	The flagship modern layout: each feed becomes a responsive grid of item cards that
+	reflows from one to four columns on the width of its own container, not the viewport.
+	Descends from: nothing in 1.6 - this is one of the three new 2.0 templates.
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar">
+		<span class="zf-bar__logo">{chanlogo}</span>
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}">{chantitle}</a></h2>
+			<span class="zf-bar__desc">{chandesc|trunc:140}</span>
+			<span class="zf-bar__time">Updated {lastupdated}</span>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{moreurl}">All items</a>
+			<a class="zf-tool" href="{feedurl}">Feed</a>
+			<a class="zf-tool" href="{hideurl}">Hide</a>
+		</div>
+	</div>
+	<div class="zf-grid">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<article class="zf-card">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<div class="zf-item__desc">{description|trunc:220}</div>
+			<div class="zf-card__foot">
+				<time class="zf-item__time" datetime="{itemdate_iso}">{itemdate_rel}</time>
+				<a class="zf-tool" href="{link}">Read<span class="zf-sr"> {title}</span></a>
+			</div>
+		</article>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</div>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

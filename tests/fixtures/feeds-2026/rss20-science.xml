@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Science Desk</title>
+    <link>https://science.example.com/</link>
+    <description>Research news and explainers</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 15 Sep 2026 05:30:00 GMT</lastBuildDate>
+    <item>
+      <title>Deep sea survey finds unrecorded species</title>
+      <link>https://science.example.com/2026/deep-sea</link>
+      <description>The survey catalogued eleven organisms new to science.</description>
+      <pubDate>Mon, 14 Sep 2026 19:00:00 GMT</pubDate>
+      <guid>https://science.example.com/2026/deep-sea</guid>
+    </item>
+    <item>
+      <title>Telescope array completes first sky map</title>
+      <link>https://science.example.com/2026/sky-map</link>
+      <description>Three years of observation produced a single composite image.</description>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <guid>https://science.example.com/2026/sky-map</guid>
+    </item>
+    <item>
+      <title>Battery chemistry doubles cycle life</title>
+      <link>https://science.example.com/2026/battery</link>
+      <description>A coating change slows the growth of dendrites.</description>
+      <pubDate>Sun, 13 Sep 2026 08:00:00 GMT</pubDate>
+      <guid>https://science.example.com/2026/battery</guid>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {"name": "script tag", "input": "<p>ok</p><script>alert(1)</script>", "mustNotContain": ["<script", "alert(1)"]},
+    {"name": "img onerror", "input": "<img src=x onerror=alert(1)>", "mustNotContain": ["onerror", "alert(1)"]},
+    {"name": "javascript href", "input": "<a href=\"javascript:alert(1)\">x</a>", "mustNotContain": ["javascript:"]},
+    {"name": "data uri href", "input": "<a href=\"data:text/html;base64,PHNjcmlwdD4=\">x</a>", "mustNotContain": ["data:text/html"]},
+    {"name": "svg onload", "input": "<svg onload=alert(1)></svg>", "mustNotContain": ["onload", "<svg"]},
+    {"name": "iframe", "input": "<iframe src=\"https://evil.example\"></iframe>", "mustNotContain": ["<iframe"]},
+    {"name": "style expression", "input": "<div style=\"background:url(javascript:alert(1))\">x</div>", "mustNotContain": ["javascript:"]},
+    {"name": "form", "input": "<form action=\"https://evil.example\"><input name=p></form>", "mustNotContain": ["<form", "<input"]},
+    {"name": "object", "input": "<object data=\"https://evil.example\"></object>", "mustNotContain": ["<object"]},
+    {"name": "meta refresh", "input": "<meta http-equiv=\"refresh\" content=\"0;url=https://evil.example\">", "mustNotContain": ["http-equiv"]},
+    {"name": "onmouseover attr", "input": "<b onmouseover=\"alert(1)\">hover</b>", "mustNotContain": ["onmouseover"]},
+    {"name": "nested encoded", "input": "<a href=\"jAvAsCrIpT:alert(1)\">x</a>", "mustNotContain": ["alert(1)"]},
+    {"name": "base tag", "input": "<base href=\"https://evil.example/\">", "mustNotContain": ["<base"]},
+    {"name": "keeps safe markup", "input": "<p>Hello <strong>world</strong> and <a href=\"https://ok.example/a\">link</a></p>", "mustContain": ["<strong>", "https://ok.example/a"]}
+  ]
+}

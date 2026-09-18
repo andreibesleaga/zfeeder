@@ -1,0 +1,50 @@
+---
+title: "What was kept and what was replaced"
+---
+flowchart LR
+    subgraph old["zFeeder 1.6 — 2004"]
+        o1["Flat files, no SQL"]
+        o2["OPML subscriptions"]
+        o3["Template sections<br/>and {tokens}"]
+        o4["One-line include"]
+        o5["Cache with a per-feed interval"]
+        o6["MD5 password"]
+        o7["config.php rewritten<br/>from $_POST"]
+        o8["$_GET used as a file path"]
+        o9["fopen#40;#41; on any URL"]
+        o10["Feed HTML printed raw"]
+        o11["WAP / WML output"]
+    end
+
+    subgraph new["zFeeder 2.0 — 2026"]
+        n1["Flat files <b>or</b> SQLite"]
+        n2["OPML 2.0; 2004 files still load"]
+        n3["Same sections, same 15 tokens,<br/>9 more and 3 filters"]
+        n4["Same, plus /embed and /api"]
+        n5["Same, plus ETag and 304"]
+        n6["Argon2id, rate-limited"]
+        n7["JSON, outside the web root"]
+        n8["Name pattern + realpath"]
+        n9["UrlGuard on every hop"]
+        n10["Escaped once, sanitised"]
+        n11["Removed"]
+    end
+
+    o1 --> n1
+    o2 --> n2
+    o3 --> n3
+    o4 --> n4
+    o5 --> n5
+    o6 --> n6
+    o7 --> n7
+    o8 --> n8
+    o9 --> n9
+    o10 --> n10
+    o11 --> n11
+
+    classDef keep fill:#eef7ee,stroke:#4a9a5a,color:#16202a
+    classDef fix fill:#fdf0ee,stroke:#c0614a,color:#16202a
+    classDef gone fill:#f0f0f0,stroke:#999,color:#555
+    class o1,o2,o3,o4,o5,n1,n2,n3,n4,n5 keep
+    class o6,o7,o8,o9,o10,n6,n7,n8,n9,n10 fix
+    class o11,n11 gone

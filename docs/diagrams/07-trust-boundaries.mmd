@@ -1,0 +1,47 @@
+---
+title: "Trust boundaries and where each control sits"
+---
+flowchart TB
+    subgraph outside["Outside — nothing here is trusted"]
+        anon["Anonymous visitor"]
+        pub["Feed publisher<br/><i>supplies attacker-controlled text</i>"]
+    end
+
+    subgraph edge["Request boundary"]
+        hdrs["SecurityHeaders<br/><i>CSP, nosniff, HSTS, frame-ancestors</i>"]
+        rate["RateLimiter<br/><i>login, per identity</i>"]
+        csrf["Csrf<br/><i>every mutating request</i>"]
+    end
+
+    subgraph outbound["Outbound boundary"]
+        guard["UrlGuard<br/><i>scheme + resolved IP,<br/>re-checked on every redirect</i>"]
+        limits["Size, timeout,<br/>redirect caps"]
+    end
+
+    subgraph content["Content boundary"]
+        xml["XML parsing<br/><i>DTDs with an internal subset refused</i>"]
+        san["Sanitizer<br/><i>allow-list</i>"]
+        esc["Escape once<br/>+ safeUrl#40;#41;"]
+    end
+
+    subgraph paths["Filesystem boundary"]
+        names["Name pattern<br/><i>^#91;a-z0-9_-#93;#123;1,40#125;$</i>"]
+        real["realpath containment"]
+        json["Config written as JSON,<br/><b>never PHP</b>"]
+    end
+
+    app["zFeeder"]
+    priv["Loopback, private ranges,<br/>link-local, metadata address"]
+
+    anon --> edge --> app
+    pub -->|"feed body"| content --> app
+    app --> outbound --> pub
+    outbound -.->|"refused"| priv
+    app --> paths
+
+    classDef bad fill:#fdf0ee,stroke:#c0614a,color:#16202a
+    classDef ctl fill:#eef7ee,stroke:#4a9a5a,color:#16202a
+    classDef sys fill:#006699,stroke:#003d5c,color:#fff
+    class anon,pub,priv bad
+    class hdrs,rate,csrf,guard,limits,xml,san,esc,names,real,json ctl
+    class app sys

@@ -1,0 +1,55 @@
+<tr class="zf-row{% if not row.subscribed %} is-unsubscribed{% endif %}">
+<td class="zf-cell zf-cell-check">
+<input class="zf-checkbox" type="checkbox" id="select-{{ row.index }}" name="select[{{ row.index }}]" value="1">
+<label class="zf-sr-only" for="select-{{ row.index }}">Delete {{ row.title }}</label>
+<input type="hidden" name="xml_url[{{ row.index }}]" value="{{ row.xml_url }}">
+</td>
+<td class="zf-cell">
+<label class="zf-sr-only" for="position-{{ row.index }}">Position of {{ row.title }}</label>
+<input class="zf-input zf-input-number" id="position-{{ row.index }}" name="position[{{ row.index }}]"
+       type="number" min="0" max="10000" step="1" value="{{ row.position }}">
+</td>
+<td class="zf-cell">
+<label class="zf-sr-only" for="subscribed-{{ row.index }}">Subscribed to {{ row.title }}</label>
+<select class="zf-select" id="subscribed-{{ row.index }}" name="subscribed[{{ row.index }}]">
+<option value="yes"{% if row.subscribed %} selected{% endif %}>yes</option>
+<option value="no"{% if not row.subscribed %} selected{% endif %}>no</option>
+</select>
+</td>
+<td class="zf-cell zf-cell-channel">
+<p class="zf-channel-title">
+{% if row.html_url %}<a href="{{ row.html_url }}" rel="noopener noreferrer">{{ row.title }}</a>{% else %}{{ row.title }}{% endif %}
+{% if row.language %}<span class="zf-channel-language">{{ row.language }}</span>{% endif %}
+</p>
+<p class="zf-channel-status">
+{% if row.last_fetch.cached %}
+last fetched <time>{{ row.last_fetch.at }}</time>{% if row.last_fetch.status %} - HTTP {{ row.last_fetch.status }}{% endif %}{% if row.last_fetch.stale %} - due for a refresh{% endif %}
+{% else %}
+not fetched yet
+{% endif %}
+</p>
+{% if row.last_fetch.error %}
+<p class="zf-channel-error">Last error: {{ row.last_fetch.error }}</p>
+{% endif %}
+{% if row.description %}<p class="zf-channel-description">{{ row.description }}</p>{% endif %}
+<p class="zf-channel-address"><a class="zf-feed-link" href="{{ row.xml_url }}" rel="noopener noreferrer">{{ row.xml_url }}</a></p>
+</td>
+<td class="zf-cell">
+<label class="zf-sr-only" for="refresh-{{ row.index }}">Refresh minutes for {{ row.title }}</label>
+<input class="zf-input zf-input-number" id="refresh-{{ row.index }}" name="refresh_minutes[{{ row.index }}]"
+       type="number" min="1" max="100000" step="1" value="{{ row.refresh_minutes }}">
+</td>
+<td class="zf-cell">
+<label class="zf-sr-only" for="showed-{{ row.index }}">Shown news for {{ row.title }}</label>
+<input class="zf-input zf-input-number" id="showed-{{ row.index }}" name="showed_items[{{ row.index }}]"
+       type="number" min="0" max="1000" step="1" value="{{ row.showed_items }}">
+</td>
+<td class="zf-cell zf-cell-order">
+<button class="zf-button zf-button-icon" type="submit" name="move" value="up:{{ row.index }}">
+<span aria-hidden="true">&uarr;</span><span class="zf-sr-only">Move {{ row.title }} up</span>
+</button>
+<button class="zf-button zf-button-icon" type="submit" name="move" value="down:{{ row.index }}">
+<span aria-hidden="true">&darr;</span><span class="zf-sr-only">Move {{ row.title }} down</span>
+</button>
+</td>
+</tr>

@@ -1,0 +1,42 @@
+<!--	zFeeder template
+	name / description: css / CSS template
+	author: AB & LCX
+	note: Do NOT delete or modify comments in the template files 
+
+    Use: Modify the HEAD section of the page in which you include zfeeder.php 
+         associate with a css file:
+        <link rel="stylesheet" href="newsfeeds/templates/css/css.css" type="text/css">
+     
+-->
+
+<!-- zFeeder template header -->
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+    <div class="zf_header"><span></span></div>
+<!-- ENDheader -->
+<!-- channel -->
+    <div class="zf_channel"> 
+        <div class="zf_logo">{chanlogo}</div> 
+        <div class="zf_controls">
+            <div class="zf_moreurl"><a href="{moreurl}"><span>more</span></a></div>
+            <div class="zf_hideurl"><a href="{hideurl}"><span>hide</span></a></div>
+        </div>
+        <div class="zf_chantitle"><a href="{chanlink}" title="{chandesc}" target="_blank"><span>{chantitle}</span></a></div> 
+        <div class="zf_rss"><a href="{feedurl}" title="RSS" target="_blank"><span>RSS</span></a></div>
+        <div class="zf_lastupdated"><span>{lastupdated}</span></div> 
+    </div>
+<!-- ENDchannel --> 
+<!-- news -->
+    <div class="zf_news">  
+        <div class="zf_title"><a href="{link}" target="_blank"><span>{title}</span></a></div> 
+        <div class="zf_description"><span>{description}</span></div> 
+        <div class="zf_pubdate"><span>{pubdate}</span></div>
+    </div>
+<!-- ENDnews --> 
+<!-- footer --> 
+    <div class="zf_footer"><span></span></div> 
+<!-- ENDfooter --> 
+<!-- between --> 
+    <div class="zf_between"><span></span></div> 
+<!-- ENDbetween --> 

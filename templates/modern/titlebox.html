@@ -1,0 +1,41 @@
+<!--
+	zFeeder 2.0 template: titlebox
+	A narrow headline box for a sidebar: channel name, when it was fetched, and the
+	titles only - the 120px table of 2004 turned into a fluid card.
+	Descends from: classic/titlebox (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--box zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+	<div class="zf-box">
+<!-- ENDheader -->
+
+<!-- channel -->
+		<div class="zf-bar">
+			<div class="zf-bar__head">
+				<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+				<span class="zf-bar__time">{lastupdated}</span>
+			</div>
+		</div>
+		<ul class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+			<li class="zf-item">
+				<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+				<time class="zf-item__time" datetime="{itemdate_iso}">{itemdate_rel}</time>
+			</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+		</ul>
+	</div>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<!-- ENDbetween -->

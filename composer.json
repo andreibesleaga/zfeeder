@@ -1,0 +1,86 @@
+{
+    "name": "andreibesleaga/zfeeder",
+    "description": "zFeeder 2.0 - the 2004 PHP RSS aggregator, rebuilt for 2026. Flat-file or SQLite, OPML subscriptions, template driven, embeddable in one line.",
+    "type": "project",
+    "keywords": ["rss", "atom", "jsonfeed", "aggregator", "feedreader", "opml", "syndication", "zfeeder"],
+    "homepage": "https://github.com/andreibesleaga/zfeeder",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Andrei N. Besleaga",
+            "homepage": "https://andreibesleaga.com",
+            "role": "Original author (2003-2004) and maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/andreibesleaga/zfeeder/issues",
+        "source": "https://github.com/andreibesleaga/zfeeder"
+    },
+    "require": {
+        "php": ">=8.3",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*",
+        "laminas/laminas-feed": "^2.23",
+        "nyholm/psr7": "^1.8",
+        "nyholm/psr7-server": "^1.1",
+        "psr/http-message": "^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/log": "^3.0",
+        "symfony/console": "^7.1",
+        "symfony/html-sanitizer": "^7.1",
+        "symfony/http-client": "^7.1",
+        "twig/twig": "^3.14"
+    },
+    "require-dev": {
+        "deptrac/deptrac": "^4.7",
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^11.4"
+    },
+    "suggest": {
+        "ext-pdo_sqlite": "Required for the sqlite storage backend (ZF_STORAGE=sqlite)",
+        "ext-curl": "Faster HTTP transport for feed fetching"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zfeeder\\": "src/"
+        },
+        "files": [
+            "src/Embed/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zfeeder\\Tests\\": "tests/"
+        }
+    },
+    "bin": ["bin/zfeeder"],
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite unit",
+        "test:golden": "phpunit --testsuite golden",
+        "test:security": "phpunit --testsuite security",
+        "stan": "phpstan analyse --memory-limit=1G",
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix",
+        "deptrac": "deptrac analyse --config-file=deptrac.yaml",
+        "check": ["@cs", "@stan", "@deptrac", "@test"]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.0.x-dev"
+        }
+    }
+}

@@ -1,0 +1,59 @@
+# zFeeder 2.0 — Fly.io application definition.
+#
+#   cp deploy/fly.toml.example fly.toml
+#   fly apps create zfeeder
+#   fly volumes create zfeeder_data --size 1 --region cdg
+#   fly secrets set ZF_ADMIN_PASSWORD_HASH='...'
+#   fly deploy
+#
+# Run every command from the repository root: the build context is the root,
+# which is what deploy/Dockerfile expects.
+
+app = "zfeeder"                  # CHANGE to your app name
+primary_region = "cdg"           # CHANGE; must match the volume's region
+
+[build]
+  dockerfile = "deploy/Dockerfile"
+
+# Everything here is public configuration. The password hash and the refresh
+# key go in `fly secrets set`, not in this file.
+[env]
+  ZF_ENV = "production"
+  ZF_DATA_DIR = "/var/www/data"
+  ZF_STORAGE = "flat"
+  ZF_TEMPLATE_SET = "modern"
+  ZF_ADMIN_SKIN = "modern"
+  ZF_ADMIN_USER = "admin"
+  ZF_LOG_PATH = "php://stdout"
+  ZF_LOG_LEVEL = "info"
+  # Fly terminates TLS at its proxy and forwards X-Forwarded-Proto.
+  # Without this, zFeeder treats the request as plaintext and will not set the
+  # Secure flag on the session cookie.
+  ZF_TRUSTED_PROXIES = "*"
+
+[http_service]
+  internal_port = 80             # the image's Apache listens on 80
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  # Keep one machine running: the feed cache lives on the volume, and a
+  # stopped machine runs no cron.
+  min_machines_running = 1
+
+  [[http_service.checks]]
+    method = "GET"
+    path = "/healthz"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "15s"
+
+# The volume holds subscriptions, the feed cache, config.json and the log.
+# Without it every deploy starts from the seeded data-dist/ copy again.
+[mounts]
+  source = "zfeeder_data"
+  destination = "/var/www/data"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+  cpus = 1

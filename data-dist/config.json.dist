@@ -1,0 +1,16 @@
+{
+    "default_category": "zfeeder",
+    "template_set": "modern",
+    "default_template": "cards",
+    "admin_skin": "modern",
+    "channel_location": "top",
+    "channel_one_bar": true,
+    "powered_by": true,
+    "max_description_chars": 600,
+    "allow_html_in_items": true,
+    "refresh_mode": "online",
+    "display_error": false,
+    "owner_name": "",
+    "owner_email": "",
+    "log_level": "warning"
+}

@@ -1,0 +1,9 @@
+<nav class="zf-nav" aria-label="Administration">
+<ul class="zf-nav-list">
+{% for item in menu %}
+<li class="zf-nav-item">
+<a class="zf-nav-link{% if item.key == screen %} is-current{% endif %}" href="{{ item.href }}"{% if item.key == screen %} aria-current="page"{% endif %}>{{ item.label }}</a>
+</li>
+{% endfor %}
+</ul>
+</nav>

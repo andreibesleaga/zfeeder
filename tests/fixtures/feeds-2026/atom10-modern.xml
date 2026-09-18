@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>Modern Atom Source</title>
+  <link href="https://atom.example.org/"/>
+  <link rel="self" href="https://atom.example.org/feed.atom"/>
+  <id>urn:uuid:9a1b2c3d-0000-4000-8000-000000000001</id>
+  <updated>2026-09-15T06:00:00Z</updated>
+  <subtitle>Long form writing about software</subtitle>
+  <icon>https://atom.example.org/icon.png</icon>
+  <entry>
+    <title>Deterministic builds in practice</title>
+    <link href="https://atom.example.org/posts/deterministic"/>
+    <id>urn:uuid:9a1b2c3d-0000-4000-8000-000000000101</id>
+    <updated>2026-09-14T22:10:00Z</updated>
+    <published>2026-09-14T22:10:00Z</published>
+    <author><name>A. Author</name></author>
+    <summary>Reproducing a byte-identical artefact twice is mostly a matter of removing clocks.</summary>
+    <content type="html">&lt;p&gt;Reproducing a byte-identical artefact twice is mostly a matter of removing &lt;strong&gt;clocks&lt;/strong&gt; and paths.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>A note on feed parsing</title>
+    <link href="https://atom.example.org/posts/parsing"/>
+    <id>urn:uuid:9a1b2c3d-0000-4000-8000-000000000102</id>
+    <updated>2026-09-13T11:00:00Z</updated>
+    <published>2026-09-13T11:00:00Z</published>
+    <author><name>B. Writer</name></author>
+    <summary>Lenient parsers keep old feeds alive.</summary>
+  </entry>
+  <entry>
+    <title>Container queries everywhere</title>
+    <link href="https://atom.example.org/posts/container-queries"/>
+    <id>urn:uuid:9a1b2c3d-0000-4000-8000-000000000103</id>
+    <updated>2026-09-12T08:45:00Z</updated>
+    <published>2026-09-12T08:45:00Z</published>
+    <summary>Components that size themselves to their slot, not the viewport.</summary>
+  </entry>
+</feed>

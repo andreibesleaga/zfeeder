@@ -1,0 +1,41 @@
+<!--
+	zFeeder 2.0 template: simplegray
+	A neutral grey column that borrows no colour from the host page, with the 2004
+	ornament between feeds; the right choice when the page already has a palette.
+	Descends from: classic/simplegray (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--gray zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar">
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+			<span class="zf-bar__time">Updated {lastupdated}</span>
+		</div>
+	</div>
+	<ul class="zf-items zf-items--rows">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+			<div class="zf-item__desc">{description}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf zf--gray"><div class="zf-sep zf-sep--dots" role="separator"></div></div>
+<!-- ENDbetween -->

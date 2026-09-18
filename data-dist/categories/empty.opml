@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- zFeeder 2.0 subscription list. Edit in the admin panel, with bin/zfeeder, or by hand. -->
+<opml version="2.0">
+  <head>
+    <title>empty</title>
+    <dateModified>Thu, 18 Sep 2026 00:00:00 GMT</dateModified>
+    <ownerName>zFeeder</ownerName>
+  </head>
+  <body>
+  </body>
+</opml>

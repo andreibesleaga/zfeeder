@@ -1,0 +1,46 @@
+<!--
+	zFeeder 2.0 template: ampheta
+	AmphetaDesk's desktop-aggregator look: an amber channel strip and one dense line per
+	item, headline and summary running together, for reading a lot of feeds quickly.
+	Descends from: classic/ampheta (2004, after AmphetaDesk's default template).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--amber zf-feed zf-list" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar zf-bar--solid">
+		<span class="zf-bar__logo">{chanlogo}</span>
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}">{chantitle}</a></h2>
+			<span class="zf-bar__time">Last downloaded: {lastupdated}</span>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{feedurl}">XML</a>
+			<a class="zf-tool" href="{hideurl}">Hide</a>
+		</div>
+	</div>
+	<ul class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{itemdate_rel}</time>
+			<div class="zf-item__desc">{description|trunc:180}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

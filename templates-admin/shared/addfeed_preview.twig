@@ -1,0 +1,76 @@
+{% extends 'layout.twig' %}
+{% block heading %}Add this feed{% endblock %}
+{% block content %}
+{% if error %}
+<p class="zf-error" role="alert">{{ error }}</p>
+{% endif %}
+
+<section class="zf-panel" aria-labelledby="zf-readfrom-heading">
+<h2 class="zf-subheading" id="zf-readfrom-heading">What this feed says about itself</h2>
+<dl class="zf-status">
+<div class="zf-status-item"><dt>Feed address</dt><dd>{{ preview.feed_url }}</dd></div>
+<div class="zf-status-item"><dt>Site address</dt><dd>{{ preview.site_url ?: 'not given' }}</dd></div>
+<div class="zf-status-item"><dt>Language</dt><dd>{{ preview.language ?: 'not given' }}</dd></div>
+<div class="zf-status-item"><dt>Format</dt><dd>{{ preview.format ?: 'unknown' }}</dd></div>
+<div class="zf-status-item"><dt>Copyright</dt><dd>{{ preview.copyright ?: 'not given' }}</dd></div>
+<div class="zf-status-item"><dt>Last build date</dt><dd>{{ preview.last_build ?: 'not given' }}</dd></div>
+<div class="zf-status-item"><dt>Items right now</dt><dd>{{ preview.items }}</dd></div>
+</dl>
+<p><a class="zf-external" href="{{ validator_url }}" rel="noopener noreferrer">Validate this feed at validator.w3.org</a></p>
+</section>
+
+<section class="zf-panel" aria-labelledby="zf-subscribe-heading">
+<h2 class="zf-subheading" id="zf-subscribe-heading">Subscribe</h2>
+<form class="zf-form" method="post" action="{{ admin_url('/admin/add-new') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="subscribe">
+<input type="hidden" name="feed_url" value="{{ preview.feed_url }}">
+<input type="hidden" name="site_url" value="{{ preview.site_url }}">
+<input type="hidden" name="language" value="{{ preview.language }}">
+
+<div class="zf-field">
+<label class="zf-label" for="title">Title</label>
+<input class="zf-input" id="title" name="title" type="text" value="{{ preview.title }}" aria-describedby="title-help">
+<p class="zf-help" id="title-help">Shown in the channel bar. Edit it freely: it is yours, not the publisher's.</p>
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="description">Description</label>
+<input class="zf-input" id="description" name="description" type="text" value="{{ preview.description }}">
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="refresh_minutes">Refresh time (minutes)</label>
+<input class="zf-input zf-input-number" id="refresh_minutes" name="refresh_minutes" type="number"
+       min="1" max="100000" step="1" value="{{ preview.refresh_minutes }}" aria-describedby="refresh_minutes-help">
+<p class="zf-help" id="refresh_minutes-help">How long a fetched copy is treated as fresh.</p>
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="showed_items">Shown news</label>
+<input class="zf-input zf-input-number" id="showed_items" name="showed_items" type="number"
+       min="0" max="1000" step="1" value="{{ preview.showed_items }}" aria-describedby="showed_items-help">
+<p class="zf-help" id="showed_items-help">Zero hides the feed without unsubscribing from it.</p>
+</div>
+
+<div class="zf-field zf-field-check">
+<input class="zf-checkbox" id="subscribed" name="subscribed" type="checkbox" value="1"{% if preview.subscribed %} checked{% endif %}>
+<label class="zf-label" for="subscribed">Enabled</label>
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="category">Category</label>
+<select class="zf-select" id="category" name="category">
+{% for name in categories %}
+<option value="{{ name }}"{% if name == selected_category %} selected{% endif %}>{{ name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="zf-actions">
+<button class="zf-button zf-button-primary" type="submit">Add to the subscription list</button>
+<a class="zf-button zf-button-quiet" href="{{ admin_url('/admin/add-new') }}">Cancel</a>
+</div>
+</form>
+</section>
+{% endblock %}

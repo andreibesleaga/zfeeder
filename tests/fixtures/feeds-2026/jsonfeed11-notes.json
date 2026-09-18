@@ -1,0 +1,31 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Notes in JSON",
+  "home_page_url": "https://notes.example.io/",
+  "feed_url": "https://notes.example.io/feed.json",
+  "description": "Short notes published as JSON Feed",
+  "language": "en",
+  "icon": "https://notes.example.io/icon.png",
+  "authors": [{ "name": "N. Publisher", "url": "https://notes.example.io/about" }],
+  "items": [
+    {
+      "id": "https://notes.example.io/1",
+      "url": "https://notes.example.io/1",
+      "title": "JSON Feed is still fine",
+      "summary": "A small format that does one job.",
+      "content_html": "<p>A small format that does <em>one job</em> and stops there.</p>",
+      "date_published": "2026-09-14T10:00:00Z",
+      "authors": [{ "name": "N. Publisher" }]
+    },
+    {
+      "id": "https://notes.example.io/2",
+      "url": "https://notes.example.io/2",
+      "title": "Attachments in feeds",
+      "content_text": "Enclosures predate podcasts by a few years.",
+      "date_published": "2026-09-13T09:30:00Z",
+      "attachments": [
+        { "url": "https://notes.example.io/audio/2.mp3", "mime_type": "audio/mpeg", "size_in_bytes": 5120000 }
+      ]
+    }
+  ]
+}

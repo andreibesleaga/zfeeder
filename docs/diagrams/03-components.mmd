@@ -1,0 +1,52 @@
+---
+title: "Components, by enforced layer"
+---
+flowchart TB
+    subgraph infra["Infrastructure — delivery and adapters"]
+        http["Http<br/><i>Router, controllers,<br/>SecurityHeaders, ErrorHandler</i>"]
+        admin["Admin<br/><i>Auth, CSRF, 7 screens, Twig</i>"]
+        clic["Cli<br/><i>12 commands</i>"]
+        legacy["Legacy<br/><i>1.6 importers</i>"]
+    end
+
+    subgraph appl["Application — the use cases"]
+        fetch["Fetch<br/><i>FeedFetcher, UrlGuard</i>"]
+        parse["Parse<br/><i>FeedParser, Autodiscovery</i>"]
+        render["Render<br/><i>TemplateEngine, Renderer,<br/>Sanitizer, Tokens</i>"]
+        embed["Embed<br/><i>zfeeder#40;#41;</i>"]
+    end
+
+    subgraph store["Storage — one port, two adapters"]
+        port["SubscriptionStore +<br/>CacheStore interfaces"]
+        flatA["Flat adapter"]
+        sqlA["SQLite adapter"]
+    end
+
+    subgraph dom["Domain — knows nothing outside itself"]
+        subs["Subscription<br/><i>Category, Feed</i>"]
+        model["Parse#92;Model<br/><i>Channel, Item</i>"]
+    end
+
+    cfg["Config<br/><i>Schema, Loader, Writer</i>"]
+    comp["Composition root<br/><i>Kernel, FeedService</i>"]
+
+    infra --> appl
+    infra --> comp
+    appl --> store
+    appl --> dom
+    store --> dom
+    appl --> cfg
+    store --> cfg
+    port --> flatA
+    port --> sqlA
+    comp --> appl
+    comp --> store
+
+    classDef d fill:#fff4e6,stroke:#d19a4a,color:#16202a
+    classDef a fill:#e8f2f8,stroke:#006699,color:#16202a
+    classDef s fill:#eef7ee,stroke:#4a9a5a,color:#16202a
+    classDef i fill:#f6f8fa,stroke:#8aa4b5,color:#16202a
+    class subs,model d
+    class fetch,parse,render,embed a
+    class port,flatA,sqlA s
+    class http,admin,clic,legacy i

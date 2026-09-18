@@ -1,0 +1,68 @@
+{% extends 'layout.twig' %}
+{% block heading %}Import feed list{% endblock %}
+{% block content %}
+{% if error %}
+<p class="zf-error" id="import-error" role="alert">{{ error }}</p>
+{% endif %}
+
+<section class="zf-panel" aria-labelledby="zf-import-heading">
+<h2 class="zf-subheading" id="zf-import-heading">Import an OPML subscription list</h2>
+<form class="zf-form" method="post" action="{{ admin_url('/admin/import') }}" enctype="multipart/form-data">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="action" value="import">
+
+<div class="zf-field">
+<label class="zf-label" for="opml_file">Upload a file</label>
+<input class="zf-input zf-input-file" type="file" id="opml_file" name="opml_file" accept=".opml,.xml,text/xml,application/xml"
+       aria-describedby="opml_file-help{% if error %} import-error{% endif %}"{% if error %} aria-invalid="true"{% endif %}>
+<p class="zf-help" id="opml_file-help">Up to {{ (max_bytes / 1024)|round }} kB and {{ max_outlines }} feeds. The file is read and parsed; what your browser calls it makes no difference.</p>
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="opml_url">Or an address to read it from</label>
+<input class="zf-input" type="url" id="opml_url" name="opml_url" inputmode="url" spellcheck="false"
+       placeholder="https://example.com/subscriptions.opml"
+       aria-describedby="opml_url-help{% if error %} import-error{% endif %}"{% if error %} aria-invalid="true"{% endif %}>
+<p class="zf-help" id="opml_url-help">Public addresses only: private and local addresses are refused.</p>
+</div>
+
+<div class="zf-field">
+<label class="zf-label" for="import-category">Into which category</label>
+<select class="zf-select" id="import-category" name="category">
+{% for name in categories %}
+<option value="{{ name }}"{% if name == selected_category %} selected{% endif %}>{{ name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<fieldset class="zf-fieldset">
+<legend class="zf-legend">What to do with what is already there</legend>
+<div class="zf-field zf-field-check">
+<input class="zf-radio" type="radio" id="mode-append" name="mode" value="append" checked>
+<label class="zf-label" for="mode-append">Add the imported feeds to the list</label>
+</div>
+<div class="zf-field zf-field-check">
+<input class="zf-radio" type="radio" id="mode-replace" name="mode" value="replace">
+<label class="zf-label" for="mode-replace">Replace the list with the imported feeds</label>
+</div>
+</fieldset>
+
+<div class="zf-actions">
+<button class="zf-button zf-button-primary" type="submit">Import</button>
+</div>
+</form>
+</section>
+
+<section class="zf-panel" aria-labelledby="zf-export-heading">
+<h2 class="zf-subheading" id="zf-export-heading">Export</h2>
+{% if exports %}
+<ul class="zf-export-list">
+{% for export in exports %}
+<li class="zf-export-item"><a class="zf-export-link" href="{{ export.href }}" download>{{ export.name }}.opml</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="zf-empty">There are no categories to export yet.</p>
+{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,101 @@
+# Architecture boundaries, enforced rather than described.
+#
+# The shape is hexagonal: a Domain that knows nothing about the outside world,
+# an Application layer that orchestrates it, adapters (Storage, Infrastructure)
+# at the edges, and a Composition root that is allowed to know everything
+# because wiring things together is precisely its job.
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - '#src/Embed/functions.php#'
+  layers:
+    # Value objects and primitives with no dependencies of their own.
+    - name: Shared
+      collectors:
+        - type: classNameRegex
+          value: '#^Zfeeder\\Version$#'
+        - type: directory
+          value: src/Exception/.*
+
+    # The problem domain: subscriptions and the normalised feed model.
+    - name: Domain
+      collectors:
+        - type: directory
+          value: src/Subscription/.*
+        - type: directory
+          value: src/Parse/Model/.*
+
+    # Configuration is read by nearly everything and reads nothing itself.
+    - name: Config
+      collectors:
+        - type: directory
+          value: src/Config/.*
+
+    # Ports and their two adapters.
+    - name: Storage
+      collectors:
+        - type: directory
+          value: src/Storage/.*
+
+    # Use cases: fetching, parsing and rendering.
+    - name: Application
+      collectors:
+        - type: directory
+          value: src/Fetch/.*
+        - type: directory
+          value: src/Render/.*
+        - type: classNameRegex
+          value: '#^Zfeeder\\Parse\\(?!Model)[A-Za-z]+$#'
+
+    # Delivery mechanisms and outbound adapters.
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: src/Http/.*
+        - type: directory
+          value: src/Admin/.*
+        - type: directory
+          value: src/Cli/.*
+        - type: directory
+          value: src/Legacy/.*
+        - type: directory
+          value: src/Log/.*
+        - type: directory
+          value: src/Embed/.*
+
+    # The composition root: builds the object graph, so it sees everything.
+    - name: Composition
+      collectors:
+        - type: classNameRegex
+          value: '#^Zfeeder\\(Kernel|FeedService)$#'
+
+  ruleset:
+    Shared: ~
+    Domain:
+      - Shared
+    Config:
+      - Shared
+    Storage:
+      - Shared
+      - Domain
+      - Config
+    Application:
+      - Shared
+      - Domain
+      - Config
+      - Storage
+    Infrastructure:
+      - Shared
+      - Domain
+      - Config
+      - Storage
+      - Application
+      - Composition
+    Composition:
+      - Shared
+      - Domain
+      - Config
+      - Storage
+      - Application
+      - Infrastructure

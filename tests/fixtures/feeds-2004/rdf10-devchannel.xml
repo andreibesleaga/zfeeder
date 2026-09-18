@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel rdf:about="http://dev.example.com/">
+    <title>DevChannel</title>
+    <link>http://dev.example.com/</link>
+    <description>Developer headlines</description>
+    <dc:language>en</dc:language>
+    <items><rdf:Seq>
+      <rdf:li rdf:resource="http://dev.example.com/1"/>
+      <rdf:li rdf:resource="http://dev.example.com/2"/>
+      <rdf:li rdf:resource="http://dev.example.com/3"/>
+    </rdf:Seq></items>
+  </channel>
+  <item rdf:about="http://dev.example.com/1">
+    <title>Kernel 2.6 ships</title>
+    <link>http://dev.example.com/1</link>
+    <description>The long awaited release is out.</description>
+    <dc:date>2004-02-25T14:00:00Z</dc:date>
+  </item>
+  <item rdf:about="http://dev.example.com/2">
+    <title>Compiler gains new warnings</title>
+    <link>http://dev.example.com/2</link>
+    <description>Static checks catch more mistakes.</description>
+    <dc:date>2004-02-24T09:30:00Z</dc:date>
+  </item>
+  <item rdf:about="http://dev.example.com/3">
+    <title>Package manager rewrite</title>
+    <link>http://dev.example.com/3</link>
+    <description>Dependency solving becomes deterministic.</description>
+    <dc:date>2004-02-23T18:05:00Z</dc:date>
+  </item>
+</rdf:RDF>

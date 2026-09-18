@@ -1,0 +1,83 @@
+# zFeeder 2.0 — .htaccess for shared hosting.
+#
+# tools/build-dist.sh copies this file into the release archive as
+# public/.htaccess. It is the .htaccess equivalent of deploy/apache-vhost.conf,
+# for hosts where you cannot edit the virtual host.
+#
+# It assumes the document root is the public/ directory. If your host serves
+# the account root instead, see the "subdirectory" note below.
+#
+# Apache 2.4 syntax. On Apache 2.2 replace every "Require all denied" with
+# "Order allow,deny" / "Deny from all".
+
+Options -Indexes -MultiViews +FollowSymLinks
+DirectoryIndex index.php
+
+# ---------------------------------------------------------------------------
+# Front controller
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Uncomment and set when zFeeder is served from a subdirectory, for example
+    # https://example.com/feeds/ with the archive unpacked into ~/public_html/feeds.
+    # RewriteBase /feeds/
+
+    # Real files and directories are served as they are: assets, images.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Everything else goes to the front controller.
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+# Shared hosts rarely let you set environment variables any other way. Every
+# ZF_* variable in docs/CONFIGURATION.md can be set here.
+#
+# mod_env puts these in $_SERVER, which is where ConfigLoader reads them from
+# when getenv() has nothing. They do not work if the host runs PHP through a
+# CGI wrapper that strips the environment; in that case put the same settings
+# in data/config.json instead, using the JSON keys from docs/CONFIGURATION.md.
+#
+# ZF_DATA_DIR is usually best left alone on shared hosting. The default is
+# <project root>/data, a sibling of this directory, which is already outside
+# the document root. Pointing it somewhere else moves the subscriptions, the
+# cache and the log, but NOT config.json: that is always read from
+# <project root>/data/config.json.
+<IfModule mod_env.c>
+    # SetEnv ZF_URL https://example.com/
+    # SetEnv ZF_TEMPLATE_SET modern
+    # SetEnv ZF_ADMIN_PASSWORD_HASH "$argon2id$v=19$m=65536,t=4,p=1$..."
+    # SetEnv ZF_DATA_DIR /home/youraccount/zfeeder-data
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Caching
+# ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|gif|jpg|jpeg|svg|woff2)$">
+        Header set Cache-Control "public, max-age=604800, immutable"
+    </FilesMatch>
+    <FilesMatch "\.(json|opml|xml)$">
+        Header set Cache-Control "no-store"
+    </FilesMatch>
+</IfModule>
+
+# Response security headers are set by PHP, in src/Http/SecurityHeaders.php,
+# because the policy differs between the admin panel, the public pages and the
+# embed endpoint. Do not duplicate them here.
+
+# ---------------------------------------------------------------------------
+# Files that must never be served
+# ---------------------------------------------------------------------------
+<FilesMatch "^(composer\.(json|lock)|\.env.*|.*\.md|.*\.sqlite|.*\.sqlite-wal|.*\.sqlite-shm|.*\.log|.*\.opml)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

@@ -1,0 +1,109 @@
+<!-- zFeeder template header -->
+<SCRIPT LANGUAGE="JavaScript">
+function SwitchChannel( obj )
+{
+if(document.getElementById(escape(obj)))
+        {
+
+            var el = document.getElementById(escape(obj));
+       
+            if (el.style.display != "block") {
+               el.style.display = "block";
+            } else {
+                el.style.display = "none";
+            }
+
+        }
+}
+</SCRIPT>
+<!-- header -->
+<div class="feed">
+<!-- channel -->
+<div class="channel">
+    <div class="fold">
+       <img src="http://zf.test/newsfeeds/images/infojunkie_triangle.png" alt="unfold" border="0" onclick="SwitchChannel(1);" />
+    </div>
+    <div class="logo">      
+       
+    </div>
+    <div class="controls">
+      <a href="/golden.php?zfmore=1&amp;zftemplate=infojunkie&amp;zfcategory=goldenB&amp;zfposition=p1,p2,#zfchannel1"><img src="http://zf.test/newsfeeds/images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a> &nbsp;
+    </div>
+    <div class="chanlink">
+           <a href="http://dev.example.com/" title="Developer headlines">DevChannel</a>
+    </div>
+</div>
+<div class="newslist" id=1>
+    <div class="dateline">
+        last updated: Mon, 31 Dec 2029 22:00:00 GMT
+    </div>
+<!-- news --> 
+    <div class="newstitle">
+      <a href="http://dev.example.com/1" title="http://dev.example.com/1">Kernel 2.6 ships</a>
+      <span class="footer">[2004-02-25T14:00:00Z]</span>
+    </div>
+    <div class="newsdesc">
+        The long awaited release is out.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="http://dev.example.com/2" title="http://dev.example.com/2">Compiler gains new warnings</a>
+      <span class="footer">[2004-02-24T09:30:00Z]</span>
+    </div>
+    <div class="newsdesc">
+        Static checks catch more mistakes.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="http://dev.example.com/3" title="http://dev.example.com/3">Package manager rewrite</a>
+      <span class="footer">[2004-02-23T18:05:00Z]</span>
+    </div>
+    <div class="newsdesc">
+        Dependency solving becomes deterministic.
+    </div>
+ <!-- footer --> 
+  </div> <!-- newslist section -->
+</div> <!-- channel section -->
+<!-- between --> 
+<!-- header -->
+<div class="feed">
+<!-- channel -->
+<div class="channel">
+    <div class="fold">
+       <img src="http://zf.test/newsfeeds/images/infojunkie_triangle.png" alt="unfold" border="0" onclick="SwitchChannel(2);" />
+    </div>
+    <div class="logo">      
+       
+    </div>
+    <div class="controls">
+      <a href="/golden.php?zfmore=2&amp;zftemplate=infojunkie&amp;zfcategory=goldenB&amp;zfposition=p1,p2,#zfchannel2"><img src="http://zf.test/newsfeeds/images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a> &nbsp;
+    </div>
+    <div class="chanlink">
+           <a href="http://weblog.example.net/" title="Notes about publishing on the web">Weblog Central</a>
+    </div>
+</div>
+<div class="newslist" id=2>
+    <div class="dateline">
+        last updated: Mon, 31 Dec 2029 22:00:00 GMT
+    </div>
+<!-- news --> 
+    <div class="newstitle">
+      <a href="http://weblog.example.net/why-rss" title="http://weblog.example.net/why-rss">Why RSS matters</a>
+      <span class="footer">[]</span>
+    </div>
+    <div class="newsdesc">
+        Syndication lets readers follow many sites at once.
+    </div>
+ <!-- news --> 
+    <div class="newstitle">
+      <a href="http://weblog.example.net/aggregators" title="http://weblog.example.net/aggregators">Aggregators compared</a>
+      <span class="footer">[]</span>
+    </div>
+    <div class="newsdesc">
+        A look at desktop and server-side readers.
+    </div>
+ <!-- footer --> 
+  </div> <!-- newslist section -->
+</div> <!-- channel section -->
+<!-- between --> 
+<span style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-small;">powered by <a href="http://zvonnews.sourceforge.net">zFeeder</a></span>

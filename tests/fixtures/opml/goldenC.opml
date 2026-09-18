@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<opml version="1.0">
+  <head>
+    <title>goldenC</title>
+    <dateModified>Wed, 25 Feb 2004 14:00:00 GMT</dateModified>
+  </head>
+  <body>
+    <outline type="rss" position="1" text="Tech Wire" title="Tech Wire" description="Tech Wire description" xmlUrl="http://fixtures.test/rss20-content-encoded.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="4" isSubscribed="yes" language="en" />
+    <outline type="rss" position="2" text="Science Desk" title="Science Desk" description="Science Desk description" xmlUrl="http://fixtures.test/rss20-science.xml" htmlUrl="http://example.org/" refreshTime="999999" showedItems="3" isSubscribed="yes" language="en" />
+  </body>
+</opml>

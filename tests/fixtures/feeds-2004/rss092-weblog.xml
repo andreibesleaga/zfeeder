@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<rss version="0.92">
+  <channel>
+    <title>Weblog Central</title>
+    <link>http://weblog.example.net/</link>
+    <description>Notes about publishing on the web</description>
+    <item>
+      <title>Why RSS matters</title>
+      <link>http://weblog.example.net/why-rss</link>
+      <description>Syndication lets readers follow many sites at once.</description>
+    </item>
+    <item>
+      <title>Aggregators compared</title>
+      <link>http://weblog.example.net/aggregators</link>
+      <description>A look at desktop and server-side readers.</description>
+    </item>
+  </channel>
+</rss>

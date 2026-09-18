@@ -1,0 +1,25 @@
+{% extends 'layout.twig' %}
+{% block heading %}Sign in to zFeeder{% endblock %}
+{% block content %}
+<form class="zf-form zf-form-login" method="post" action="{{ admin_url('/admin/login') }}">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+{% if error %}
+<p class="zf-error" id="login-error" role="alert">{{ error }}</p>
+{% endif %}
+<div class="zf-field">
+<label class="zf-label" for="admin_user">User name</label>
+<input class="zf-input" id="admin_user" name="admin_user" type="text" value="{{ admin_user }}"
+       autocomplete="username" autocapitalize="none" spellcheck="false" required
+       {% if error %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+</div>
+<div class="zf-field">
+<label class="zf-label" for="admin_pass">Password</label>
+<input class="zf-input" id="admin_pass" name="admin_pass" type="password"
+       autocomplete="current-password" required
+       {% if error %}aria-invalid="true" aria-describedby="login-error"{% endif %}>
+</div>
+<div class="zf-actions">
+<button class="zf-button zf-button-primary" type="submit">Sign in</button>
+</div>
+</form>
+{% endblock %}

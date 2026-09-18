@@ -1,0 +1,43 @@
+<!--
+	zFeeder 2.0 template: simpleblue
+	The plainest blue column: title bar, hide link, headline, date and summary - no logo,
+	no icons, nothing to load. The safest template to drop into an unknown page.
+	Descends from: classic/simpleblue (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+<!-- ENDheader -->
+
+<!-- channel -->
+	<div class="zf-bar">
+		<div class="zf-bar__head">
+			<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+		</div>
+		<div class="zf-bar__tools">
+			<a class="zf-tool" href="{hideurl}">Hide this channel</a>
+		</div>
+	</div>
+	<ul class="zf-items zf-items--rows">
+<!-- ENDchannel -->
+
+<!-- news -->
+		<li class="zf-item">
+			<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			<time class="zf-item__time" datetime="{itemdate_iso}">{pubdate}</time>
+			<div class="zf-item__desc">{description}</div>
+		</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+	</ul>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<div class="zf"><hr class="zf-sep"></div>
+<!-- ENDbetween -->

@@ -1,0 +1,33 @@
+{% extends 'layout.twig' %}
+{% block heading %}Welcome{{ user ? ', ' ~ user : '' }}{% endblock %}
+{% block content %}
+{% if status.problem %}
+<p class="zf-error" role="alert">{{ status.problem }}</p>
+{% endif %}
+
+<section class="zf-panel" aria-labelledby="zf-status-heading">
+<h2 class="zf-subheading" id="zf-status-heading">Status</h2>
+<dl class="zf-status">
+<div class="zf-status-item"><dt>Categories</dt><dd>{{ status.categories }}</dd></div>
+<div class="zf-status-item"><dt>Subscriptions</dt><dd>{{ status.subscriptions }}</dd></div>
+<div class="zf-status-item"><dt>Cached feeds</dt><dd>{{ status.cache_entries }} ({{ (status.cache_bytes / 1024)|round }} kB)</dd></div>
+<div class="zf-status-item"><dt>Storage</dt><dd>{{ status.storage }}</dd></div>
+<div class="zf-status-item"><dt>Refresh mode</dt><dd>{{ status.refresh_mode }}</dd></div>
+<div class="zf-status-item"><dt>Waiting for a refresh</dt><dd>{% if status.overdue > 0 %}{{ status.overdue }} feed{{ status.overdue == 1 ? '' : 's' }}{% else %}nothing{% endif %}</dd></div>
+<div class="zf-status-item"><dt>Template set</dt><dd>{{ status.template_set }}</dd></div>
+<div class="zf-status-item"><dt>Version</dt><dd>zFeeder {{ status.version }}</dd></div>
+</dl>
+{% if status.demo_mode %}
+<p class="zf-note">This panel is running in demonstration mode: you can look at every screen, and nothing you do is saved.</p>
+{% endif %}
+</section>
+
+<section class="zf-panel" aria-labelledby="zf-screens-heading">
+<h2 class="zf-subheading" id="zf-screens-heading">Screens</h2>
+<ul class="zf-screen-list">
+{% for item in menu %}{% if item.key != 'main' %}
+<li class="zf-screen-item"><a class="zf-screen-link" href="{{ item.href }}">{{ item.label }}</a> <span class="zf-screen-description">- {{ item.description }}</span></li>
+{% endif %}{% endfor %}
+</ul>
+</section>
+{% endblock %}

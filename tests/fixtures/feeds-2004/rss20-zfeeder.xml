@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rss version="2.0">
+  <channel>
+    <title>zFeeder</title>
+    <link>http://zvonnews.sourceforge.net</link>
+    <description>zFeeder news</description>
+    <language>en</language>
+    <lastBuildDate>Wed, 25 Feb 2004 14:00:20 GMT</lastBuildDate>
+    <image><url>http://zvonnews.sourceforge.net/images/zflogo.png</url><title>zFeeder</title><link>http://zvonnews.sourceforge.net</link></image>
+    <item>
+      <title>zFeeder 1.6 released</title>
+      <link>http://zvonnews.sourceforge.net/news/1.6</link>
+      <description>Added WAP (wml) support, fixed a bug when deleting feeds, added PHP sessions login.</description>
+      <pubDate>Sun, 25 Apr 2004 11:15:55 GMT</pubDate>
+      <guid>http://zvonnews.sourceforge.net/news/1.6</guid>
+    </item>
+    <item>
+      <title>zFeeder 1.5 released</title>
+      <link>http://zvonnews.sourceforge.net/news/1.5</link>
+      <description>A new header field for template files and minor bug fixes.</description>
+      <pubDate>Sun, 18 Apr 2004 05:52:11 GMT</pubDate>
+      <guid>http://zvonnews.sourceforge.net/news/1.5</guid>
+    </item>
+    <item>
+      <title>new template for 1.4</title>
+      <link>http://zvonnews.sourceforge.net/news/rij</link>
+      <description>RJ contributed a template for zFeeder 1.4, with multiple frames.</description>
+      <pubDate>Thu, 26 Feb 2004 12:26:52 GMT</pubDate>
+      <guid>http://zvonnews.sourceforge.net/news/rij</guid>
+    </item>
+    <item>
+      <title>Standalone or module</title>
+      <link>http://zvonnews.sourceforge.net/news/modules</link>
+      <description>zFeeder has been used as an aggregator or integrated on websites.</description>
+      <pubDate>Wed, 25 Feb 2004 03:08:01 GMT</pubDate>
+      <guid>http://zvonnews.sourceforge.net/news/modules</guid>
+    </item>
+  </channel>
+</rss>

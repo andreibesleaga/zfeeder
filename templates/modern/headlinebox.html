@@ -1,0 +1,42 @@
+<!--
+	zFeeder 2.0 template: headlinebox
+	The tightest box of all: a numbered list of headlines under a solid channel bar,
+	for a "top stories" rail beside the main content.
+	Descends from: classic/headlinebox (2004, AB).
+-->
+
+<!-- zFeeder template header -->
+<link rel="stylesheet" href="{scripturl}assets/modern/zf.css">
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<section class="zf zf--box zf-feed" id="zfchannel{position}" aria-labelledby="zf-chan-{feedid}">
+	<div class="zf-box">
+<!-- ENDheader -->
+
+<!-- channel -->
+		<div class="zf-bar zf-bar--solid">
+			<div class="zf-bar__head">
+				<h2 class="zf-bar__title" id="zf-chan-{feedid}"><a href="{chanlink}" title="{chandesc}">{chantitle}</a></h2>
+			</div>
+			<div class="zf-bar__tools">
+				<a class="zf-tool" href="{moreurl}" title="All stored news from this feed">+</a>
+			</div>
+		</div>
+		<ol class="zf-items">
+<!-- ENDchannel -->
+
+<!-- news -->
+			<li class="zf-item">
+				<h3 class="zf-item__title"><a href="{link}">{title}</a></h3>
+			</li>
+<!-- ENDnews -->
+
+<!-- footer -->
+		</ol>
+	</div>
+</section>
+<!-- ENDfooter -->
+
+<!-- between -->
+<!-- ENDbetween -->

@@ -1,0 +1,20 @@
+{% extends 'layout.twig' %}
+{% block heading %}Updates{% endblock %}
+{% block content %}
+<p class="zf-lede">You are running <strong>zFeeder {{ version }}</strong>.</p>
+
+{% if not checking %}
+<p class="zf-note">Automatic update checks are switched off, so this screen asks nobody anything.
+You can turn them on with the <em>Check for updates</em> option on the
+<a href="{{ admin_url('/admin/config') }}">configuration screen</a>, or look at the
+<a href="{{ releases_page }}" rel="noopener noreferrer">releases page</a> yourself.</p>
+{% elseif error %}
+<p class="zf-error" role="alert">{{ error }}</p>
+<p>You can check the <a href="{{ releases_page }}" rel="noopener noreferrer">releases page</a> by hand.</p>
+{% elseif newer %}
+<p class="zf-note zf-note-attention">Version <strong>{{ latest }}</strong> has been released.
+See the <a href="{{ releases_page }}" rel="noopener noreferrer">releases page</a> for what changed.</p>
+{% else %}
+<p class="zf-note">The latest release is <strong>{{ latest }}</strong>, so this installation is up to date.</p>
+{% endif %}
+{% endblock %}

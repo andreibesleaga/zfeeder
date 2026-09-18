@@ -1,0 +1,40 @@
+{# Rendered whole on a normal page load and on its own for htmx: the same
+   markup, the same form, the same routes. Without JavaScript the buttons post
+   to /admin/subscriptions and the page comes back; with it, this block is
+   replaced in place. #}
+<div class="zf-subscriptions" id="zf-subscriptions">
+{% if fragment %}{% include 'partials/flash.twig' with {oob: true} %}{% endif %}
+<form class="zf-form zf-form-table" method="post" action="{{ admin_url('/admin/subscriptions') }}"
+      hx-post="{{ admin_url('/admin/_/subscriptions') }}" hx-target="#zf-subscriptions" hx-swap="outerHTML">
+<input type="hidden" name="{{ csrf_field }}" value="{{ csrf_token }}">
+<input type="hidden" name="category" value="{{ category }}">
+
+{% if rows is empty %}
+<p class="zf-empty">There are no subscriptions in "{{ category }}" yet.
+<a href="{{ admin_url('/admin/add-new') }}">Add the first one.</a></p>
+{% else %}
+<table class="zf-table">
+<caption class="zf-table-caption">Subscriptions in the "{{ category }}" category</caption>
+<thead>
+<tr>
+<th scope="col">Delete</th>
+<th scope="col">Position</th>
+<th scope="col">Subscribed</th>
+<th scope="col">Channel</th>
+<th scope="col">Refresh<span class="zf-th-note"> (minutes)</span></th>
+<th scope="col">Shown<span class="zf-th-note"> news</span></th>
+<th scope="col">Order</th>
+</tr>
+</thead>
+<tbody>
+{% for row in rows %}{% include 'partials/subscription_row.twig' %}{% endfor %}
+</tbody>
+</table>
+
+<div class="zf-actions zf-actions-sticky">
+<button class="zf-button zf-button-primary" type="submit" name="action" value="save">Save changes</button>
+<button class="zf-button zf-button-danger" type="submit" name="action" value="delete">Delete selected</button>
+</div>
+{% endif %}
+</form>
+</div>

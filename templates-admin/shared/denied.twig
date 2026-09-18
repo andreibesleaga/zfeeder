@@ -1,0 +1,6 @@
+{% extends 'layout.twig' %}
+{% block heading %}{{ heading }}{% endblock %}
+{% block content %}
+<p class="zf-error" role="alert">{{ message }}</p>
+<p><a class="zf-button" href="{{ admin_url('/admin') }}">Back to the panel</a></p>
+{% endblock %}
