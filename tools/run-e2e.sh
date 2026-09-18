@@ -16,10 +16,21 @@ DATA_DIR="$(mktemp -d)"
 CONTAINER="zfeeder-e2e-$$"
 SERVER_PID=""
 
+# Teardown must never decide the outcome: by the time this runs the suite has
+# already passed or failed, and a tidying-up problem is not a test result. The
+# container owns the data directory it was given — it writes the cache and the
+# config as root — so those files are not ours to delete. Hand the removal back
+# to a container before falling back to leaving the directory behind.
 cleanup() {
+    status=$?
     [ -n "$SERVER_PID" ] && kill "$SERVER_PID" 2>/dev/null || true
     docker rm -f "$CONTAINER" >/dev/null 2>&1 || true
-    rm -rf "$DATA_DIR"
+    if [ -d "$DATA_DIR" ] && ! rm -rf "$DATA_DIR" 2>/dev/null; then
+        docker run --rm -v "$DATA_DIR:/data" --entrypoint /bin/sh zfeeder:e2e \
+            -c "chown -R $(id -u):$(id -g) /data" >/dev/null 2>&1 || true
+        rm -rf "$DATA_DIR" 2>/dev/null || true
+    fi
+    exit "$status"
 }
 trap cleanup EXIT
 

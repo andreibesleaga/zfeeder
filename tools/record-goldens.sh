@@ -5,7 +5,19 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="$(mktemp -d)"
-trap 'rm -rf "$WORK"' EXIT
+# The 1.6 container writes its cache into the mounted tree as its own user, so
+# some of what is left behind is not ours to delete. Tidying up must not change
+# the exit status of a recording that otherwise succeeded.
+cleanup() {
+    status=$?
+    if [ -d "$WORK" ] && ! rm -rf "$WORK" 2>/dev/null; then
+        docker run --rm -v "$WORK:/w" php:5.6-apache \
+            sh -c "chown -R $(id -u):$(id -g) /w" >/dev/null 2>&1 || true
+        rm -rf "$WORK" 2>/dev/null || true
+    fi
+    exit "$status"
+}
+trap cleanup EXIT
 cp -r "$ROOT/legacy/zfeeder-1.6/." "$WORK/"
 NF="$WORK/newsfeeds"
 rm -f "$NF/categories"/*.opml
