@@ -17,9 +17,9 @@
      modern light  fg #16202a on #ffffff 16.48 · muted #516070 on #ffffff 6.45
                    accent #006699 on #ffffff 6.25 · #ffffff on accent 6.25
                    danger #b3261e 6.54 · ok #1b6b3a 6.54 · warn #8a4b00 6.32
-     modern dark   fg #e6edf3 on #12181f 14.85 · muted #a3b2c0 8.24
-                   accent #5fc0ef 8.73 · danger #ff8a80 7.82 · ok #6ee7a0 11.56
-                   #04131d on accent 9.20
+     modern dark   fg #eaf0f6 on #222c39 12.30 · muted #adbac8 7.15
+                   accent #79bbff 6.97 · danger #ff9c93 7.01 · ok #7deaad 9.58
+                   #04121f on accent 9.33
      classic       fg #16202a on the #d0ecfd bar 13.42 · #006699 on #d0ecfd 5.09
                    fg on #ffffff 16.48 · muted #4a5b6b on #ffffff 7.00
    All body and helper text is >= 4.5:1 in both themes. The focus ring is the
@@ -67,17 +67,17 @@
   --zfa-shadow-l: 0 1px 2px rgb(16 32 48 / 8%), 0 8px 20px rgb(16 32 48 / 6%);
 
   /* dark */
-  --zfa-bg-d: #0d1216;
-  --zfa-surface-d: #12181f;
-  --zfa-surface-2-d: #19212a;
-  --zfa-fg-d: #e6edf3;
-  --zfa-muted-d: #a3b2c0;
-  --zfa-accent-d: #5fc0ef;
-  --zfa-accent-fg-d: #04131d;
-  --zfa-border-d: #2b3640;
-  --zfa-danger-d: #ff8a80;
-  --zfa-ok-d: #6ee7a0;
-  --zfa-warn-d: #f0b45c;
+  --zfa-bg-d: #1c2430;
+  --zfa-surface-d: #222c39;
+  --zfa-surface-2-d: #2b3646;
+  --zfa-fg-d: #eaf0f6;
+  --zfa-muted-d: #adbac8;
+  --zfa-accent-d: #79bbff;
+  --zfa-accent-fg-d: #04121f;
+  --zfa-border-d: #3a4656;
+  --zfa-danger-d: #ff9c93;
+  --zfa-ok-d: #7deaad;
+  --zfa-warn-d: #f3bf72;
   --zfa-shadow-d: 0 1px 2px rgb(0 0 0 / 50%), 0 8px 20px rgb(0 0 0 / 40%);
 
   /* live */

@@ -7,10 +7,10 @@
     .zfl-tile { fill: #e8f4ec; }
     .zfl-edge { fill: none; stroke: #c9e2d3; stroke-width: 2; }
     @media (prefers-color-scheme: dark) {
-      .zfl-ink  { fill: #e6edf3; }
-      .zfl-dot  { fill: #63d3a0; }
-      .zfl-tile { fill: #14251c; }
-      .zfl-edge { stroke: #2c4a38; }
+      .zfl-ink  { fill: #eaf0f6; }
+      .zfl-dot  { fill: #6fdcaa; }
+      .zfl-tile { fill: #223229; }
+      .zfl-edge { stroke: #3d5f4a; }
     }
   </style>
 

@@ -163,7 +163,7 @@ echo <<<HTML
     <style>
       :root { color-scheme: light dark; --bg:#fff; --fg:#16202a; --muted:#55636f; --accent:#006699; --border:#d8dee4; --surface:#f6f8fa; }
       @media (prefers-color-scheme: dark) {
-        :root { --bg:#0d1117; --fg:#e6edf3; --muted:#9aa7b2; --accent:#58a6ff; --border:#30363d; --surface:#161b22; }
+        :root { --bg:#1c2430; --fg:#eaf0f6; --muted:#adbac8; --accent:#79bbff; --border:#3d4a5a; --surface:#273140; }
       }
       * { box-sizing: border-box; }
       body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }

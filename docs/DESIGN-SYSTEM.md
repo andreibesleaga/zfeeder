@@ -21,13 +21,13 @@ media query.
 
 | Token | Light | Dark | What it is for |
 |---|---|---|---|
-| `--zf-bg` | `#ffffff` | `#0f1418` | the surface the feed sits on |
-| `--zf-surface` | `#f5f7f9` | `#19212a` | cards, boxes, channel bars |
-| `--zf-fg` | `#16202a` | `#e6edf3` | body text and headlines |
-| `--zf-fg-muted` | `#516070` | `#a3b2c0` | dates, descriptions, secondary labels |
-| `--zf-accent` | `#006699` | `#5fc0ef` | links, solid bars, the focus ring — **the 2004 blue, kept** |
+| `--zf-bg` | `#ffffff` | `#1c2430` | the surface the feed sits on |
+| `--zf-surface` | `#f5f7f9` | `#273140` | cards, boxes, channel bars |
+| `--zf-fg` | `#16202a` | `#eaf0f6` | body text and headlines |
+| `--zf-fg-muted` | `#516070` | `#b0bdcb` | dates, descriptions, secondary labels |
+| `--zf-accent` | `#006699` | `#7cccf2` | links, solid bars, the focus ring — **the 2004 blue, kept** |
 | `--zf-accent-fg` | `#ffffff` | `#04131d` | text drawn *on* the accent |
-| `--zf-border` | `#c7d2db` | `#2f3a45` | hairlines between items and around boxes |
+| `--zf-border` | `#c7d2db` | `#3d4a5a` | hairlines between items and around boxes |
 | `--zf-radius` | `8px` | same | corner radius (`0` gives a square 2004 look) |
 | `--zf-gap` | `0.75rem` | same | the rhythm between components |
 | `--zf-font` | system sans stack | same | body font |
@@ -92,17 +92,17 @@ that is not on that scale.
 
 | Token | Light | Dark | For |
 |---|---|---|---|
-| `--zfa-bg` | `#eef2f6` | `#0d1216` | page |
-| `--zfa-surface` | `#ffffff` | `#12181f` | cards, inputs, toasts |
-| `--zfa-surface-2` | `#f5f7f9` | `#19212a` | table headers, hovers, notes |
-| `--zfa-fg` | `#16202a` | `#e6edf3` | text |
-| `--zfa-muted` | `#516070` | `#a3b2c0` | help text |
-| `--zfa-accent` | `#006699` | `#5fc0ef` | the one accent: links, primary button, headings, focus ring |
-| `--zfa-accent-fg` | `#ffffff` | `#04131d` | text on the accent |
-| `--zfa-border` | `#ccd6de` | `#2b3640` | borders |
-| `--zfa-danger` | `#b3261e` | `#ff8a80` | destructive actions, errors |
-| `--zfa-ok` | `#1b6b3a` | `#6ee7a0` | success |
-| `--zfa-warn` | `#8a4b00` | `#f0b45c` | the "notes" rail |
+| `--zfa-bg` | `#eef2f6` | `#1c2430` | page |
+| `--zfa-surface` | `#ffffff` | `#222c39` | cards, inputs, toasts |
+| `--zfa-surface-2` | `#f5f7f9` | `#2b3646` | table headers, hovers, notes |
+| `--zfa-fg` | `#16202a` | `#eaf0f6` | text |
+| `--zfa-muted` | `#516070` | `#adbac8` | help text |
+| `--zfa-accent` | `#006699` | `#79bbff` | the one accent: links, primary button, headings, focus ring |
+| `--zfa-accent-fg` | `#ffffff` | `#04121f` | text on the accent |
+| `--zfa-border` | `#ccd6de` | `#3a4656` | borders |
+| `--zfa-danger` | `#b3261e` | `#ff9c93` | destructive actions, errors |
+| `--zfa-ok` | `#1b6b3a` | `#7deaad` | success |
+| `--zfa-warn` | `#8a4b00` | `#f3bf72` | the "notes" rail |
 | `--zfa-radius` / `--zfa-radius-sm` | `10px` / `6px` | same | shape |
 | `--zfa-tap` | `44px` | same | minimum touch target — every control uses it |
 | `--zfa-maxw` | `76rem` | same | shell width |
