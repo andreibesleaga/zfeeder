@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE wml PUBLIC  "-//WAPFORUM//DTD WML 1.1//EN"
+	 "http://www.wapforum.org/DTD/wml_1.1.xml"> 
+	<wml>
+		<card id="demo" title="Welcome to zFeeder WAP demo">
+			<p>This is just a demo page to show you how to include zfeeder on your wml pages<br/></p>
+			<p><a href="newsfeeds/wap.php">Click here for syndicated news !</a></p>
+		</card>
+	</wml>

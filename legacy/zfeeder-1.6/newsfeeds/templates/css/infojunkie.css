@@ -1,0 +1,126 @@
+/*	zFeeder style sheet
+	works with the infojunkie theme
+	author: LCX
+*/
+
+
+.fold, .logo {
+    float: left;
+    margin: 0px;
+    padding: 1px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.channel {
+    vertical-align: middle;
+    padding: 1px;
+    background-color: #eee;
+    height: 16px;
+    border: 1px solid #ccc;
+}
+
+.channel img {
+    max-height: 16px;
+    width: auto;
+    height: auto;
+}
+
+.feed {
+    margin-bottom: 1px;
+}
+
+.feed a:link  { 
+    color: #002080;
+    text-decoration: none;
+}
+
+.feed a:visited  { 
+    color: #663333; 
+    text-decoration: none; 
+}
+
+
+
+.feed a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+
+
+.feed a:active   { 
+    color: #606060;
+    text-decoration: none; 
+    font-size: 100%;
+}
+
+
+.newstitle {
+    background-color: #f4f4f4;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 10px;
+    padding-left: 5px;
+    margin-right: 3px;
+    border-left: 1px dotted #333;
+    border-top: 1px dotted #333;
+}
+
+.newsdesc {
+    padding-right: 25px;
+    text-align: justify;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    padding-left: 25px;
+    padding-bottom: 0px;
+    background-color: #fff;
+    font-size: 80%;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    border-left: 1px dotted #333;
+}
+
+.newsdesc a:hover{
+    text-decoration: underline;
+}
+
+.chanlink{
+    font-family: Tahoma, Arial, Helvetica, MS sans serif;
+    /*font-weight: bold;*/
+    margin-left: 0px;
+}
+
+/*
+.chanlink a {
+    font-size: 100%;
+    font-weight: bold;
+}
+*/
+
+.controls {
+    vertical-align: middle;
+    float: right;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 5px;
+    height: 12px;
+    width: auto;
+}
+
+.dateline {
+    color: #999;
+    font-size: 80%;
+    font-family: Tahoma;
+    text-align: right;
+}
+
+
+/* Open/Close style */
+
+.newslist {
+    display: none;
+    padding-bottom: 3px;
+}
+
+
+

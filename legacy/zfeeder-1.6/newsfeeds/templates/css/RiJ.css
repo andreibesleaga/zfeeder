@@ -1,0 +1,177 @@
+/*	STYLESHEET FOR zFeeder	*/
+/*	Only works for the RiJ template	*/
+
+/*	NOTICE: Any element can be set to display:none 
+	if you don't want it shown.	*/
+
+body
+{
+	font-family: verdana;
+	font-size: 12px;
+	color: #000000;
+	background-color: #ffffff;
+	margin: 20px;
+}
+
+	a:link
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	a:visited
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	a:hover 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+
+#logo	/*	the channel logo	*/
+{
+	margin-top: 5px;
+	float: right;
+}
+
+
+#channel	/* the channel name	*/
+{
+	padding-top: 15px;
+}
+
+	#channel a:link
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: bold; 
+	}
+
+	#channel a:visited
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: bold; 
+	}
+
+	#channel a:hover 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: bold; 
+	}
+
+
+#lastupdated	/* last updated date	*/
+{
+	font-size: 9px;
+	font-style: italic;
+	margin-bottom: 3px;
+}
+
+
+#moreurl	/*	link to show more entries for a channel	*/
+{
+	display: none;
+}
+
+	#moreurl a:link 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#moreurl a:visited 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#moreurl a:hover 
+	{ 
+		color: #000000; 
+		text-decoration: underline; 
+		font-weight: normal; 
+	}
+
+
+#title	/*	new item title	*/
+{
+	margin-left: 2px;
+}
+
+	#title a:link 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#title a:visited 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#title a:hover 
+	{ 
+		color: #000000; 
+		text-decoration: underline; 
+		font-weight: normal; 
+	}
+
+
+#description	/*	news item description	*/
+{
+	font-size: 10px;
+	margin-left: 15px;
+	margin-right: 10px;
+	margin-bottom: 3px;
+}
+
+
+#between	/*	the area between the feeds	*/
+{
+	border-bottom: dashed 1px #999999;
+	padding-bottom: 20px;
+}
+
+
+#adminlink				/*	this is a small link to the admin panel	*/
+{						/*	it is inside the between div	*/
+	float: right;
+	font-size: 8px;
+	text-align: right;
+	margin-right: 3px;
+}
+
+	#adminlink a:link
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#adminlink a:visited
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}
+
+	#adminlink a:hover 
+	{ 
+		color: #000000; 
+		text-decoration: none; 
+		font-weight: normal; 
+	}

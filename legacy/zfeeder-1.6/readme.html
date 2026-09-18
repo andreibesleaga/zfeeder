@@ -1,0 +1,546 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE"
+ content="text/html; charset=windows-1252">
+  <title>zFeeder help file</title>
+  <style>
+	<!--
+		A:link { color: #0000ff }
+	-->
+	</style>
+</head>
+<body dir="ltr" link="#0000ff" lang="en-US">
+<p>
+<table dir="ltr" align="left" border="0" cellpadding="2" cellspacing="2"
+ width="750">
+  <tbody>
+    <tr>
+      <td width="124">
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+      <td valign="top" width="18"><a name="top"></a></td>
+      <td width="582">
+      <p align="center"><strong><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#0066cc">Welcome
+to <a href="http://zvonnews.sourceforge.net/">zFeeder</a> 1.6 </font></font></strong>
+      </p>
+      </td>
+      <td width="8">
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>&nbsp;</p>
+      </td>
+      <td>
+      <p>&nbsp;</p>
+      </td>
+      <td>
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+      <td>
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+    </tr>
+    <tr>
+      <td height="2829" valign="top">
+      <p align="center"><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><a
+ href="#whatis"><br>
+what is zFeeder</a><br>
+      <br>
+      <a href="#features">features</a> <br>
+      <br>
+      <a href="#history">history</a> <br>
+      <br>
+      <a href="#requirements">requirements</a> <br>
+      <br>
+      <a href="#files">script files<br>
+      </a><a href="#install"><br>
+how to install</a><br>
+      <br>
+      <a href="#include">how to include it</a><br>
+      <br>
+      <a href="#refreshing">online/offline refreshing </a><br>
+(refresh key) <br>
+      <br>
+      <a href="#customization">customization<br>
+      <br>
+      </a></font></font></font><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><a
+ href="readme.html#wap">wap</a></font></font></font><br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066"><br>
+      <a href="#security">security stuff</a><br>
+      <br>
+      <font color="#990000">hot</font> <a href="#tips">tips</a></font></font></font></p>
+      </td>
+      <td valign="top">
+      <p align="center">&nbsp;</p>
+      </td>
+      <td valign="top">
+      <p align="left"><a name="whatis"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><strong>what
+is zFeeder ?</strong><br>
+      <br>
+zFeeder is a PHP script used to display RSS content.<br>
+It can be used to display other's content on your site, your intranet
+or your desktop.<br>
+It is also known as an aggregator or feedreader and it parses RSS (or
+RDF or backend) files (xml files) and shows content formatted.<br>
+It supports all versions of RSS (0.9, 0.9x, 1.0 and 2.0) and is
+template driven.<br>
+It also outputs wml files to implement WAP sites (for mobile devices).<br>
+It is simple to use, implement and customize accordingly to your needs.<br>
+It is open source and <a href="LICENSE">GPL licensed</a>.</font></font></font></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="features"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><strong>features</strong><br>
+      <br>
+- simple to include on any php page<br>
+      <br>
+- uses only flat-text-files, and works without SQL database<br>
+      <br>
+- simple to install and configure<br>
+      <br>
+- remote RSS files are cached for better performance and to prevent IP
+banning<br>
+&nbsp;&nbsp;from certain sites which has protection for their RSS files<br>
+      <br>
+- you can configure it to show what RSS remote file you want<br>
+      <br>
+- stores feed configuration in OPML file for easy exporting to other
+aggregators<br>
+      <br>
+- supports importing subscriptions from other aggregators<br>
+      <br>
+- supports autodiscovery of feeds (thanks to <a
+ href="http://keithdevens.com/weblog/archive/2002/Jun/03/RSSAuto-DiscoveryPHP"
+ target="_blank">Keith Devens</a>) <br>
+      <br>
+- bookmarklet for browser to easy add a site to your page while you
+browse the net<br>
+      <br>
+- administration panel for easy configure of subscriptions<br>
+      <br>
+- template driven so that you can make your own appearance of the
+content<br>
+      <br>
+- supports CSS templates <br>
+      <br>
+- recognizing RSS versions 0.9, 0.9x, 1.0, 2.0 (does not validate them
+though) <br>
+      <br>
+- online/offline refreshing of feeds via browser or cron<br>
+      <br>
+- multiple categories (subscriptions files) <br>
+      <br>
+- WAP (wml) output<br>
+      <br>
+      <a href="#top">top</a> </font></font></font> </p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="history"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><br>
+      <strong>history</strong><br>
+      <br>
+- zFeeder 1.6 - fixed bug when deleting feeds from subscriptions panel,
+added WAP (wml) support, added PHP sessions admin panel login, added
+user agent, added support for content:encoded items<br>
+- zFeeder 1.5 – fixed a bug with rss link '&amp;' character, added a
+header to templates<br>
+- zFeeder 1.4 - multiple subscriptions lists (categories), templates in
+one file, directories structure changed, several constant and variable
+names changed <br>
+- zFeeder 1.3 - offline refreshing, separated functions to allow
+multiple inclusions <br>
+- zFeeder 1.2 – small bug fixes<br>
+- zvonFeeds 1.0 renamed to <font color="#cc0000">zFeeder 1.0</font>,
+zvonFeeds 1.1.0 renamed to <font color="#cc0000">zFeeder 1.1</font> <br>
+- zvonFeeds 1.1.0<br>
+- zvonFeeds 1.0<br>
+      <br>
+      <a href="#top">top</a> </font></font></font> </p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="requirements"></a><br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066"><strong>requirements</strong><br>
+      <br>
+to install zFeeder you need that your webhost provides PHP (&gt;=4.2.0)
+support<br>
+and also has compiled the expat library (which is installed by default
+in PHP) <br>
+It is compatible with most of the bowsers so that all users can view
+your news.<br>
+It can run on Linux, Windows or any other OS that supports PHP.<br>
+Your host MUST allow outbound connections to other sites.<br>
+      <br>
+      <a href="#top">top</a> </font></font></font> </p>
+      <hr noshade="noshade" size="1">
+      <p align="left">&nbsp;</p>
+      <p align="left"><a name="files"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><strong>script
+files</strong><br>
+      <br>
+- zfeeder.php - this is the zFeeder script<br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">-
+zfuncs.php - zFeeder's functions </font></font><br>
+- admin.php - the administration panel (along with files in </font><font
+ color="#cc3300">includes</font><font color="#000066"> dir)<br>
+- config.php - stores configuration<br>
+- index.php - dummy file<br>
+- wap.php - outputs wml for wap sites<br>
+- subscriptions list files (categories) in the </font><font
+ color="#cc3300">categories</font><font color="#000066"> subdirectory <br>
+- several templates for your use in the <font color="#cc3300">templates</font>
+subdirectory<br>
+      <br>
+      <br>
+      <font color="#cc3300">NOTE:</font> zFeeder comes by default with
+several categories and multiple subscriptions. They are there for
+demonstration purposes and personal use only. If you want to display
+them on your site first check the copyright, licenses and terms of use
+of that feeds (sites). <br>
+      <br>
+      <a href="#top"><br>
+top</a> </font></font></font> </p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="install"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><strong>how
+to install</strong><br>
+      <br>
+      <br>
+- upload <font color="#cc3300">newsfeeds</font> directory to your
+webhost<br>
+      <br>
+- give "write" and "execute" attributes to subdirectory: <font
+ color="#cc3300">cache</font><br>
+&nbsp;&nbsp;(either with your FTP client or with CHMOD 0777)<br>
+&nbsp;&nbsp;attributes of all files in cache dir should be 0766 or 0666<font
+ color="#000066"><br>
+&nbsp;&nbsp;Note: 0666, 0766 and 0777 attributes are considered a
+security risk <br>
+      <br>
+- give writeable attributes to <font color="#cc3300">config.php</font>
+and to files in subdirectory <font color="#cc3300">categories</font><br>
+      <br>
+- point your browser to http://your_domain/newsfeeds/admin.php<br>
+      <br>
+- configure values and save configuration<br>
+      <br>
+- if you set "use subscription file" to "no" then configuration of
+feeds list will no<br>
+&nbsp;&nbsp;longer be available in the admin config panel, therefore
+you must edit <br>
+&nbsp;&nbsp;<font color="#cc3300">zfeeder.php</font> and set them
+manually<br>
+      <br>
+- include <font color="#cc3300">zfeeder.php</font> on your pages<br>
+      <br>
+If you want to add new categories you must copy empty.opml with a new
+category name, in categories directory, and then add subcriptions to
+that category or import OPML files to it.<br>
+If you want to delete a category simply delete the category.opml file
+from the categories directory. <br>
+      <br>
+zFeeder 1.6 implemented two mechanisms for login to admin panel. You
+can use:<br>
+- server - HTTP Server Basic Auth (has limitations on several
+webservers such as the ones that run PHP as CGI; sends user password
+base64 encoded; when you logout you need to press cancel when the
+authentication box appears)<br>
+- session - PHP sessions (depends on your webhost's php.ini
+configuration and can use cookies; sends user password clear text)<br>
+- no panel - this disables the login to admin panel, so you can no
+longer access it. to re-enable login you need to edit config.php and
+change ZF_LOGINTYPE.<br>
+      <br>
+      <a href="#top">top</a></font></font></font></font></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="include"></a><br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066"><strong>how to include</strong><br>
+      <br>
+once the installation is succesfull you can include the feedsreader on
+your php page<br>
+      <br>
+Example: <font color="#cc3300">&lt;? include
+('newsfeeds/zfeeder.php'); ?&gt;</font><br>
+      <br>
+      <br>
+You can also call the script with 4 parameters:<br>
+- zftemplate - a template name (filename in templates directory,
+without the extension)<br>
+- zfposition - a list of comma separated values of rss numbers to
+display (p1,p2,...) <br>
+- zfmore - gives all the news from the specified feed number (this is
+implemented in 'more')<br>
+- zfcategory - category name (filename in categories subdirectory,
+without the extension) <br>
+      <br>
+examples:<br>
+      <br>
+http://example.com/newsfeeds/zfeeder.php?zftemplate=logos - will show
+with<br>
+&nbsp;the logos template<br>
+      <br>
+http://example.com/page_with_zfeeder.php?zftemplate=some&amp;zfposition=p3,p5,p1<br>
+will show only the feeds 3, 5, 1 (that you defined in zfeeder) in that
+order,<br>
+in a 'some' template. <br>
+      <br>
+If you want to have it on different pages, showing on each page
+different feeds, you must include it like this:<br>
+      <font color="#cc3300"><br>
+&lt;? $_GET['zfposition']="p1,p2"; include('newsfeeds/zfeeder.php');
+?&gt;</font><br>
+this will show on the page where is included only the feeds with
+position 1 and 2<br>
+      <font color="#cc3300"><br>
+&lt;? $_GET['zfposition']="p3,p2"; $_GET['zftemplate']="logos";<br>
+include('newsfeeds/zfeeder.php'); ?&gt;</font><br>
+this will show on the page where is included only the feeds with
+position 2 and 3 and<br>
+will be shown with a different template<br>
+      <br>
+You can also include it multiple times in the same page to organize the
+feeds or to allow multiple templates on the same page. <br>
+NOTE: Check the demo pages to view useful examples.<br>
+      <br>
+      <a href="#top">top</a></font></font></font></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="refreshing"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><br>
+      <strong><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif">online/offline refreshing
+(the refresh key)</font></font></strong><br>
+      <a href="#top"><br>
+      </a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif">Until zFeeder 1.3 and by
+default in zFeeder 1.3 the feeds are refreshed online. This means that
+the script checks each time it is executed if the feeds expired and if
+so then it tries to refresh them. This may slow the loading of the page
+and some times (if there are many feeds) the script may even timeout.<br>
+      <br>
+The offline refreshing is now available, which means the script doesn't
+try to refresh any feeds, unless it is told to do so. This means you
+can add the feed refreshing as an automated task (cron) or only when
+you call it with certain parameters from your browser.<br>
+      <br>
+There are 2 things that allow offline refreshing: the REFRESH_KEY and
+the 'zfrefresh' parameter passed to the script.<br>
+      <br>
+Whenever the REFRESH_KEY is empty the mode of refreshing is: online<br>
+Whenever the REFRESH_KEY is not empty the mode of refreshing is: offline<br>
+      <br>
+You can put any value in REFRESH_KEY (a keyword) and when you want the
+script to check and refresh feeds you call it:
+http://example.com/newsfeeds/zfeeder.php?zfrefresh=your_keyword<br>
+This will refresh the feeds in the default category. If you want to
+refresh other category:<br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066">http://example.com/newsfeeds/zfeeder.php?zfcategory=other&amp;zfrefresh=your_keyword</font></font></font><br>
+      <br>
+It is not recommended to call the script from your browser. Instead it
+is better to make it an automated task with cron (and lynx or wget or a
+php script). <br>
+      <br>
+You can view some good articles on cron and php <a
+ href="http://www.sitepoint.com/article/1196" target="_blank">here</a>
+and <a
+ href="http://www.htmlcenter.com/tutorials/tutorials.cfm?id=155&amp;type=PHP"
+ target="_blank">here</a>. <br>
+      </font></font></font><br>
+      <a href="#top"><font color="#000066"><br>
+top</font></a></font></font></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="customization"></a><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066"><br>
+      <strong>customization</strong><br>
+      <br>
+You can customize the looks of the feeds reader by editing the
+templates or create<br>
+new ones and by configuring values in the configuration section of the
+script. <br>
+There are comments describing what each option means.<br>
+      <br>
+Customizing templates:<br>
+you can edit and customize (create templates) by changing html code in
+the template files<br>
+The following values in them are coverted:<br>
+      <br>
+- {chanlogo} is replaced with the logo of the channel if available;<br>
+- {chanlink} is replaced with the channel link;<br>
+- {chandesc} is replaced with the channel description;<br>
+- {chantitle} is replaced with the channel title;<br>
+- {feedurl} is replaced with the rss feed url;<br>
+- {moreurl} is replaced with a link which displays all of the stored
+news for that feed;<br>
+- {lasupdated} is replaced with a date when the feed was last read from
+source<br>
+- {scripturl} is replaced with the url to your script<br>
+- {hideurl} is replaced with a values so that when clicked that feed
+will not show<br>
+- {category} is replaced with the name of the category <br>
+- {link} is replaced with the news link;<br>
+- {pubdate} is replaced with the news publication date if available;<br>
+- {title} is replaced with the news title;<br>
+- {description} is replaced with the available news description;<br>
+- {id} is replaced with the number of the channel (feed) if it is in
+the channel section, or with the number of the news item (if it is in
+the news section and you use only one feed) <br>
+      <br>
+      <br>
+      <font color="#cc3300">note:</font> if you create nice templates
+you are welcomed to share them with everybody.<br>
+you will be given credit on site.<br>
+      <br>
+      <a href="#top">top</a></font></font></font></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="security"></a><font color="#000066"><font
+ size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>security
+stuff<br>
+      <br>
+      </strong>It is recommended that after you customize your
+configuration and subscriptions<br>
+you set <font color="#cc3300">config.php</font> and <font
+ color="#cc3300">categories</font></font></font> <font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif">files attributes back to
+readonly.<br>
+Whenever you want to change them afterwards you need to set them back
+to write.<br>
+If you feel confident manually editing config.php and subscriptions,
+you might as well delete admin.php and all files in includes directory
+except zfuncs.php. <br>
+      <br>
+      <a href="#top">top</a></font></font></font><a href="#top"><font
+ size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066"> </font></font></font> </a></p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="wap"></a><br>
+      <font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font
+ color="#000066"><strong>wap</strong><br>
+      <br>
+You need to provide a link to wap.php from your wml pages. There is a
+demo_wap.wml page to show your how it's done. You can edit and change
+the templates the same as explained above. wml templates are located in
+the templates directory, their names begin with "wap_" and their
+extension is html, altough they are wml.<br>
+      <br>
+Limitations: <br>
+- by default only supports valid well-formed RSS sources, so feeds
+which contains special characters like &amp; may not work. To make them
+work you need to look in "templates" directory and copy
+"wap_categ_CDATA.html" to "wap_categ.html" and "wap_sources_CDATA.html"
+to "wap_sources.html". <br>
+      <br>
+- zFeeder does not check for the size of the content and mobile devices
+supports only limited size pages, so it's your duty to include only
+limited size feeds or set the number of displayed news in the admin
+panel.<br>
+      <br>
+- some feeds may contain images and stuff that only a limited category
+of mobiles support (images like gif, jpg; the rest supports only wbmp,
+so the images will not be displayed).<br>
+      <br>
+      <a href="readme.html#top">top</a> </font></font></font> </p>
+      <hr noshade="noshade" size="1">
+      <p align="left"><a name="tips"></a><br>
+      <strong><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066">hot
+tips<br>
+      <br>
+      </font></font></font></strong><font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif"><font color="#000066">-
+find out more about newsfeeds or where to find them <a
+ href="http://www.faganfinder.com/search/rss.shtml" target="_blank">here</a><br>
+      <br>
+- if you put the bookmarklet to your browser then everytime you visit a
+site and want<br>
+&nbsp;&nbsp;to add it's content to your site just click on it and if a
+rss is detected by <br>
+&nbsp; <a
+ href="http://diveintomark.org/archives/2002/06/02/important_change_to_the_link_tag.html"
+ target="_blank">autodiscovery</a> then it will drive you to your site
+admin panel to auto-subscribe to it.<br>
+      <br>
+      <strong><br>
+what else you can show with zFeeder besides standard feeds:</strong><br>
+      <br>
+- you can search for feeds containing a <strong>specific keyword</strong>
+by entering this address in the<br>
+&nbsp;&nbsp;import feed list</font></font></font>: <br>
+      <br>
+      <font color="#000066">&nbsp;&nbsp;<font size="2"><font
+ face="Verdana, Arial, Helvetica, sans-serif">http://www.feedster.com/rss.php?q=<font
+ color="#cc0000">someword</font>&amp;sort=date&amp;type=opml&amp;ie=UTF-8
+      <br>
+      <br>
+&nbsp;&nbsp;this will search on <a href="http://www.feedster.com/"
+ target="_blank">Feedster</a> any feeds containing "<font
+ color="#cc0000">someword</font>" and return you all that<br>
+&nbsp; feeds, which&nbsp;you can import to your subscriptions<br>
+      <br>
+- you can import <strong>weather</strong> for a city by entering the
+following address in add new,<br>
+&nbsp;&nbsp;Feed URL: &nbsp;&nbsp;http://laughingmeme.org/weather-rss/<font
+ color="#cc3300">country/city.rss</font><br>
+&nbsp;&nbsp;<br>
+&nbsp;&nbsp;this will use <a href="http://laughingmeme.org/"
+ target="_blank">Kellan Elliott-McCrea</a>'s (experimental) <a
+ href="http://laughingmeme.org/weather-rss/" target="_blank">RSS
+Weather Service</a> to display<br>
+&nbsp;&nbsp;the weather for <font color="#cc3300">country's</font>
+city: <font color="#cc3300">city</font><br>
+      <br>
+&nbsp;&nbsp;You can also use <a href="http://rssweather.com/"
+ target="_blank">rssweather.com</a><br>
+      <br>
+- you can import and show the <strong>sites near any location</strong>
+by entering the address in<br>
+&nbsp;&nbsp;&nbsp;Feed URL:&nbsp;&nbsp; http://geourl.org/rss091/?lat=<font
+ color="#cc3300">44.4946</font>&amp;lon=<font color="#cc3300">26.0594</font>&amp;dist=<font
+ color="#cc3300">300</font><br>
+      <br>
+&nbsp;&nbsp; this will use <a href="http://geourl.org/" target="_blank">GeoURL</a>
+service to show the sites at <font color="#cc3300">300</font> miles
+nearby the location given by the latitude:<font color="#cc3300"> 44.4946</font>
+and longitude: <font color="#cc3300">26.0594</font> . <br>
+&nbsp;&nbsp; To find your own coordinates you can use: <a
+ href="http://www.maporama.com/share/" target="_blank">Maporama</a><br>
+&nbsp;&nbsp;&nbsp; <br>
+- for more information about what you can display through RSS you can
+check <a href="http://rss.lockergnome.com/" target="_blank">Lockergnome's
+RSS Resource</a> or find feeds at <a href="http://www.syndic8.com/"
+ target="_blank">Syndic8</a><br>
+      <br>
+      <br>
+      <br>
+      <a href="#top">top</a> </font></font></font> </p>
+      </td>
+      <td>
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+    </tr>
+    <tr>
+      <td height="21">
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+      <td>
+      <p>&nbsp;</p>
+      <p align="center">&nbsp;</p>
+      </td>
+      <td>
+      <p><font color="#000066">&nbsp;</font></p>
+      </td>
+      <td valign="top"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</p>
+</body>
+</html>

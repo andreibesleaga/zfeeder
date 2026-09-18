@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>zFeeder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="zFeeder - PHP RSS feedreader script for reading news from websites with syndication, without SQL database, with WAP support.">
+<meta name="keywords" content="RSS,php,wap,feed,script,syndication,backend,aggregator,feeder,newsfeed,feedreader">
+<style type="text/css">
+.unnamed1 {border: thin solid #CFE4FE;}
+a.one:link {color: white; text-decoration: none}
+a.one:visited {color: white; text-decoration: none}
+a.one:hover {color: #66FFFF; text-decoration: underline}
+a:link {color: #003399}
+a:visited {color: #5F5FB8}
+a:hover {color: #EE7A06}
+</style>
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://zvonnews.sourceforge.net/news/rss.php">
+</head>
+
+
+<body>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td width="123" height="50" rowspan="2" align="center" valign="middle" bgcolor="#0099CC"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+    <td height="48" colspan="2" align="center" valign="middle" bgcolor="#0099CC"><font color="#003399" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#FFFFFF">Welcome
+             to the home of  zFeeder<br>
+      (formerly known as  zvonfeeds)</font></strong></font></td>
+    <td width="123" height="50" rowspan="2" align="center" valign="middle" bgcolor="#0099CC">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#0099CC"> 
+    <td height="10" colspan="2" align="center" valign="middle" bgcolor="#0099CC"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+      <font face="Geneva, Arial, Helvetica, sans-serif"><strong>..::&nbsp;<a class="one" href="index.php">home</a> 
+       | <a href="zindex.php" class="one">demo</a> | </strong></font></font><strong><font color="#FFFFFF" size="2" face="Geneva, Arial, Helvetica, sans-serif"><a  class="one" href="zfeeder.php">documentation</a> | <a class="one" href="download.php">downloads</a> 
+      | <a class="one" href="references.php">references</a> | <a class="one" href="support.php">forums</a> 
+      ::..</font></strong></td>
+  </tr>
+  <tr align="right" valign="top"> 
+    <td colspan="4" bgcolor="#E1F0FF"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+      </font></td>
+  </tr>
+  <tr> 
+    <td colspan="4">&nbsp;</td>
+  </tr>
+</table>
+
+<table width="100%" height="55" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td width="135" align="left" valign="top"> 
+      <br>      
+      <font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+            <!------ Start of HTML vote @ hotscripts ------->
+      <table width="100" height="119" border="0" align="left" cellpadding="0" cellspacing="0" class="unnamed1">
+        <form action="http://www.hotscripts.com/cgi-bin/rate.cgi" method="POST">
+          <tr> 
+            <td height="117"> <table width="125" border="0" cellpadding="0" cellspacing="0">
+          <tr> 
+                  
+            <td height="57" align="center" valign="top"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif">vote 
+              <font color="#CC0000">zFeeder</font> <br>
+                    @ HotScripts</font> <input type="hidden" name="ID" value="23995"> 
+                    <input type="hidden" name="external" value="1"></td>
+                </tr>
+                <tr> 
+                  <td height="48" align="center" valign="top"> <select name="rate" size="1">
+                      <option value="5" selected>Excellent!</option>
+                      <option value="4">Very Good</option>
+                      <option value="3">Good</option>
+                      <option value="2">Fair</option>
+                      <option value="1">Poor</option>
+                    </select> <br> <input name="submit" type="submit" value="Cast My Vote!"> 
+                  </td>
+                </tr>
+              </table></td>
+          </tr>
+        </form>
+      </table>
+      <!------ End of HTML vote @ hotscripts ------->
+
+      </font></td>
+    <td width="5" rowspan="2" align="left" valign="top">&nbsp;</td>
+    <td rowspan="2" align="left" valign="top"><font color="#003399" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp; 
+      </font><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+      <font color="#003399" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>what 
+is it ?</strong></font>
+<p><ul>
+  <li type="square"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+  check <a href="zfeeder.php">zFeeder</a> if you want to show&nbsp;other's
+  RSS content (news and <a href="zfeeder.php#tips">much more</a>) on your website, wapsite 
+   or  use it on your PC (or intranet) as a news reader.<br>
+  </font></li><br>
+  <li type="square"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+  check some <a href="shots.php">screenshots</a> if you want to preview some
+  templates not online and parts of admin panel.<br>
+  </font></li>
+</ul></p>
+<br><br>
+      </font>
+	   <table border="0" align="center" valign="top" width="100%">
+        <tr> 
+          <td align="center" valign="top"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+            <a name="zn0"></a><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr> 
+    <td  colspan="2" align="left" background="http://zvonnews.sourceforge.net/news/images/background/v20.png"><font face="Verdana, Arial, Helvetica, sans-serif" color="#000000" size="2"><font color="#000099">1 year.</font></font></td>
+  </tr>
+  <br />
+  <tr align="left"> 
+    <td height="32" colspan="2" bgcolor="#D0ECFD"><font face="Verdana, Arial, Helvetica, sans-serif" color="" size="2">zFeeder celebrates one year since it's first version.<br /><br />For all the german speaking people: there is a 3 pages article in <a href="http://www.internet-pro.de" title="INTERNET PROFESSIONELL" target="_blank">INTERNET PROFESSIONELL</a> Magazine, 08/2004, from VNU Business Publications, Deutschland. There is a bigger article dedicated to RSS and zFeeder has an article where it's installing, administering and usage is extensively covered and there is even a short passage about it's wap capabilities. The script is also included on the magazine's listings CD and as far as I know, it's the first magazine to include it on a CD.<br /><br />Development it's currently on standby, frozen on version 1.6 and will continue as soon as my free  time will permit it.
+</font></td>
+  </tr>
+  <tr align="right" bgcolor="#D0ECFD"> 
+    <td height="19" align="left"><font color="#3399CC" size="1" face="Verdana, Arial, Helvetica, sans-serif"></font></td>
+    <td height="19"><font color="#3399CC" size="2" face="Verdana, Arial, Helvetica, sans-serif"><em>Sun, 12 Sep 2004 08:22:56 -0700</em></font></td>
+  </tr>
+</table>
+<a name="zn1"></a><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr> 
+    <td  colspan="2" align="left" background="http://zvonnews.sourceforge.net/news/images/background/v20.png"><font face="Verdana, Arial, Helvetica, sans-serif" color="#000000" size="2"><font color="#000099">zFeeder 1.6 released</font></font></td>
+  </tr>
+  <br />
+  <tr align="left"> 
+    <td height="32" colspan="2" bgcolor="#D0ECFD"><font face="Verdana, Arial, Helvetica, sans-serif" color="" size="2">Changes:<br /><br />- added WAP (wml) support - outputing wml for wap enabled devices;<br />- fixed a bug when deleting feeds from admin panel, thanks to Felix Rabinovich;<br />- added alternative login mechanism to admin panel with PHP sessions, thanks to Nicholas from xenomorph.net;<br />- added a user-agent string for identification when retriving feeds from websites;<br />- added support for feeds which contain content:encoded items;<br /><br />Thanks to the people from the forums.
+</font></td>
+  </tr>
+  <tr align="right" bgcolor="#D0ECFD"> 
+    <td height="19" align="left"><font color="#3399CC" size="1" face="Verdana, Arial, Helvetica, sans-serif"></font></td>
+    <td height="19"><font color="#3399CC" size="2" face="Verdana, Arial, Helvetica, sans-serif"><em>Sun, 25 Apr 2004 11:15:55 -0700</em></font></td>
+  </tr>
+</table>
+<a name="zn2"></a><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr> 
+    <td  colspan="2" align="left" background="http://zvonnews.sourceforge.net/news/images/background/v20.png"><font face="Verdana, Arial, Helvetica, sans-serif" color="#000000" size="2"><font color="#000099">zFeeder 1.5 released</font></font></td>
+  </tr>
+  <br />
+  <tr align="left"> 
+    <td height="32" colspan="2" bgcolor="#D0ECFD"><font face="Verdana, Arial, Helvetica, sans-serif" color="" size="2">zFeeder 1.5 defines a new field for the template files - a header field which is only included once (at the begining) of zFeeder output and fixes some minor bugs:<br />- infojunkie javascript (contributed by Thomas Churm);<br />- a problem with the ampersands in the URLs (Steve from www.dreamlab.ca);
+</font></td>
+  </tr>
+  <tr align="right" bgcolor="#D0ECFD"> 
+    <td height="19" align="left"><font color="#3399CC" size="1" face="Verdana, Arial, Helvetica, sans-serif"></font></td>
+    <td height="19"><font color="#3399CC" size="2" face="Verdana, Arial, Helvetica, sans-serif"><em>Sun, 18 Apr 2004 05:52:11 -0700</em></font></td>
+  </tr>
+</table>
+<a name="zn3"></a><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr> 
+    <td  colspan="2" align="left" background="http://zvonnews.sourceforge.net/news/images/background/v20.png"><font face="Verdana, Arial, Helvetica, sans-serif" color="#000000" size="2"><font color="#000099">new template for 1.4</font></font></td>
+  </tr>
+  <br />
+  <tr align="left"> 
+    <td height="32" colspan="2" bgcolor="#D0ECFD"><font face="Verdana, Arial, Helvetica, sans-serif" color="" size="2">RJ contributed a template for zFeeder 1.4, with multiple frames. You can preview <a href="http://zvonnews.sourceforge.net/images/zfeeder9.PNG" title="screenshot" target="_blank">screenshot</a> or find it in the downloads section at sourceforge.
+</font></td>
+  </tr>
+  <tr align="right" bgcolor="#D0ECFD"> 
+    <td height="19" align="left"><font color="#3399CC" size="1" face="Verdana, Arial, Helvetica, sans-serif"></font></td>
+    <td height="19"><font color="#3399CC" size="2" face="Verdana, Arial, Helvetica, sans-serif"><em>Thu, 26 Feb 2004 12:26:52 -0800</em></font></td>
+  </tr>
+</table>
+<a name="zn4"></a><table border="0" cellspacing="0" cellpadding="0" width="100%">
+  <tr> 
+    <td  colspan="2" align="left" background="http://zvonnews.sourceforge.net/news/images/background/v20.png"><font face="Verdana, Arial, Helvetica, sans-serif" color="#000000" size="2"><font color="#000099">Standalone or module, personal aggregator or website feedreader.</font></font></td>
+  </tr>
+  <br />
+  <tr align="left"> 
+    <td height="32" colspan="2" bgcolor="#D0ECFD"><font face="Verdana, Arial, Helvetica, sans-serif" color="" size="2"><br />zFeeder has been used so far as an aggregator (even if it does not implement many features of a desktop aggregator) or  integrated on websites to provide real-time news (or any other information available as RSS) to visitors. This is possible because it is customizable and you can find the use you want for it. Until now people used it to read their daily news and managed to integrate it standalone or by creating specific modules.<br /><br />Some examples of modules:<br /> - Bakshi <a href="http://bakshi.us/blog/archives/2004/02/23/zfeeder-mod-released/" title="WordPress zFeeder module" target="_blank">released a module</a> to integrate zFeeder with WordPress.<br /> - A PHP-Nuke module has been created at <a href="http://www.nukediva.us" title="NukeDiva" target="_blank">NukeDiva</a>.<br /> - zFeeder is an integrated part of <a href="http://xhp.sourceforge.net" title="XHP (eXpandable Home Page)" target="_blank">XHP (eXpandable Home Page)</a>, personal homepage software CMS.<br /> - Elise has an <a href="http://www.elise.com/mt/archives/000242displaying_an_rss_newsfeed_on_your_site.php" title="article" target="_blank">article</a> on how to display RSS newsfeeds on a MovableType site.<br /><br />People like: Laurent, Rachel, Adam have provided great feedback.<br />Thank you all !<br /><br />Let me know if you made a module, template, bugfix, etc., so that it can be shared with everyone.<br />Happy Feedreading !
+</font></td>
+  </tr>
+  <tr align="right" bgcolor="#D0ECFD"> 
+    <td height="19" align="left"><font color="#3399CC" size="1" face="Verdana, Arial, Helvetica, sans-serif"></font></td>
+    <td height="19"><font color="#3399CC" size="2" face="Verdana, Arial, Helvetica, sans-serif"><em>Wed, 25 Feb 2004 03:08:01 -0800</em></font></td>
+  </tr>
+</table>
+<br />< previous | &nbsp;1 &nbsp;<a href=/index.php?znpage=2>2</a> &nbsp;<a href=/index.php?znpage=3>3</a> &nbsp;<a href=/index.php?znpage=4>4</a> &nbsp;&nbsp; | <a href=/index.php?znpage=2>next</a> &gt;<br />
+<br />            </font> </td>
+        </tr>
+        <tr> 
+          <td height="21" align="left" valign="top"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+            </font></td>
+        </tr>
+      </table></td>
+    <td width="5" rowspan="2" align="left" valign="top">&nbsp;</td>
+    <td width="150" rowspan="2" align="right" valign="top"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+      <br>
+      <style type="text/css">
+<!--
+.style2 {font-family: Geneva, Arial, Helvetica, sans-serif}
+-->
+</style>
+<table width="130" height="231" border="0" cellpadding="0" cellspacing="0" class="unnamed1">
+  <tr> 
+    <td height="231" align="center" >
+	<p><font color="#CC3300" size="2" face="Georgia, Times New Roman, Times, serif">Note<br>
+        <br>
+        </font><font color="#CC3300" size="2"><span class="style2"><font color="#000066">please
+         keep the link: &quot;powered by..&quot; or
+        use  the logo below with a link to this site :</font></span></font><font color="#CC3300" size="2" face="Georgia, Times New Roman, Times, serif"><br>
+        <br>
+        <img src="images/zflogo.png" alt="logo" title="zFeeder minilogo" width="80" height="15"><br>
+        <br>
+        <font color="#CC3300">Thank you !</font></font>
+	</p>
+    <p class="style2">
+	  <font color="#000066" size="2">Subscription examples provided with zFeeder are for demonstration purposes and personal use only. If you want to display newsfeeds on your site, first check the copyright, licensing and terms of use of
+      the source.</font>
+	</p>
+	</td>
+  </tr>
+</table>
+<br>
+
+
+
+      <br>
+      <br>
+      <table width="130" height="100" border="0" cellpadding="0" cellspacing="0" class="unnamed1">
+  <tr> 
+    <td height="110" align="center" ><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"><a href="http://zvonnews.sourceforge.net/news/rss.php"><img src="news/images/rss.png" alt="RSS" title="RSS file" width="36" height="14" border="0" /></a>&nbsp;<a href="http://zvonnews.sourceforge.net/newsfeeds/subscriptions.opml"><img src="images/opml.gif" alt="OPML" title="OPML subscription file" width="36" height="14" border="0" /></a> 
+      <br>
+      <br>
+      <a href="http://feeds.archive.org/validator/check?url=http://zvonnews.sourceforge.net/news/rss.php"><img src="images/valid-rss.png" alt="[Valid RSS]" title="Validate my RSS feed" width="88" height="31" border="0" /></a></font></td>
+  </tr>
+</table>
+<br>
+
+
+
+      </font></td>
+  </tr>
+  <tr> 
+    <td height="19" align="left" valign="top">&nbsp;</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" dwcopytype="CopyTableRow">
+  <tr> 
+    <td colspan="3" align="center">&nbsp;</td>
+  </tr>
+  <tr align="left"> 
+    <td colspan="3" bgcolor="#E1F0FF"><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif">
+	&nbsp;
+      </font></td>
+  </tr>
+  <tr> 
+    <td width="135" height="60" align="center" valign="middle" bgcolor="#0099CC"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">hosted 
+      by:</font><font color="#000066" size="2" face="Verdana, Arial, Helvetica, sans-serif"><br>
+      <a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=84348&amp;type=2" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a> 
+      </font></td>
+    <td align="left" bgcolor="#0099CC"><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">zShaped, 
+      zFeeder and site content are copyright &copy;2003-2004 <font color="#000066"> 
+      ::</font> <span class="one"><a href="contact.php" class="one"> Andrei Besleaga</a> 
+      <font color="#000066">::<br>
+      </font></span> The software is released under the <font color="#000066">::</font> 
+      <a href="http://www.gnu.org/licenses/gpl.html" class="one"> GNU/GPL license</a> 
+      <font color="#000066">::</font>.</font><font color="#000066" size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+      <font color="#FFFFFF">All trademarks are copyright of their respective owners.</font><br>
+      <font color="#FFFFFF" size="2"> </font><font size="1"> <font color="#FFFFFF">T</font><font color="#FFFFFF">his 
+      site and products on this site have no connection and are not <br>
+      in any way affiliated, endorsed or sponsored by ZVON (www.zvon.org) </font></font> 
+      </font> </td>
+    <td align="center" bgcolor="#0099CC"><a href="/inhere/"><img src="pixel.gif" border="0" alt=" " width="1" height="1" /></a></td>
+  </tr>
+</table>
+</body></html>

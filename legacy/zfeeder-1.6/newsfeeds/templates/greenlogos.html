@@ -1,0 +1,43 @@
+<!--	zFeeder template
+	name / description: greenlogos / simple html tables green scheme with channel logos (images)
+	author: AB
+	note: Do NOT delete or modify comments in the template files
+-->
+
+<!-- zFeeder template header -->
+<!-- ENDzFeeder template header -->
+
+<!-- header -->
+<table width="100%" cellpadding="0" cellspacing="0"> 
+<!-- ENDheader --> 
+  <!-- channel --> 
+  <tr> 
+     <td> <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#66CC99"> 
+         <tr bgcolor="#66CC99"> 
+          <td width="100" rowspan="2" align="left" valign="middle"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{chanlogo}</font></td> 
+          <td width="638" align="right" valign="middle"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> <a href="{chanlink}" title="{chandesc}" target="_blank">{chantitle}</a></font></td> 
+          <td width="10" rowspan="2" align="right" valign="middle">&nbsp;</td> 
+          <td width="33" rowspan="2" align="right" valign="middle"> <a href="{feedurl}"><img src="{scripturl}images/xml.png" border="0" alt="xml" title="RSS feed" /></a>&nbsp; </td> 
+        </tr> 
+         <tr> 
+          <td height="12" align="right" valign="middle"><font color="#006699" size="1" face="Verdana, Arial, Helvetica, sans-serif">updated:
+              {lastupdated}</font></td> 
+        </tr> 
+       </table> 
+      <br /> </td> 
+  </tr> 
+  <!-- ENDchannel --> 
+  <!-- news --> 
+  <tr align="left" valign="middle"> 
+     <td bgcolor="#D1FADD"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> &nbsp;<a href="{link}" title="{link}" target="_blank">{pubdate}&nbsp;{title}</a> </font></td> 
+   </tr> 
+  <tr align="left"> 
+     <td bgcolor="#FBFBFB"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{description}</font></td> 
+   </tr> 
+  <!-- ENDnews --> 
+<!-- footer --> 
+</table> 
+<!-- ENDfooter --> 
+<!-- between --> 
+<br /> 
+<!-- ENDbetween --> 

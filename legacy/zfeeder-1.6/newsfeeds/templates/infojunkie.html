@@ -1,0 +1,74 @@
+<!--	zFeeder template
+	name / description: infojunkie / template for a large number of feeds
+	author: LCX (lcx@myrealbox.com); JavaScript modified by Thomas Churm
+    Use: Modify the HEAD section of the page in which you include zfeeder.php 
+     1) associate this with a infojunkie.css file
+        <link rel=stylesheet href="newsfeeds/templates/infojunkie.css" type="text/css">
+     
+	note: Do NOT delete or modify comments in the template files - 
+-->
+
+
+<!-- zFeeder template header -->
+<SCRIPT LANGUAGE="JavaScript">
+function SwitchChannel( obj )
+{
+if(document.getElementById(escape(obj)))
+        {
+
+            var el = document.getElementById(escape(obj));
+       
+            if (el.style.display != "block") {
+               el.style.display = "block";
+            } else {
+                el.style.display = "none";
+            }
+
+        }
+}
+</SCRIPT>
+<!-- ENDzFeeder template header -->
+
+
+<!-- header -->
+<div class="feed">
+<!-- ENDheader -->
+
+<!-- channel -->
+<div class="channel">
+    <div class="fold">
+       <img src="{scripturl}images/infojunkie_triangle.png" alt="unfold" border="0" onclick="SwitchChannel({id});" />
+    </div>
+    <div class="logo">      
+       {chanlogo}
+    </div>
+    <div class="controls">
+      <a href="{moreurl}"><img src="{scripturl}images/more.png" border="0" alt="more"  title="All stored news from this feed" /></a> &nbsp;
+    </div>
+    <div class="chanlink">
+           <a href="{chanlink}" title="{chandesc}">{chantitle}</a>
+    </div>
+</div>
+<div class="newslist" id={id}>
+    <div class="dateline">
+        last updated: {lastupdated}
+    </div>
+<!-- ENDchannel --> 
+
+<!-- news --> 
+    <div class="newstitle">
+      <a href="{link}" title="{link}">{title}</a>
+      <span class="footer">[{pubdate}]</span>
+    </div>
+    <div class="newsdesc">
+        {description}
+    </div>
+ <!-- ENDnews --> 
+
+<!-- footer --> 
+  </div> <!-- newslist section -->
+</div> <!-- channel section -->
+<!-- ENDfooter --> 
+
+<!-- between --> 
+<!-- ENDbetween --> 
