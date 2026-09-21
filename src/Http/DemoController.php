@@ -106,7 +106,7 @@ final class DemoController
             <section>
               <h2>More</h2>
               <ul class="chips">
-                <li><a href="/admin">Administration panel</a></li>
+                <li><a href="/admin">Administration panel</a>(demo user: admin/zfeeder-DEMO-pass-260921)</li>
                 <li><a href="{$this->e(Version::HOMEPAGE)}">Source code</a></li>
                 <li><a href="https://sourceforge.net/projects/zvonnews/">The original, on SourceForge</a></li>
               </ul>
