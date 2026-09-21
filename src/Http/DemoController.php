@@ -107,7 +107,7 @@ final class DemoController
               <h2>More</h2>
               <ul class="chips">
                 <li><a href="/admin">Administration panel</a></li>
-                <li><a href="https://github.com/andreibesleaga/zfeeder">Source code</a></li>
+                <li><a href="{$this->e(Version::HOMEPAGE)}">Source code</a></li>
                 <li><a href="https://sourceforge.net/projects/zvonnews/">The original, on SourceForge</a></li>
               </ul>
             </section>
@@ -332,12 +332,12 @@ final class DemoController
               <ul>
                 <li><a href="/">Demonstrations</a></li>
                 <li><a href="/admin">Admin</a></li>
-                <li><a href="https://github.com/andreibesleaga/zfeeder">Code</a></li>
+                <li><a href="{$this->e(Version::HOMEPAGE)}">Code</a></li>
               </ul>
             </nav>
             <main id="main" class="zf">{$body}</main>
             <footer class="sitefoot">
-              <p>zFeeder {$this->e(Version::NUMBER)} &middot; GPL-2.0-or-later &middot;
+              <p><a href="{$this->e(Version::HOMEPAGE)}">zFeeder {$this->e(Version::NUMBER)}</a> &middot; GPL-2.0-or-later &middot;
                  originally released in 2004 on
                  <a href="https://sourceforge.net/projects/zvonnews/">SourceForge</a> &middot;
                  &copy; 2003&ndash;{$year} Andrei N. Besleaga</p>
