@@ -25,7 +25,11 @@ stack, with the security problems of 2004 fixed.
 The original is archived, unmodified, as `zfeeder-1.6.zip` in
 [andreibesleaga/old-projects](https://github.com/andreibesleaga/old-projects) — and the
 classic templates in this version are tested byte for byte against output captured from
-that code running on PHP 5.6. See [docs/HISTORY.md](docs/HISTORY.md).
+that code running on PHP 5.6. See [docs/HISTORY.md](docs/HISTORY.md). 
+More info at [zFeeder GitHub Pages](https://andreibesleaga.github.io/zfeeder/).
+A public instance runs at **<https://zfeeder.up.railway.app>**, with the panel in
+read-only demonstration mode.
+
 
 ## What it does
 
@@ -55,9 +59,6 @@ docker run -d --name zfeeder -p 8080:80 \
 ```
 
 Open <http://localhost:8080>. The panel is at `/admin`.
-
-A public instance runs at **<https://zfeeder.up.railway.app>**, with the panel in
-read-only demonstration mode.
 
 ### From source
 
