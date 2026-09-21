@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Render the portfolio page
         run: ./tools/build-pages.sh
       # enablement turns the Pages site on from here, so publishing the
