@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Signed public sustainability declarations (JWS over public data, public key only)"
+paths = ['''\.well-known/sustainability-data$''']
