@@ -80,7 +80,7 @@ jobs:
           path: dist
       - name: Extract the changelog section for this tag
         run: php tools/changelog-section.php "${GITHUB_REF_NAME}" > release-notes.md
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           body_path: release-notes.md
           files: dist/*
