@@ -10,7 +10,7 @@ COPY src/ ./src/
 RUN composer dump-autoload --optimize --classmap-authoritative --no-dev
 
 # ---- runtime ----------------------------------------------------------------
-FROM php:8.3-apache AS runtime
+FROM php:8.5-apache AS runtime
 
 ARG ZF_VERSION=2.0.0
 LABEL org.opencontainers.image.title="zFeeder" \
