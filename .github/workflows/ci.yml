@@ -65,7 +65,7 @@ jobs:
       - name: Enforce coverage floor
         if: matrix.php == '8.3' && matrix.storage == 'flat'
         run: php tools/coverage-gate.php coverage.xml 90
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: matrix.php == '8.3' && matrix.storage == 'flat'
         with:
           name: coverage
@@ -159,7 +159,7 @@ jobs:
       - run: npx --prefix tests/e2e playwright install --with-deps chromium
       - name: Run end to end suite
         run: ./tools/run-e2e.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: e2e-screenshots
