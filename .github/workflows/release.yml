@@ -32,7 +32,7 @@ jobs:
           composer install --no-dev --no-interaction --no-progress
           composer licenses --format=json > dist/licenses.json
           php tools/sbom.php > dist/zfeeder-sbom.cdx.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
