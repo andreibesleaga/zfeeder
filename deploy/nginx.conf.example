@@ -77,6 +77,17 @@ server {
         try_files $uri /index.php$is_args$args;
     }
 
+    # /.well-known/sustainability-data (draft-besleaga-sustainability-wellknown): a static,
+    # signed report refreshed monthly by the operator. An exact-match location, so it wins over the
+    # dot-file rule below. Mirrors the block in deploy/apache-vhost.conf.
+    location = /.well-known/sustainability-data {
+        default_type application/sustainability-data+json;
+        add_header Access-Control-Allow-Origin "*" always;
+        add_header Cache-Control "public, max-age=3600" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        try_files $uri =404;
+    }
+
     # Dot files, and anything that looks like data that escaped into the root.
     location ~ /\. {
         deny all;

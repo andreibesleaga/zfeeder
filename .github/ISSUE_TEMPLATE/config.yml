@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question or idea
-    url: https://github.com/andreibesleaga/zfeeder/discussions
+    url: https://github.com/andreibesleaga/zfeeder/issues
     about: Anything that is not a bug report or a concrete feature request.
   - name: Security problem
     url: https://github.com/andreibesleaga/zfeeder/security/advisories/new
