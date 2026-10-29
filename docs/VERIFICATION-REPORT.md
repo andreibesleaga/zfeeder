@@ -376,7 +376,7 @@ one.
 - **`bin/zfeeder seed` has no test**, although the container entrypoint runs it
   on every boot.
 - **The classic admin skin's axe result is not in CI.** `admin.spec.js` runs
-  against the default `modern` skin. `build/check-admin.mjs` walks both skins,
+  against the default `modern` skin. `tools/check-admin.mjs` walks both skins,
   but it is not part of the pipeline, so that result is only as fresh as the
   last manual run.
 - **CodeQL covers JavaScript only.** `.github/workflows/codeql.yml` sets

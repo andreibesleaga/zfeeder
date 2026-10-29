@@ -200,14 +200,12 @@ Filters chain left to right: `{content|trunc:300|raw}`.
    php tools/preview-templates.php        # → build/preview/<name>.html
    php -S 127.0.0.1:8899 -t . &
    ZF_PREVIEW_BASE=http://127.0.0.1:8899/build/preview \
-   NODE_PATH=/path/to/node_modules node build/check-preview.mjs
+   NODE_PATH=/path/to/node_modules node tools/check-preview.mjs
    ```
 
    That renders every modern template with sample feeds, screenshots them at
    320 / 768 / 1280 / 1920 in light and dark into `build/preview/shots/`, and
-   fails if anything makes the page scroll sideways. `build/` is listed in `.gitignore`, so
-   `build/check-admin.mjs` and `build/check-preview.mjs` are not in a fresh clone; the
-   browser suite that is tracked is `tests/e2e/` (`tools/run-e2e.sh`).
+   fails if anything makes the page scroll sideways. Both scripts are tracked in `tools/`; their output goes to `build/`, which is git-ignored. The browser suite that CI runs is `tests/e2e/` (`tools/run-e2e.sh`).
 
 ## 5. Compatibility promise
 
