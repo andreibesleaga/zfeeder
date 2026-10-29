@@ -205,7 +205,9 @@ Filters chain left to right: `{content|trunc:300|raw}`.
 
    That renders every modern template with sample feeds, screenshots them at
    320 / 768 / 1280 / 1920 in light and dark into `build/preview/shots/`, and
-   fails if anything makes the page scroll sideways.
+   fails if anything makes the page scroll sideways. `build/` is listed in `.gitignore`, so
+   `build/check-admin.mjs` and `build/check-preview.mjs` are not in a fresh clone; the
+   browser suite that is tracked is `tests/e2e/` (`tools/run-e2e.sh`).
 
 ## 5. Compatibility promise
 

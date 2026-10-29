@@ -1,6 +1,11 @@
 # zFeeder 2.0 — modernisation plan
 
 Status: PLAN ONLY (2026-09-15). Nothing implemented. Owner decisions in §3 gate the work.
+
+> Superseded 2026-10-29: this plan was carried out. zFeeder 2.0.0 was finished on 2026-09-18
+> (see `PROGRESS.md`, `CHANGELOG.md` and `docs/`). The text below is the plan as written and
+> is kept unchanged.
+
 Baseline: zFeeder 1.6 (2004), 2,172 lines of PHP 4-era code in `newsfeeds/` (zfeeder.php, admin.php, wap.php,
 includes/zfuncs.php, adminfuncs.php, addnewfeed.php, subscriptions.php, importlist.php, changeconfig.php),
 10 HTML templates + 5 CSS files, 11 OPML categories, flat-file cache. Screenshots of the original and of it running

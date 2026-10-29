@@ -24,6 +24,16 @@ ADR 0000 covers the rebuild itself. ADRs 0001–0012 correspond one-to-one with 
 | [0012](0012-aggregator-demo-as-css-grid.md) | Rebuild the frames demo as a CSS grid | Accepted |
 | [0013](0013-security-architecture.md) | The security architecture | Accepted |
 
+## Since these records were accepted
+
+The records are kept as written. Three facts have changed since: the unmodified 1.6 tree
+`legacy/zfeeder-1.6/` is no longer in the repository (it is archived at
+<https://github.com/andreibesleaga/old-projects>, and the 2004 files the tests read are in
+`tests/fixtures/legacy-1.6/`; see "Removed" in [CHANGELOG.md](../../CHANGELOG.md)); the
+repository has commits and is public; and the container image is published at
+`ghcr.io/andreibesleaga/zfeeder`. ADRs 0000, 0003, 0008, 0009, 0011 and 0012 refer to the
+old `legacy/` path.
+
 ## Adding a record
 
 Number the file after the highest existing record and name it `NNNN-short-kebab-case-slug.md`. Use the same

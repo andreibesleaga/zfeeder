@@ -283,7 +283,7 @@ matching, and the file was restored byte-identically (verified by `sha256sum`).
 | Subscription files written by 1.x load without conversion | `Unit\Subscription\OpmlReaderTest` (36 tests), `Cli\ImportCommandTest` |
 | A 2004 template loads unchanged | The golden corpus is fourteen 2004 templates, loaded by the 2.0 engine |
 | `include 'zfeeder.php';` still works | `Integration\Http\EmbedEndpointsTest::testTheIncludeFunctionProducesTheSameHtmlAsTheEndpoint`, `testEmbedAcceptsBothTheModernAndThe2004ParameterNames`, `testAnEmbeddedBlockNeverBreaksThePageThatHostsIt` |
-| The 1.6 `?zfrefresh=<key>` spelling still works | `PublicController::refreshKey()` reads `key` then `zfrefresh`. **No test names the 1.6 spelling**; `Integration\Http\EmbedEndpointsTest::testRefreshingWithTheKeyPrintsThe2004Report` covers the modern one only |
+| The 1.6 `?zfrefresh=<key>` spelling still works | `PublicController::refresh()` reads `key` then `zfrefresh`. **No test names the 1.6 spelling**; `Integration\Http\EmbedEndpointsTest::testRefreshingWithTheKeyPrintsThe2004Report` covers the modern one only |
 | A 2004 `newsfeeds/` directory can be imported | `Cli\LegacyImportCommandTest` (10 tests), against `tests/fixtures/legacy-1.6/` |
 
 ## 5. Portability review

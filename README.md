@@ -55,7 +55,7 @@ read-only demonstration mode.
 docker run -d --name zfeeder -p 8080:80 \
   -e ZF_ADMIN_PASSWORD_HASH="$(docker run --rm ghcr.io/andreibesleaga/zfeeder bin/zfeeder hash-password 'your password' | head -1)" \
   -v zfeeder-data:/var/www/data \
-  ghcr.io/andreibesleaga/zfeeder:2.0.0
+  ghcr.io/andreibesleaga/zfeeder:2.0.1
 ```
 
 Open <http://localhost:8080>. The panel is at `/admin`.
@@ -73,7 +73,7 @@ php -S 127.0.0.1:8080 -t public      # development server
 
 ### Shared hosting, the way 1.6 was installed
 
-Download `zfeeder-2.0.0.zip` from the [releases](https://github.com/andreibesleaga/zfeeder/releases),
+Download `zfeeder-2.0.1.zip` from the [releases](https://github.com/andreibesleaga/zfeeder/releases),
 unpack it, upload it, point the document root at `public/`, and put the `data/`
 directory outside the web root. Dependencies are already in the archive; there is
 nothing to compile and no Composer needed on the server.
@@ -98,7 +98,7 @@ Not a PHP site:
 ```
 GET /embed?category=news&template=modern/list     an HTML fragment
 GET /api/feeds?category=news                       JSON
-GET /api/opml/news                                 the subscription list as OPML
+GET /api/opml/news                                 the subscription list as OPML (404 unless ZF_OPML_EXPORT_PUBLIC=true)
 ```
 
 From the command line:
@@ -148,7 +148,7 @@ derived from input, XML parsing with document type declarations refused, and JSO
 configuration stored outside the web root.
 
 Each of the eighteen controls has a class in `tests/Security/`, `S01…` to `S18…`; the
-suite is 484 tests. See [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md), which also records
+security suite is 484 tests. See [docs/THREAT-MODEL.md](docs/THREAT-MODEL.md), which also records
 the four defects found in 2.0 itself and closed, and [SECURITY.md](SECURITY.md).
 
 **Do not deploy the 2004 release.** It is kept as history in

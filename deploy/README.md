@@ -5,7 +5,7 @@ The instructions that go with these files are in [../docs/DEPLOYMENT.md](../docs
 
 | File | What it is for |
 |---|---|
-| `Dockerfile` | The production image: PHP 8.3 and Apache, document root at `public/`, data on a volume at `/var/www/data`, non-root, health check on `/healthz`. Build from the repository root with `-f deploy/Dockerfile`. |
+| `Dockerfile` | The production image: PHP 8.5 and Apache (`php:8.5-apache`), document root at `public/`, data on a volume at `/var/www/data`, non-root, health check on `/healthz`. Build from the repository root with `-f deploy/Dockerfile`. |
 | `docker-compose.yml` | Running that image locally with a named volume. |
 | `entrypoint.sh` | Seeds an empty data directory from `data-dist/` on first boot and applies SQLite migrations when that backend is selected. |
 | `php.ini` | Production PHP settings baked into the image. `allow_url_fopen` is off: feeds go through the HTTP client, which enforces the address rules. |

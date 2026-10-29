@@ -24,7 +24,7 @@ and runs under Playwright.
 | integration | `tests/Integration/` | Two groups. `Integration/Admin/`: the panel from route name to response, with the real router, the real dispatcher, real Twig templates, an array session, a frozen clock and a scratch data directory — sign-in, screen access, CSRF, demo mode, add feed, subscriptions, config, import. `Integration/Http/`: the demonstration site, the template gallery, `/embed`, `/api/feeds`, `/api/opml`, `/refresh` and `/healthz` | `vendor/bin/phpunit --testsuite integration` |
 | golden | `tests/Golden/` | Byte equality of the classic template set against output recorded from zFeeder 1.6 | `vendor/bin/phpunit --testsuite golden` |
 | security | `tests/Security/` | One class per control S1–S18 of `project/PLAN.md` B6 — `S01PasswordHashingTest` through `S18SecretsTest` — on top of `tests/Security/SecurityTestCase.php`. Several classes prove the control by first showing the undefended behaviour: `S09XmlTest::testTheNaiveParserReallyDoesLeakALocalFile` before `testTheFeedParserRefusesTheXxePayloadAndReadsNoLocalFile` | `vendor/bin/phpunit --testsuite security` |
-| cli | `tests/Cli/` | Eleven of the twelve `bin/zfeeder` commands through `CommandTester`, with the application assembled the way the binary assembles it. `seed` has no class here — see [Known gaps](#known-gaps) | `vendor/bin/phpunit --testsuite cli` |
+| cli | `tests/Cli/` | The twelve `bin/zfeeder` commands, one class each (`SeedCommandTest` included), through `CommandTester`, with the application assembled the way the binary assembles it | `vendor/bin/phpunit --testsuite cli` |
 | e2e | `tests/e2e/specs/` | `public.spec.js`, `templates.spec.js` and `admin.spec.js`: the demonstration site, the template gallery and the administration panel in a real browser, with axe, a skip-link check, keyboard walkthroughs and horizontal-overflow checks | `./tools/run-e2e.sh` |
 
 Everything at once:
@@ -46,21 +46,22 @@ for s in unit integration golden security cli; do
 done
 ```
 
-The figures below are from a full local run on 18 September 2026, PHP 8.3, flat
-backend. `vendor/bin/phpunit` reported **1,418 tests, 10,643 assertions, all
-passing**, with **90.62 % line coverage of `src/` (4,896 of 5,403 lines)**;
+The figures below are from a full local run on 29 October 2026, PHP 8.3.6, flat
+backend. `vendor/bin/phpunit` reported **1,426 tests, 9,594 assertions, all
+passing**, with **91.58 % line coverage of `src/` (4,950 of 5,405 lines)**;
 the same run reported 72.80 % of methods (447 of 614) and 28.89 % of classes
 (26 of 90), the class figure being low because it counts only classes every
-line of which is executed.
+line of which is executed. The suite rows below come from separate runs of
+each suite and add up to 9,589 assertions; the single full run counts 9,594.
 
 | Suite | Tests | Assertions |
 |---|---|---|
 | unit | 624 | 1,966 |
 | integration | 179 | 1,576 |
 | golden | 51 | 263 |
-| security | 484 | 6,478 |
-| cli | 80 | 360 |
-| **total** | **1,418** | **10,643** |
+| security | 484 | 5,403 |
+| cli | 88 | 381 |
+| **total** | **1,426** | **9,594** |
 
 The largest classes are `Security\S05SanitizerTest` (87),
 `Security\S07PathTraversalTest` (86), `Unit\Parse\FeedParserTest` (64),
@@ -193,9 +194,8 @@ on purpose:
 - Whitespace that indents a closing marker stays at the end of that chunk, while
   whitespace between a closing marker and the next opening marker is dropped
   altogether, so a template's indentation does not survive into the output as
-  written. (The name and the comment of
-  `Unit\Render\TemplateEngineTest::testWhitespaceBeforeTheNextMarkerBelongsToThePreviousChunk`
-  say the opposite of what its own assertions check; the assertions are right.)
+  written. (`Unit\Render\TemplateEngineTest::testAChunkKeepsTheIndentationOfItsClosingMarkerAndNotOfItsOpeningOne`
+  asserts exactly this, in a comment that says so.)
 - In one-bar mode the channel chunk is substituted with the *feed* index, so
   `{title}` in a channel bar silently shows whichever item happens to sit at that
   offset — or nothing, when the feed is shorter.
@@ -317,11 +317,9 @@ fail.
 Stated plainly, because a test plan that only lists what is covered is a
 marketing document.
 
-1. **`bin/zfeeder seed` has no test.** `tests/Cli/` has one class per command
-   for the other eleven; `SeedCommand` is exercised only by running the
-   container, where `deploy/entrypoint.sh` calls it on every boot. Its
-   `--dry-run`, `--force` and `--from` branches and its "leave an existing
-   category alone" rule are unproven by the suite.
+1. **Closed: `bin/zfeeder seed` now has a test.** `tests/Cli/SeedCommandTest.php`
+   covers both storage backends and repeat runs, which is what the container
+   entrypoint does on every boot.
 
 2. **The security tests were not written against a weakened build.**
    `project/PLAN.md` B14 asks for each S-class to be shown failing with its
@@ -334,9 +332,9 @@ marketing document.
    no separate build with the controls compiled out, so the remaining classes
    rest on review rather than on demonstration.
 
-3. **Coverage clears the gate by about thirty lines.** The run of 18 September
-   2026 reported 90.62 % of lines in `src/` (4,896 of 5,403) against a floor of
-   90 %, which needs 4,863 covered lines: 33 lines of slack. Adding a few dozen
+3. **Coverage clears the gate by under a hundred lines.** The run of 29 October
+   2026 reported 91.58 % of lines in `src/` (4,950 of 5,405) against a floor of
+   90 %, which needs 4,865 covered lines: 85 lines of slack. Adding about a hundred
    uncovered lines fails the build. Get the current figure with
    `vendor/bin/phpunit --coverage-text` and
    `php tools/coverage-gate.php coverage.xml 90`.
@@ -344,7 +342,7 @@ marketing document.
 4. **Three of the four CI legs are not coverage-gated.** The gate runs on the
    PHP 8.3 / flat leg only, on the assumption that the other three produce the
    same figure. That assumption is not checked, and a local run with
-   `ZF_STORAGE=sqlite` and the flat default both report 1,418 tests and 10,643
+   `ZF_STORAGE=sqlite` and the flat default both report 1,426 tests and 9,594
    assertions, so on this machine they agree — but nothing asserts that they will.
 
 5. **`templates/classic/css.html` has no browser test.** The `CLASSIC` list in
