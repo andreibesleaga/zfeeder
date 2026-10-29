@@ -6,8 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.2] — 2026-10-29
+
 - Docs: audit of 29 October 2026 — configuration-file location, release download names, test
   figures, CI notes and support links corrected to match the code.
+- CI: the test matrix now includes PHP 8.5, the version the container image runs. Deployment
+  diagram and Dockerfile comment corrected to match.
+- Admin and template browser checks (`check-admin.mjs`, `check-preview.mjs`) moved from the
+  git-ignored `build/` directory to `tools/`, so they are in a fresh clone.
+- Docs: nginx example gains a `/.well-known/sustainability-data` block; CONTRIBUTING lists the
+  workflows and automation.
 
 ### Removed
 
@@ -23,10 +31,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Security
 
-- **No credential is written down in the repository.** The browser suite used a fixed
+- **No operational credential is written down in the repository.** The browser suite used a fixed
   administrator password; `tools/run-e2e.sh` now generates one for each run and passes it
   to the suite as `ZF_E2E_PASSWORD`. Nothing is exempt from the secret scan any more —
-  `S18SecretsTest` dropped its one allowed exception.
+  `S18SecretsTest` dropped its one allowed exception. The public demonstration page now
+  prints the demonstration administrator login only when `demo_mode` is on.
+
+## [2.0.1] — 2026-09-18
+
+Tag only. `v2.0.1` was cut before `src/Version.php` was bumped, so the published 2.0.1
+archive and image report themselves as 2.0.0. Its contents are described under 2.0.2; use
+2.0.2 or later.
 
 ## [2.0.0] — 2026-09-18
 
@@ -117,5 +132,7 @@ Every item below is a defect of the 1.6 code, with the test that now proves it i
   `GET /refresh?key=<key>`; the 1.6 spelling `?zfrefresh=<key>` is still accepted, at
   `/refresh` and at the old `/newsfeeds/zfeeder.php` path, so an existing cron entry keeps working.
 
-[Unreleased]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/andreibesleaga/zfeeder/releases/tag/v2.0.0
