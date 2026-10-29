@@ -2,7 +2,7 @@
 title: "How it is deployed"
 ---
 flowchart TB
-    subgraph img["Container image — php:8.3-apache"]
+    subgraph img["Container image — php:8.5-apache"]
         ep["entrypoint<br/>listen on $PORT · own the volume ·<br/>migrate · seed"]
         ap["Apache<br/>master as root, workers as www-data"]
         code["public/ src/ templates/ vendor/"]
