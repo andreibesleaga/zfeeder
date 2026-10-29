@@ -165,6 +165,10 @@ screen:
 ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node build/check-admin.mjs
 ```
 
+`build/` is listed in `.gitignore`, so `build/check-admin.mjs` and `build/check-preview.mjs`
+are not in a fresh clone; the browser suite that is tracked is `tests/e2e/`
+(`tools/run-e2e.sh`).
+
 ---
 
 ## 4. Accessibility rules, with the numbers
@@ -237,7 +241,8 @@ The rest of the checklist, all of it enforced in the CSS rather than asserted:
    The script writes `build/preview/<name>.html` plus screenshots at four widths
    in both themes into `build/preview/shots/`, and fails on any horizontal
    overflow. Open the pictures; the check only proves the page does not
-   overflow, it cannot tell you the design is ugly.
+   overflow, it cannot tell you the design is ugly. As above, `build/` is git-ignored, so
+   `build/check-preview.mjs` is not in a fresh clone.
 
 ## 6. How to theme the output from a host page
 

@@ -33,7 +33,7 @@ Healthy, HTTP 200:
 ```json
 {
     "status": "ok",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "storage": "flat",
     "checks": {
         "subscriptions": true,
@@ -47,7 +47,7 @@ Unhealthy, HTTP 503:
 ```json
 {
     "status": "degraded",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "storage": "flat",
     "checks": {
         "subscriptions": false,
@@ -62,7 +62,7 @@ Those are the only two shapes. The endpoint is
 | Field | Type | Meaning |
 |---|---|---|
 | `status` | `"ok"` or `"degraded"` | `ok` when `checks.data_writable` is true, `degraded` otherwise |
-| `version` | string | `Version::NUMBER`, currently `2.0.0` |
+| `version` | string | `Version::NUMBER`, currently `2.0.1` |
 | `storage` | `"flat"` or `"sqlite"` | the configured backend |
 | `checks.subscriptions` | bool | true when the subscription store returned at least one category |
 | `checks.data_writable` | bool | true when the data directory exists and is writable by the PHP process |
@@ -393,11 +393,10 @@ Exit 0 when all nine pass, 1 otherwise. `--json` produces the same report as a
 document with `version`, `php`, `configFile`, `projectRoot`, `options`,
 `checks`, `failed` and `ok`.
 
-`configFile` is worth reading on its own. It is always
-`<projectRoot>/data/config.json` — the path does not follow `ZF_DATA_DIR` — so
-on any installation where the data directory has been moved it names a
-different directory from the one the subscriptions are in. If a setting is not
-taking effect, this is the first line to check.
+`configFile` is worth reading on its own. It is `ZF_CONFIG_FILE` when that is
+set, otherwise `$ZF_DATA_DIR/config.json` when `ZF_DATA_DIR` is set, otherwise
+`<projectRoot>/data/config.json`. If a setting is not taking effect, this is the
+first line to check.
 
 The password hash and the refresh key are never printed — they appear as `set`
 or `not set` — so the output is safe to paste into a bug report, which is what

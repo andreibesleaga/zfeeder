@@ -47,11 +47,8 @@ Playwright suite, not the PHP.
    `X-Zfeeder-Version` response header and the outgoing `User-Agent`
    (`zfeeder/<NUMBER> (+https://github.com/andreibesleaga/zfeeder)`). Update it.
 
-   Two other files carry a literal version and are worth a look at the same time:
-   `tools/sbom.php` writes a hard-coded `'version' => '2.0.0'` for the application component
-   of the bill of materials, so a later release will describe itself as 2.0.0 until that is
-   fixed; `tools/build-dist.sh` defaults to `2.0.0` only when it is called with no argument,
-   which the workflow never does.
+   `tools/sbom.php` reads the product version from `src/Version.php`. `tools/build-dist.sh`
+   defaults to `2.0.0` only when it is called with no argument, which the workflow never does.
 
 2. **Regenerate the configuration reference if `src/Config/Schema.php` changed.**
    `docs/CONFIGURATION.md` is generated:
@@ -157,11 +154,10 @@ These are manual, and the maintainer does them.
    <https://packagist.org/packages/submit>.
 5. **Announce it**, if there is anything to announce. A security release should say so
    plainly and name the versions affected, per [SECURITY.md](../SECURITY.md).
-6. **Expect the Pages workflow to fail, for now.** `.github/workflows/pages.yml` publishes the
-   portfolio page on every push to `main` that touches `docs/`. It calls
-   `./tools/build-pages.sh`, **which does not exist in this repository**, so the job fails and
-   the published page does not refresh. It has nothing to do with the release archives, but it
-   will be red next to them.
+6. **Check the Pages workflow.** `.github/workflows/pages.yml` publishes the portfolio page
+   (`docs/portfolio/` and `docs/HISTORY.md`, rendered by `./tools/build-pages.sh`) on every
+   push to `main` that touches `docs/`. It is separate from the release archives, but a red
+   run next to them is worth a look.
 
 ## Security releases
 

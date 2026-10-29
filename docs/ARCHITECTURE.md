@@ -205,15 +205,13 @@ collector to see.
 | 12 | `Http\SecurityHeaders::forPublic()` | CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`, and HSTS when the request is HTTPS. |
 | 13 | `zfeeder_emit()` in `public/index.php` | Status, headers and body are written to the SAPI in 8 KiB chunks. |
 
-One caveat about step 2 that is worth knowing before you deploy. The JSON
-configuration file is looked for at `<project root>/data/config.json`
-(`ConfigLoader::DEFAULT_CONFIG_RELATIVE`), and that path is **not** derived from
-`data_dir`. Setting `ZF_DATA_DIR` moves the subscriptions, the cache and the log
-but not the configuration file, so a `config.json` placed in the data directory
-is not read. Verify what is actually in use with `bin/zfeeder check-config`,
-which prints the config file path it resolved. See
-[DEPLOYMENT.md](DEPLOYMENT.md) for what this means on a platform with a mounted
-volume.
+One note on step 2. The JSON configuration file is looked for at
+`$ZF_DATA_DIR/config.json` when `ZF_DATA_DIR` is set in the environment, at
+`<project root>/data/config.json` (`ConfigLoader::DEFAULT_CONFIG_RELATIVE`)
+when it is not, and at the path in `ZF_CONFIG_FILE` when that is set. Verify what
+is actually in use with `bin/zfeeder check-config`, which prints the config file
+path it resolved. See [DEPLOYMENT.md](DEPLOYMENT.md) for what this means on a
+platform with a mounted volume.
 
 Two routes deliberately skip the header layer: `public.health` and
 `public.refresh` are returned from `public/index.php` without passing through

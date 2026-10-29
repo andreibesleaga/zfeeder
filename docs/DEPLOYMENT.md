@@ -61,22 +61,20 @@ there. `bin/zfeeder check-config` prints the effective value of every option and
 where it came from. See [`docs/CONFIGURATION.md`](CONFIGURATION.md) for all 44
 options.
 
-**Where the configuration file lives.** `ConfigLoader` reads
-`<project root>/data/config.json` — the path is built from the project root, not
-from `ZF_DATA_DIR`. When `ZF_DATA_DIR` is unset the two are the same directory
-and everything sits together. When `ZF_DATA_DIR` points elsewhere, which every
-container recipe below does, the subscriptions, cache, log and rate-limit files
-move but the configuration file does not: it stays at `<project root>/data/config.json`,
-which inside an image means the container's own filesystem. Two consequences:
+**Where the configuration file lives.** `ConfigLoader` looks for it in this order
+and uses the first that applies:
 
-- **Configure a container through environment variables.** A `config.json`
-  placed in the mounted data directory is not read. `bin/zfeeder check-config`
-  prints the exact path it used on the `Config file` line — check it if a
-  setting is not taking effect.
-- **A change made in the admin panel — including a password change — is written
-  to `<project root>/data/config.json` and does not survive a redeploy** of a
-  container whose data volume is mounted somewhere else. Pin those settings in
-  the environment instead.
+1. `ZF_CONFIG_FILE`, if set: that exact path (a relative path is taken from the
+   project root);
+2. `$ZF_DATA_DIR/config.json`, if the `ZF_DATA_DIR` environment variable is set;
+3. `<project root>/data/config.json`.
+
+So a container that mounts a volume at `/var/www/data` and sets `ZF_DATA_DIR`
+keeps `config.json` on the volume, next to the subscriptions. `ZF_DATA_DIR` is
+read from the environment for this purpose; a `data_dir` key inside
+`config.json` cannot move the file that contains it. `bin/zfeeder check-config`
+prints the exact path it used on the `Config file` line, and the data directory
+on the `Data directory` line.
 
 The variables that come up in every recipe below:
 
@@ -105,6 +103,17 @@ Three lines on standard output: the bare hash, the shell assignment and the JSON
 fragment. Pipe the first through `head -1` when you want just the hash. The
 minimum password length is 12 characters.
 
+### The sustainability declaration
+
+The repository ships a signed, static report at `public/.well-known/sustainability-data`,
+in the format of the Internet-Draft `draft-besleaga-sustainability-wellknown`. It is served
+as any other file in `public/`. In the container, `deploy/apache-vhost.conf` gives it the
+media type `application/sustainability-data+json`, `Access-Control-Allow-Origin: *` and a
+one-hour cache. `deploy/nginx.conf.example` has no matching block, so under nginx the file
+gets whatever type your server assigns. The file's `target` field names
+`zfeeder.up.railway.app`, the public demo; an installation on another host name should
+replace the file or delete it.
+
 ### Which target
 
 | Target | Persistent storage | Effort | Suits |
@@ -124,7 +133,7 @@ minimum password length is 12 characters.
 
 The image is built from [`deploy/Dockerfile`](../deploy/Dockerfile): a
 `composer:2` stage that installs the production dependencies, then
-`php:8.3-apache`, which already ships every extension zFeeder needs, so nothing
+`php:8.5-apache`, which already ships every extension zFeeder needs, so nothing
 is compiled. It enables `rewrite`, `headers` and `expires`, sets the document
 root to `/var/www/html/public`, exposes port 80 and carries a `HEALTHCHECK` that
 curls `/healthz` on `${PORT:-80}`.
@@ -168,7 +177,7 @@ docker run -d --name zfeeder \
   -e ZF_TEMPLATE_SET=modern \
   -e ZF_LOG_PATH=php://stdout \
   -e ZF_LOG_LEVEL=info \
-  ghcr.io/andreibesleaga/zfeeder:2.0.0
+  ghcr.io/andreibesleaga/zfeeder:2.0.1
 ```
 
 The published tags are the full version, the major-minor pair and `latest`; the
@@ -229,12 +238,10 @@ milliseconds. A marker file would be worse than useless: it would record that
 seeding happened even when it did not take effect, so a volume created by an
 older version, or one whose categories were emptied, would never repair itself.
 
-The seeded subscriptions are read; the seeded `config.json` is not. The image
-sets `ZF_DATA_DIR=/var/www/data` while the project root is `/var/www/html`, and
-`ConfigLoader` looks for `/var/www/html/data/config.json`. Configure the
-container with `-e ZF_*` variables, as the commands here do, and treat the
-defaults in `data-dist/config.json.dist` as what a source install gets, not what
-this container gets.
+The image sets `ZF_DATA_DIR=/var/www/data`, so `ConfigLoader` reads the seeded
+`/var/www/data/config.json` from the volume, and a change saved in the admin
+panel is written there and survives a redeploy. An environment variable still
+beats the file, as everywhere else; the commands here set `-e ZF_*` variables.
 
 ### Verify
 
@@ -374,9 +381,9 @@ All five points apply just as much to Fly, Render and Cloud Run: each assigns a
 port through `PORT`, each mounts storage as a separate declaration rather than
 from a `VOLUME` line, and each presents a new volume owned by root.
 
-Settings saved in the panel are a separate matter, and the volume does not save
-them either: they go to `/var/www/html/data/config.json`, inside the container.
-Pin anything you care about in the environment.
+Settings saved in the panel go to `/var/www/data/config.json`, which is on the
+volume, so they survive a redeploy. A setting pinned by an environment variable
+shows as read-only in the panel and cannot be changed there.
 
 ### Environment
 
@@ -630,9 +637,9 @@ with PHP-FPM or Apache with `mod_rewrite`.
 Either unpack a release archive, which already contains `vendor/`:
 
 ```bash
-curl -fsSLO https://github.com/andreibesleaga/zfeeder/releases/download/v2.0.0/zfeeder-2.0.0.zip
-unzip zfeeder-2.0.0.zip -d /var/www
-mv /var/www/zfeeder-2.0.0 /var/www/zfeeder
+curl -fsSLO https://github.com/andreibesleaga/zfeeder/releases/download/v2.0.1/zfeeder-2.0.1.zip
+unzip zfeeder-2.0.1.zip -d /var/www
+mv /var/www/zfeeder-2.0.1 /var/www/zfeeder
 ```
 
 or install from a checkout:
@@ -645,9 +652,8 @@ composer install --no-dev --optimize-autoloader
 
 Then create the data directory and give it to the web server user. The default
 layout — `data/` beside the code, one level above `public/` — is the one to use
-on a VPS: it is already outside the document root, and it is the only layout
-where `config.json` and the subscriptions live together, because `ConfigLoader`
-always reads `<project root>/data/config.json`.
+on a VPS: it is already outside the document root, and it keeps `config.json`
+and the subscriptions together, and needs no `ZF_DATA_DIR`.
 
 ```bash
 mkdir -p /var/www/zfeeder/data/categories /var/www/zfeeder/data/cache
@@ -666,10 +672,10 @@ category that already exists alone. `bin/zfeeder seed --dry-run` reports what it
 would do.
 
 If you would rather keep the data on a separate filesystem, set `ZF_DATA_DIR` to
-that path. The subscriptions, cache, log and rate-limit files move there;
-`config.json` stays at `<project root>/data/config.json` and must exist there,
-or be replaced by environment variables. `bin/zfeeder check-config` prints both
-paths, on its `Config file` and `Data directory` lines.
+that path. The subscriptions, cache, log, rate-limit files and `config.json`
+all move there, so copy `data-dist/config.json.dist` to `$ZF_DATA_DIR/config.json`
+(or use environment variables). `bin/zfeeder check-config` prints both paths, on
+its `Config file` and `Data directory` lines.
 
 zFeeder writes its own files with mode 0640 and its own directories with 0750
 (`src/Storage/AtomicFile.php`), so the 2004 instruction to `chmod 0777` does not
@@ -768,10 +774,10 @@ support.
 
 ### Install
 
-1. Download `zfeeder-2.0.0.zip` from the
+1. Download `zfeeder-2.0.1.zip` from the
    [releases page](https://github.com/andreibesleaga/zfeeder/releases) and check
    it against `SHA256SUMS` from the same release.
-2. Unpack it. You get a `zfeeder-2.0.0/` directory containing `bin/`, `src/`,
+2. Unpack it. You get a `zfeeder-2.0.1/` directory containing `bin/`, `src/`,
    `public/`, `templates/`, `templates-admin/`, `data-dist/`, `vendor/`,
    `docs/`, `zfeeder.php` and a `deploy/` directory with
    `apache-vhost.conf`, `php.ini` and the `.htaccess` already copied into
@@ -796,10 +802,10 @@ support.
    because shared hosting uses the flat backend.
 
    `data/` is a sibling of `public/`, so nothing in it is reachable over HTTP,
-   and `ConfigLoader` finds `config.json` where it always looks for it:
-   `<project root>/data/config.json`. Setting `ZF_DATA_DIR` elsewhere moves the
-   subscriptions and cache but **not** the configuration file, so on shared
-   hosting it is usually more trouble than it is worth.
+   and `ConfigLoader` finds `config.json` in the default place,
+   `<project root>/data/config.json`. If you set `ZF_DATA_DIR` elsewhere, the
+   configuration file is looked for there instead, so on shared hosting it is
+   usually more trouble than it is worth.
 
 5. Point the site's document root at `/home/youraccount/zfeeder/public`.
    If your host will not let you move the document root, upload the contents of
@@ -999,8 +1005,8 @@ every time, which is what the container entrypoint does.
 | A single feed is missing from the page | that fetch failed and there is no cached copy | `bin/zfeeder list-feeds` shows the last fetch per feed, and the log carries the reason. `ZF_DISPLAY_ERROR` exists in the schema but nothing reads it, so it will not put the reason on the page |
 | PHP fatal: `could not find driver` | `ZF_STORAGE=sqlite` without `pdo_sqlite` | install the extension, or go back to `ZF_STORAGE=flat`; `check-config` reports it as a failed extension check |
 | A request for `/config.json` or an `.opml` file returns the file | the data directory is inside the web root | move it and set `ZF_DATA_DIR`; the boot check only covers the configured paths, not a stray copy |
-| A setting you put in `config.json` is ignored | the loader reads `<project root>/data/config.json`, which is not `$ZF_DATA_DIR/config.json` when the two differ | `bin/zfeeder check-config` prints the file it used on the `Config file` line |
-| Panel settings reset after a redeploy | the panel wrote them to `<project root>/data/config.json` inside the container, not to the mounted volume | move those settings to `ZF_*` variables |
+| A setting you put in `config.json` is ignored | the file is not the one the loader reads (see the order under [Three ways to configure it](#three-ways-to-configure-it)), or an environment variable pins that setting | `bin/zfeeder check-config` prints the file it used on the `Config file` line and the source of each value |
+| Panel settings reset after a redeploy | the data directory is not on a volume, so `config.json` was lost with the container | attach a volume at `/var/www/data`; see "Data lost on every deploy" below |
 | Code changed but the site did not | `opcache.validate_timestamps = 0` | reload PHP-FPM or Apache, or restart the container |
 | Container exits at once with an Apache bind error under Kubernetes | port 80 as a non-root user without `NET_BIND_SERVICE` | the capability is in [`deploy/k8s.yaml`](../deploy/k8s.yaml); add it to your own manifest |
 | Data lost on every deploy on a platform | no volume or disk attached at `/var/www/data` | attach one; the entrypoint reseeds an empty directory, which is what makes the loss look like a reset |

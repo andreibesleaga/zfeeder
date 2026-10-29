@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Docs: audit of 29 October 2026 — configuration-file location, release download names, test
+  figures, CI notes and support links corrected to match the code.
+
 ### Removed
 
 - **The 1.6 tree and the recovered screenshots.** `legacy/zfeeder-1.6/` and

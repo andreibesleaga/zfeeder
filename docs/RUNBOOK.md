@@ -40,16 +40,13 @@ Almost everything that cannot be recreated from the repository lives in one
 directory. It is `ZF_DATA_DIR`, or `data/` beside the code when that is unset,
 and it must be outside `public/`.
 
-The exception is the configuration file. `ConfigLoader` always reads
-`<project root>/data/config.json`, a path built from the project root rather
-than from `ZF_DATA_DIR`. With the default layout the two are the same directory
-and the listing below is complete. If you have moved `ZF_DATA_DIR` elsewhere —
-every container recipe does — then `config.json` is **not** in it: it is at
-`<project root>/data/config.json`, which inside a container image means the
-container's own filesystem, and a panel save there does not survive a redeploy.
+The configuration file follows the data directory. `ConfigLoader` reads
+`$ZF_DATA_DIR/config.json` when `ZF_DATA_DIR` is set in the environment, and
+`<project root>/data/config.json` when it is not; `ZF_CONFIG_FILE` overrides both
+with an explicit path. In a container `ZF_DATA_DIR` is the mounted volume, so
+`config.json` is on the volume and survives a redeploy.
 `bin/zfeeder check-config` prints both paths, on its `Config file` and
-`Data directory` lines. Configure those installations through environment
-variables.
+`Data directory` lines.
 
 With `ZF_STORAGE=flat` (the default):
 
@@ -63,8 +60,8 @@ data/
         <sha256 of the url>.json    etag, last-modified, status, fetched-at
     ratelimit/                 one small JSON file per failed-login key
     config.json                what the admin panel writes; holds the password hash.
-                               Always at <project root>/data/config.json, even
-                               when ZF_DATA_DIR points somewhere else.
+                               Inside ZF_DATA_DIR when that is set (ZF_CONFIG_FILE
+                               overrides the location).
     zfeeder.log                unless ZF_LOG_PATH points elsewhere
     refresh.lock               held while bin/zfeeder refresh runs
 ```
@@ -193,11 +190,9 @@ docker run --rm -v zfeeder-data:/data -v "$PWD":/backup alpine \
   tar -czf /backup/zfeeder-$(date +%F).tar.gz -C /data .
 ```
 
-That volume holds the subscriptions, the cache and, when `ZF_LOG_PATH` is a
-file, the log. It does **not** hold `config.json`, which the container reads
-from `/var/www/html/data/config.json` on its own filesystem. On a container,
-the configuration you need to be able to restore is the set of `ZF_*` variables
-you gave the platform; keep those wherever you keep deployment configuration.
+That volume holds the subscriptions, the cache, `config.json` and, when
+`ZF_LOG_PATH` is a file, the log. Settings pinned by `ZF_*` variables are not in
+it: keep those wherever you keep deployment configuration.
 
 ### Subscriptions only, portable, any backend
 
@@ -237,7 +232,7 @@ Either way you get a single consistent file with no `-wal` beside it.
 | File | Keep it | Why |
 |---|---|---|
 | `categories/*.opml` or `zfeeder.sqlite` | yes | the subscriptions; irreplaceable |
-| `config.json` | yes | settings and the password hash — back it up from `<project root>/data/`, which is not the mounted directory on a container |
+| `config.json` | yes | settings and the password hash — in `ZF_DATA_DIR` when that is set, otherwise in `<project root>/data/` |
 | `cache/` or the `cache` table | no | rebuilt by the next refresh |
 | `zfeeder.log` | your choice | diagnosis only |
 | `ratelimit/` | no | failed-login counters; they expire anyway |
@@ -314,14 +309,13 @@ it from the command line:
 bin/zfeeder hash-password | head -1
 ```
 
-and paste the result into `<project root>/data/config.json` as
-`"admin_password_hash"`. Write the file atomically or copy over it; there is no
-CLI command that edits `config.json` in place.
+and paste the result into `config.json` as `"admin_password_hash"`. Write the
+file atomically or copy over it; there is no CLI command that edits
+`config.json` in place.
 
 `bin/zfeeder check-config` prints the file it reads on its `Config file` line.
-Edit that file and no other — on a container it is inside the image's own
-filesystem, not on the mounted data volume, which is why a container's password
-belongs in `ZF_ADMIN_PASSWORD_HASH` rather than here.
+Edit that file and no other. On a container it is on the mounted data volume;
+a password set in `ZF_ADMIN_PASSWORD_HASH` takes precedence over it either way.
 
 ### Afterwards
 
@@ -506,7 +500,7 @@ emits and the level it uses.
 ```json
 {
     "status": "ok",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "storage": "flat",
     "checks": {
         "subscriptions": true,
@@ -612,8 +606,8 @@ and `testAFeedThatIsGenuinelyBrokenIsNotRefetchedRepeatedly` pin both halves.
 | `Configuration error: …`, exit 78 | an unknown key, a bad type or an out-of-range value in `config.json`, or a data directory inside `public/` | fix the key the message names, then `bin/zfeeder check-config` |
 | `could not find driver` | `ZF_STORAGE=sqlite` without `pdo_sqlite` | `bin/zfeeder check-config` — the extension check names it |
 | A setting changed in the panel has no effect | it is pinned by an environment variable | `bin/zfeeder check-config` — the `Source` column reads `env` |
-| A `config.json` you edited has no effect | it is not the file the loader reads: the path is `<project root>/data/config.json`, not `$ZF_DATA_DIR/config.json` | `bin/zfeeder check-config` — the `Config file` line names the file it used |
-| Panel settings reset after a container redeploy | they were written to `<project root>/data/config.json` inside the container, not to the mounted volume | move those settings to `ZF_*` environment variables |
+| A `config.json` you edited has no effect | it is not the file the loader reads (`ZF_CONFIG_FILE`, else `$ZF_DATA_DIR/config.json`, else `<project root>/data/config.json`), or an environment variable pins the setting | `bin/zfeeder check-config` — the `Config file` line names the file it used |
+| Panel settings reset after a container redeploy | the data directory is not on a mounted volume, so `config.json` was lost with the container | mount a volume at `/var/www/data` |
 | `docs/CONFIGURATION.md` disagrees with the program | it was edited by hand | `bin/zfeeder docs:config` |
 | Site returns 500 with no detail | production hides the detail on purpose | the log has it: `grep ' ERROR ' zfeeder.log` |
 | Site returns 404 for a template name you expect to work | a `TemplateException` is reported as 404, not 500, because a template that does not exist is a bad request | `grep ' NOTICE ' zfeeder.log` — refusals below 500 are logged at notice level with the status and the class |

@@ -205,6 +205,10 @@ variables:
 ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node build/check-admin.mjs
 ```
 
+`build/` is listed in `.gitignore`, so `build/check-admin.mjs` and `build/check-preview.mjs`
+are not in a fresh clone; the browser suite that is tracked is `tests/e2e/`
+(`tools/run-e2e.sh`).
+
 It is not part of CI, so the classic skin's axe result is as fresh as the last time
 somebody ran that script, while the modern skin's is re-checked on every push.
 

@@ -1,6 +1,8 @@
 # Getting help
 
-- **A question about using zFeeder** — open a [discussion](https://github.com/andreibesleaga/zfeeder/discussions).
+- **A question about using zFeeder** — open an
+  [issue](https://github.com/andreibesleaga/zfeeder/issues);
+  GitHub Discussions are not enabled on this repository.
 - **Something is broken** — open an [issue](https://github.com/andreibesleaga/zfeeder/issues)
   with your PHP version, the storage backend, the relevant part of `bin/zfeeder check-config`
   (it redacts secrets) and what you expected to happen.
