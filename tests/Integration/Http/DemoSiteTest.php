@@ -30,6 +30,20 @@ final class DemoSiteTest extends PublicSurfaceTestCase
         self::assertStringContainsString('other', $body);
     }
 
+    public function testTheDemoPasswordIsNotShownOutsideDemoMode(): void
+    {
+        $this->bootKernel(['demo_mode' => false]);
+
+        self::assertStringNotContainsString('zfeeder-DEMO-pass', self::bodyOf($this->get('/')));
+    }
+
+    public function testTheDemoPasswordIsShownInDemoMode(): void
+    {
+        $this->bootKernel(['demo_mode' => true]);
+
+        self::assertStringContainsString('demo user: admin/zfeeder-DEMO-pass', self::bodyOf($this->get('/')));
+    }
+
     public function testTheTemplateSetCanBeSwitchedFromTheQueryString(): void
     {
         self::assertStringContainsString('switch to modern', self::bodyOf($this->get('/?set=classic')));
