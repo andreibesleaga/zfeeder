@@ -51,10 +51,22 @@ tools/run-e2e.sh
 - Sign off your commits (`git commit -s`): this project uses the
   [Developer Certificate of Origin](https://developercertificate.org/).
 - CI must be green: coding standard, static analysis, architecture boundaries, the forbidden
-  constructs scan, the full test suite on PHP 8.3 and 8.4 against both storage backends, the
+  constructs scan, the full test suite on PHP 8.3, 8.4 and 8.5 against both storage backends, the
   container build, the browser tests and the accessibility checks.
 - Update the documentation in the same pull request. `docs/CONFIGURATION.md` is generated —
   run `bin/zfeeder docs:config` rather than editing it.
+
+## Workflows and automation
+
+| What | Where | When it runs | What it does |
+|---|---|---|---|
+| ci | `.github/workflows/ci.yml` | every push and pull request | coding standard, static analysis, tests on PHP 8.3 to 8.5 against both storage backends, container build and smoke test, browser and accessibility tests |
+| codeql | `.github/workflows/codeql.yml` | push, pull request, weekly | code scanning |
+| pages | `.github/workflows/pages.yml` | push to `main` that changes `docs/` | builds the project pages with `tools/build-pages.sh` and publishes them to GitHub Pages |
+| release | `.github/workflows/release.yml` | a `v2.*` tag is pushed | builds the archive, SBOM and image, and creates the release with the CHANGELOG section as its notes (see [docs/RELEASE-PROCESS.md](docs/RELEASE-PROCESS.md)) |
+| Dependabot | `.github/dependabot.yml` | weekly, Monday | pull requests for Composer, GitHub Actions, the Docker base image and `tests/e2e` npm packages |
+
+Dependabot pull requests go through the same CI as any other change.
 
 ## Code style
 

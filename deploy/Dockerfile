@@ -24,7 +24,7 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/html/public \
     ZF_DATA_DIR=/var/www/data \
     ZF_ENV=production
 
-# php:8.3-apache already ships every extension zFeeder needs - pdo_sqlite,
+# php:8.5-apache already ships every extension zFeeder needs - pdo_sqlite,
 # sqlite3, dom, simplexml, mbstring, ctype, fileinfo, curl, session and OPcache -
 # so nothing is compiled here. curl is installed only for the health check.
 RUN set -eux; \

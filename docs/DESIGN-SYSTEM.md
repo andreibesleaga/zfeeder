@@ -155,19 +155,17 @@ skin, as it was in 2004. Pick it with `ZF_ADMIN_SKIN=classic` (or the
 
 ### How the admin is verified
 
-`build/check-admin.mjs` signs in to a running panel, walks the six screens at
+`tools/check-admin.mjs` signs in to a running panel, walks the six screens at
 1280 and 375 in both colour schemes for both skins, asserts there is no
 horizontal overflow, proves the stylesheet is actually applied, screenshots
 everything into `build/preview/admin-shots/`, and runs axe-core on every
 screen:
 
 ```sh
-ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node build/check-admin.mjs
+ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node tools/check-admin.mjs
 ```
 
-`build/` is listed in `.gitignore`, so `build/check-admin.mjs` and `build/check-preview.mjs`
-are not in a fresh clone; the browser suite that is tracked is `tests/e2e/`
-(`tools/run-e2e.sh`).
+Both scripts are tracked in `tools/`; their output goes to `build/`, which is git-ignored. The browser suite that CI runs is `tests/e2e/` (`tools/run-e2e.sh`).
 
 ---
 
@@ -235,14 +233,13 @@ The rest of the checklist, all of it enforced in the CSS rather than asserted:
    php tools/preview-templates.php
    php -S 127.0.0.1:8899 -t . &            # icons and sprites need HTTP
    ZF_PREVIEW_BASE=http://127.0.0.1:8899/build/preview \
-   NODE_PATH=/path/to/node_modules node build/check-preview.mjs
+   NODE_PATH=/path/to/node_modules node tools/check-preview.mjs
    ```
 
    The script writes `build/preview/<name>.html` plus screenshots at four widths
    in both themes into `build/preview/shots/`, and fails on any horizontal
    overflow. Open the pictures; the check only proves the page does not
-   overflow, it cannot tell you the design is ugly. As above, `build/` is git-ignored, so
-   `build/check-preview.mjs` is not in a fresh clone.
+   overflow, it cannot tell you the design is ugly. As above, the script is tracked in `tools/` and writes into the git-ignored `build/`.
 
 ## 6. How to theme the output from a host page
 

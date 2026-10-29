@@ -195,19 +195,17 @@ the two skins are a single layout file each, `templates-admin/modern/layout.twig
 `tools/run-e2e.sh` nor `admin.spec.js` sets `ZF_ADMIN_SKIN`, so what the CI suite sees is
 the default, `modern`.
 
-The classic skin is covered by a second script, `build/check-admin.mjs`, which signs in
+The classic skin is covered by a second script, `tools/check-admin.mjs`, which signs in
 and walks the six screens for **both** skins at 1280 and 375 pixels in light and dark,
 asserting no horizontal overflow, that the stylesheet is applied, and — at 1280 — zero axe
 violations. It takes the axe bundle and a Playwright install through environment
 variables:
 
 ```sh
-ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node build/check-admin.mjs
+ZF_AXE=/path/to/axe.min.js NODE_PATH=/path/to/node_modules node tools/check-admin.mjs
 ```
 
-`build/` is listed in `.gitignore`, so `build/check-admin.mjs` and `build/check-preview.mjs`
-are not in a fresh clone; the browser suite that is tracked is `tests/e2e/`
-(`tools/run-e2e.sh`).
+Both scripts are tracked in `tools/`; their output goes to `build/`, which is git-ignored. The browser suite that CI runs is `tests/e2e/` (`tools/run-e2e.sh`).
 
 It is not part of CI, so the classic skin's axe result is as fresh as the last time
 somebody ran that script, while the modern skin's is re-checked on every push.
