@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Docs: install and upgrade commands name 2.0.2; the release process notes that a new container package must be made public.
+
 ## [2.0.2] — 2026-10-29
 
 - Docs: audit of 29 October 2026 — configuration-file location, release download names, test
