@@ -500,7 +500,7 @@ emits and the level it uses.
 ```json
 {
     "status": "ok",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "storage": "flat",
     "checks": {
         "subscriptions": true,
