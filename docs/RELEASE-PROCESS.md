@@ -127,6 +127,10 @@ Builds `deploy/Dockerfile` for `linux/amd64` and `linux/arm64` and pushes to
 need to be configured. `docker/metadata-action` applies three tags: the full version, the
 `major.minor` prefix and `latest`. Provenance attestation and an image SBOM are both enabled.
 
+A package pushed by a workflow can be private. After the first release open the package
+settings on GitHub and set Visibility to Public; if it is private, `docker pull` without a
+login fails and the Docker quick start in the README does not work.
+
 ### `publish` — create the GitHub release
 
 Needs both jobs above. Downloads the `dist` artefact, runs

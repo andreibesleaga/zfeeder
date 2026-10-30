@@ -177,7 +177,7 @@ docker run -d --name zfeeder \
   -e ZF_TEMPLATE_SET=modern \
   -e ZF_LOG_PATH=php://stdout \
   -e ZF_LOG_LEVEL=info \
-  ghcr.io/andreibesleaga/zfeeder:2.0.1
+  ghcr.io/andreibesleaga/zfeeder:2.0.2
 ```
 
 The published tags are the full version, the major-minor pair and `latest`; the
@@ -265,7 +265,7 @@ real endpoints and the security headers — the same one CI runs:
 ### Upgrade
 
 ```bash
-docker pull ghcr.io/andreibesleaga/zfeeder:2.0.1
+docker pull ghcr.io/andreibesleaga/zfeeder:2.0.2
 docker rm -f zfeeder
 docker run -d --name zfeeder ...   # same flags, same volume, new tag
 ```
@@ -615,7 +615,7 @@ cannot write its data directory never becomes ready.
 ### Upgrade
 
 ```bash
-kubectl -n zfeeder set image deploy/zfeeder zfeeder=ghcr.io/andreibesleaga/zfeeder:2.0.1
+kubectl -n zfeeder set image deploy/zfeeder zfeeder=ghcr.io/andreibesleaga/zfeeder:2.0.2
 kubectl -n zfeeder rollout status deploy/zfeeder
 kubectl -n zfeeder rollout undo deploy/zfeeder      # if it goes wrong
 ```
@@ -637,9 +637,9 @@ with PHP-FPM or Apache with `mod_rewrite`.
 Either unpack a release archive, which already contains `vendor/`:
 
 ```bash
-curl -fsSLO https://github.com/andreibesleaga/zfeeder/releases/download/v2.0.1/zfeeder-2.0.1.zip
-unzip zfeeder-2.0.1.zip -d /var/www
-mv /var/www/zfeeder-2.0.1 /var/www/zfeeder
+curl -fsSLO https://github.com/andreibesleaga/zfeeder/releases/download/v2.0.2/zfeeder-2.0.2.zip
+unzip zfeeder-2.0.2.zip -d /var/www
+mv /var/www/zfeeder-2.0.2 /var/www/zfeeder
 ```
 
 or install from a checkout:
@@ -774,10 +774,10 @@ support.
 
 ### Install
 
-1. Download `zfeeder-2.0.1.zip` from the
+1. Download `zfeeder-2.0.2.zip` from the
    [releases page](https://github.com/andreibesleaga/zfeeder/releases) and check
    it against `SHA256SUMS` from the same release.
-2. Unpack it. You get a `zfeeder-2.0.1/` directory containing `bin/`, `src/`,
+2. Unpack it. You get a `zfeeder-2.0.2/` directory containing `bin/`, `src/`,
    `public/`, `templates/`, `templates-admin/`, `data-dist/`, `vendor/`,
    `docs/`, `zfeeder.php` and a `deploy/` directory with
    `apache-vhost.conf`, `php.ini` and the `.htaccess` already copied into
