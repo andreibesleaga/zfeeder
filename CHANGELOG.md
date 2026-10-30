@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-- Fixed: `Version::NUMBER` is now `2.0.2`. The published 2.0.2 release reports `2.0.1` in `/healthz`, the
-  `X-Zfeeder-Version` header and the `User-Agent`; the next release carries the right number.
+## [2.0.3] — 2026-10-30
+
+- Fixed: the version is reported correctly again. The 2.0.2 release reports `2.0.1` in `/healthz`,
+  the `X-Zfeeder-Version` header and the `User-Agent`, because `src/Version.php` was not bumped
+  before the tag; 2.0.3 reports `2.0.3`. Use 2.0.3 instead of 2.0.2.
 - CI: the release workflow fails before the build when `Version::NUMBER` differs from the tag.
-- Docs: install and upgrade commands name 2.0.2; the release process notes that a new container package must be made public.
+- Docs: install and upgrade commands name the current release; the release process notes that a
+  new container package must be made public; `deploy/k8s.yaml` pins the current image.
 
 ## [2.0.2] — 2026-10-29
 
@@ -137,7 +141,8 @@ Every item below is a defect of the 1.6 code, with the test that now proves it i
   `GET /refresh?key=<key>`; the 1.6 spelling `?zfrefresh=<key>` is still accepted, at
   `/refresh` and at the old `/newsfeeds/zfeeder.php` path, so an existing cron entry keeps working.
 
-[Unreleased]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/andreibesleaga/zfeeder/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/andreibesleaga/zfeeder/releases/tag/v2.0.0
