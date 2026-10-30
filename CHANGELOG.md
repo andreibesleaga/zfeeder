@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Fixed: `Version::NUMBER` is now `2.0.2`. The published 2.0.2 release reports `2.0.1` in `/healthz`, the
+  `X-Zfeeder-Version` header and the `User-Agent`; the next release carries the right number.
+- CI: the release workflow fails before the build when `Version::NUMBER` differs from the tag.
 - Docs: install and upgrade commands name 2.0.2; the release process notes that a new container package must be made public.
 
 ## [2.0.2] — 2026-10-29

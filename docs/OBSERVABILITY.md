@@ -33,7 +33,7 @@ Healthy, HTTP 200:
 ```json
 {
     "status": "ok",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "storage": "flat",
     "checks": {
         "subscriptions": true,
@@ -47,7 +47,7 @@ Unhealthy, HTTP 503:
 ```json
 {
     "status": "degraded",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "storage": "flat",
     "checks": {
         "subscriptions": false,
@@ -62,7 +62,7 @@ Those are the only two shapes. The endpoint is
 | Field | Type | Meaning |
 |---|---|---|
 | `status` | `"ok"` or `"degraded"` | `ok` when `checks.data_writable` is true, `degraded` otherwise |
-| `version` | string | `Version::NUMBER`, currently `2.0.1` |
+| `version` | string | `Version::NUMBER`, currently `2.0.2` |
 | `storage` | `"flat"` or `"sqlite"` | the configured backend |
 | `checks.subscriptions` | bool | true when the subscription store returned at least one category |
 | `checks.data_writable` | bool | true when the data directory exists and is writable by the PHP process |

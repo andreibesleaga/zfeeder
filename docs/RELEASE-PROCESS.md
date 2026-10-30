@@ -47,6 +47,9 @@ Playwright suite, not the PHP.
    `X-Zfeeder-Version` response header and the outgoing `User-Agent`
    (`zfeeder/<NUMBER> (+https://github.com/andreibesleaga/zfeeder)`). Update it.
 
+   The release workflow checks this: its first step fails the run when `Version::NUMBER` differs
+   from the tag without its leading `v`, so a tag cut before the bump publishes nothing.
+
    `tools/sbom.php` reads the product version from `src/Version.php`. `tools/build-dist.sh`
    defaults to `2.0.0` only when it is called with no argument, which the workflow never does.
 

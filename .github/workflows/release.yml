@@ -25,6 +25,13 @@ jobs:
           php-version: '8.3'
           tools: composer:v2
           coverage: none
+      - name: Check that Version::NUMBER matches the tag
+        run: |
+          number="$(php -r 'require "src/Version.php"; echo Zfeeder\Version::NUMBER;')"
+          if [ "$number" != "${GITHUB_REF_NAME#v}" ]; then
+            echo "::error::Version::NUMBER is $number but the tag is $GITHUB_REF_NAME"
+            exit 1
+          fi
       - name: Build the shared-hosting archive
         run: ./tools/build-dist.sh "${GITHUB_REF_NAME#v}"
       - name: Software bill of materials
