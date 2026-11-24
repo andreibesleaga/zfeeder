@@ -29,6 +29,7 @@ that code running on PHP 5.6. See [docs/HISTORY.md](docs/HISTORY.md).
 More info at [zFeeder GitHub Pages](https://andreibesleaga.github.io/zfeeder/).
 A public instance runs at **<https://zfeeder.up.railway.app>**, with the panel in
 read-only demonstration mode.
+A site built on zFeeder as a library: **<https://agenticfeeder.com>**, daily AI news from about 230 feeds.
 
 
 ## What it does

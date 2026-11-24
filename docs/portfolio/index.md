@@ -105,5 +105,7 @@ capture rather than from a dedicated demo page.
 
 - Live demo: <https://zfeeder.up.railway.app> — the 2.0 rebuild, with the administration panel in
   read-only demonstration mode
+- Used by: <https://agenticfeeder.com> — a daily AI-news site built on zFeeder 2.0 as a library
+  (fetching with address checks, parsing and cleaning of about 230 feeds)
 - Source: <https://github.com/andreibesleaga/zfeeder>
 - Original project: <https://sourceforge.net/projects/zvonnews/>
